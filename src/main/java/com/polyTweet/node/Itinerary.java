@@ -1,4 +1,4 @@
-package com.PolyTweet.Node;
+package com.polyTweet.node;
 
 import java.util.ArrayList;
 

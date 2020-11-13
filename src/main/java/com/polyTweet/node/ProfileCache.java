@@ -1,6 +1,6 @@
-package com.PolyTweet.Node;
+package com.polyTweet.node;
 
-import com.PolyTweet.Profile.Profile;
+import com.polyTweet.profile.Profile;
 
 import java.util.Date;
 

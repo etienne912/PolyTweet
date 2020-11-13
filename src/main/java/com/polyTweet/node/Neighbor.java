@@ -1,4 +1,4 @@
-package com.PolyTweet.Node;
+package com.polyTweet.node;
 
 public class Neighbor {
 	private final String ip;

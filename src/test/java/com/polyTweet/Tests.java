@@ -1,7 +1,9 @@
-import com.PolyTweet.Node.Node;
-import com.PolyTweet.Node.exceptions.MaxNodeException;
-import com.PolyTweet.Node.exceptions.NodeNotFoundException;
-import com.PolyTweet.Profile.Profile;
+package com.polyTweet;
+
+import com.polyTweet.node.Node;
+import com.polyTweet.node.exceptions.MaxNodeException;
+import com.polyTweet.node.exceptions.NodeNotFoundException;
+import com.polyTweet.profile.Profile;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

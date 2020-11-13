@@ -1,4 +1,4 @@
-package com.PolyTweet.Profile;
+package com.polyTweet.profile;
 
 import java.util.Date;
 

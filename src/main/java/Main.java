@@ -1,5 +1,5 @@
-import com.PolyTweet.Node.Node;
-import com.PolyTweet.Profile.Profile;
+import com.polyTweet.node.Node;
+import com.polyTweet.profile.Profile;
 
 public class Main {
 	public static void main(String[] args) {

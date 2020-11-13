@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+application {
+    mainClass = 'Main'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+    testImplementation("junit:junit:4.13")
+    testImplementation 'org.junit.platform:junit-platform-commons:1.5.2'
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.7.0")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.7.0")
+}

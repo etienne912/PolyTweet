@@ -1,8 +1,8 @@
-package com.PolyTweet.Node;
+package com.polyTweet.node;
 
-import com.PolyTweet.Node.exceptions.MaxNodeException;
-import com.PolyTweet.Node.exceptions.NodeNotFoundException;
-import com.PolyTweet.Profile.Profile;
+import com.polyTweet.node.exceptions.MaxNodeException;
+import com.polyTweet.node.exceptions.NodeNotFoundException;
+import com.polyTweet.profile.Profile;
 
 import java.util.ArrayList;
 import java.util.List;

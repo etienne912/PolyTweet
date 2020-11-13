@@ -1,4 +1,4 @@
-package com.PolyTweet.Node.exceptions;
+package com.polyTweet.node.exceptions;
 
 public class MaxNodeException extends Exception {
 	public MaxNodeException() {
