@@ -6,13 +6,14 @@ import java.util.List;
 import java.util.Date;
 
 public class Profile implements Serializable {
+	private static long count = 0;
 	private final long id;
 	private final String firstName, lastName;
 	private String status;
 	private final List<Post> posts;
 
 	public Profile(String firstName, String lastName) {
-		this.id = new Date().getTime();
+		this.id = count++;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.status = "";
