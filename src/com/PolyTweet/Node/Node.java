@@ -1,5 +1,7 @@
 package com.PolyTweet.Node;
 
+import com.PolyTweet.Node.exceptions.MaxNodeException;
+import com.PolyTweet.Node.exceptions.NodeNotFoundException;
 import com.PolyTweet.Profile.Profile;
 
 import java.util.ArrayList;
@@ -26,8 +28,19 @@ public class Node {
 		return id;
 	}
 
-	public Profile searchProfile(long id) {
-		return this.searchProfile(id, new Itinerary());
+	public void addNeighbor(Node neighbor) throws MaxNodeException {
+		if (this.neighbors.size() < 5)
+			this.neighbors.add(neighbor);
+		else
+			throw new MaxNodeException();
+	}
+
+	public Profile searchProfile(long id) throws NodeNotFoundException {
+		Profile result = this.searchProfile(id, new Itinerary());
+		if (result != null)
+			return result;
+		else
+			throw new NodeNotFoundException(id);
 	}
 
 	public Profile searchProfile(long id, Itinerary oldItinerary) {
@@ -53,10 +66,5 @@ public class Node {
 
 		return null;
 	}
-
-	public void addNeighbor(Node neighbor) {
-		this.neighbors.add(neighbor);
-	}
-
 
 }
