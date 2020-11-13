@@ -1,0 +1,37 @@
+Cahier des charges réseau pair-à-pair (2020)
+
+Thème : réseau social pair-à-pair
+
+
+En informatique on dit qu'un réseau est pair-à-pair lorsque toutes les machines on un rôle équivalent, par opposition au mode client-serveur par exemple.
+
+Le défi dans un réseau pair-à-pair est relatif au passage à l'échelle : lorsque le nombre de machines (on dira plutôt des "noeuds") est très grand, 1) aucun noeud ne peut avoir en mémoire la liste de tous les autres noeuds, cette information doit donc être répartie sur les différents noeuds et 2) à chaque instant on peut supposer qu'au moins un noeud est en panne ou injoignable ; l'information doit donc être répliquée.
+
+
+Dans ce projet il est demandé de réaliser un logiciel permettant d'assurer un service de réseau social pair-à-pair.
+
+Vous pourrez traiter ce projet suivant deux possibilités:
+
+    Chaque noeud peut être hébergé par une machine différente et est joignable par son adresse IP et un numéro de port. Pour les tests, on pourra lancer chaque noeud dans un processus différent (et une JVM différente) sur un même PC, avec une même adresse IP mais un numéro de port différrent.
+    Sans réseau, juste une simulation donc, chaque noeud est un objet en mémoire, tout le programme tourne sur une seule machine virtuelle Java (JVM), un seul "main" est exécuté.
+
+
+
+Cahier des charges informel.
+
+
+Le cahier des charges est exprimé pour un réseau réel, à adapter pour la version simulée dans un seul processus.
+
+    Chaque étudiant de Polytech (appelé ensuite un "utilisateur") peut faire tourner sur son PC personnel une instance du logiciel. Cette instance est appelée un "noeud", l'ensemble des noeuds est appelé le "système".
+    Chaque instance hébèrge des informations sur son utilisateur : nom, prénom, identifiant unique, statut (une phrase courte) et publications (textes avec une date).
+    Chaque noeud joue le rôle de serveur : il est en écoute sur le réseau (à une adresse IP donc, et sur un port donné) et peut répondre aux requêtes concernant son utilisateur (récupération des informations demandées, voir plus loin). [Dans la version simulée, le service est rendu par appel de méthode.]
+    Chaque noeud peut mémoriser les informations pour contacter AU PLUS 5 autres noeuds : adresse IP et port [ou référence de l'objet pour la version simulée] et utilisateur sur ce noeud. Ces noeuds dont on a mémorisé les informations sont appelés des "voisins".
+    Chaque utilisateur peut demander au système, via son noeud, des informations de n'importe quel autre utilisateur : nom, prénom, identifiant, statut, dernières publications.
+    Si le noeud d'un utilisateur ne sait pas contacter le noeud de l'utilisateur demandé, il transfère sa requête aux voisins (parmi les 5 mémorisés) qui eux-mêmes peuvent la faire suivre, et ainsi de suite.
+    Chaque utilisateur peut modifier son statut à tout moment, ainsi qu'ajouter une publication.
+    Si un utilisateur A cherche une information sur un utilisateur B mais qu'il s'adresse à C pour obtenir cette information, alors C n'est pas obligé de router la demande jusqu'à B si il détient déjà cette information. En particulier, les noms, prénoms et identifiants uniques sont intemporels, contrairement aus statuts et aux publications. Attention, on ne peut mémoriser des informations que sur ses 5 voisins.
+    Si un utilisateur A cherche une information périssable sur un utilisateur B (statut, publications), et que B n'est pas joignable (son système est éteint, ou n'est pas accessible par le réseau, ou personne de joignable ne connaît son adresse), alors n'importe qui qui a des données sur B en mémoire peut donner ces informations, en précisant qu'elles proviennent d'un cache. (À nouveau, on ne peut mémoriser des informations que sur ses 5 voisins.)
+    [FACULTATIF] Chaque utilisateur peut suivre d'autres utilisateurs (comme sur Twitter). Un utilisateur peut demander à son système de lui montrer les derniers statuts et les dernières  publications de tous les utilisateurs qu'il suit. On peut suivre plus de 5 utilisateurs (mais on ne peut toujours pas mémoriser les informations de plus de 5 utilisateurs).
+    Un utilisateur peut entrer manuellement dans son système l'adresse d'un autre utilisateur. Ainsi si quelqu'un s'apperçoit qu'il est injoignable car personne n'a son adresse, il peut demander informellement à un camarade de le référencer. Attention, l'ajout manuel ne permet pas de dépasser la limite de 5 voisins (on doit effacer un voisin si on en avait déjà 5).
+    [FACULTATIF] Une fois qu'un noeud a un voisin, ce noeud peut demander à ce voisin de lui communiquer d'autres adresses afin de remplir sa table de voisins.
+    [FACULTATIF pour la version réseau] Lorsqu'un noeud s'éteint proprement (sur demande de l'utilisateur), il sauvegarde les informations de son utilisateur et la liste de ses voisins, qu'il rechargera au prochain lancement.
