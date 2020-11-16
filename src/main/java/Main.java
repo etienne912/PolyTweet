@@ -20,11 +20,12 @@ public class Main {
 		try {
 			node0.searchEnterPoint(node1);
 
-//			node1.addNeighbor(node0);
-//
 			node2.searchEnterPoint(node3);
 
 			node3.searchEnterPoint(node0);
+
+			System.out.println(node1.searchProfile(3));
+			System.out.println(node1.searchProfile(2));
 
 			System.out.println(node0);
 			System.out.println(node1);

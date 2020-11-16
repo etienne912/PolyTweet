@@ -1,6 +1,5 @@
 package com.polyTweet.node;
 
-import com.polyTweet.node.exceptions.MaxNodeException;
 import com.polyTweet.node.exceptions.NodeNotFoundException;
 import com.polyTweet.profile.Profile;
 
@@ -8,18 +7,17 @@ import java.util.*;
 
 public class Node {
 	private final HashMap<Long, Node> neighbors;
-	private final List<ProfileCache> cache;
+	private final HashMap<Long, ProfileCache> cache;
 	private final Profile myProfile;
 	private final long id;
 	private static long count = 0;
 
 	public Node(Profile myProfile) {
 		this.neighbors = new HashMap<>();
-		this.cache = new ArrayList<>();
+		this.cache = new HashMap<>();
 		this.myProfile = myProfile;
 		this.id = count++;
 	}
-
 
 	public Profile getProfile() {
 		return this.myProfile;
@@ -29,34 +27,25 @@ public class Node {
 		return id;
 	}
 
-	public void addNeighbor(Node neighbor) throws MaxNodeException {
-		if (this.neighbors.size() < 5)
+	public void addNeighbor(Node neighbor) {
+		if (neighbor == null) return;
+		if (this.isNotFull())
 			this.neighbors.put(neighbor.getId(), neighbor);
-		else
-			throw new MaxNodeException();
+		if (neighbor.isNotFull())
+			neighbor.neighbors.put(this.id, this);
 	}
 
 	public void searchEnterPoint(Node node) {
-		Node enterNode = node.searchEnterPoint(this, new Itinerary());
-		if (enterNode != null)
-			this.neighbors.put(enterNode.getId(), enterNode);
+		this.addNeighbor(node.searchEnterPoint(new Itinerary()));
 	}
 
-	public Node searchEnterPoint(Node newNode, Itinerary oldItinerary) {
-		if (this.neighbors.size() < 5) {
-			try {
-				this.addNeighbor(newNode);
-			} catch (MaxNodeException ignored) {
-			}
+	public Node searchEnterPoint(Itinerary oldItinerary) {
+		if (this.isNotFull()) {
 			return this;
 		}
 
 		for (Node node : this.neighbors.values()) {
-			if (node.getNbNeighbors() < 5) {
-				try {
-					node.addNeighbor(newNode);
-				} catch (MaxNodeException ignored) {
-				}
+			if (node.isNotFull()) {
 				return node;
 			}
 		}
@@ -65,10 +54,33 @@ public class Node {
 			if (!oldItinerary.hasAlreadyPassed(node.getId())) {
 				try {
 					Itinerary clone = (Itinerary) oldItinerary.clone();
-					Node enterNode = node.searchEnterPoint(newNode, clone.addNodeId(this.id));
+					Node enterNode = node.searchEnterPoint(clone.addNodeId(this.id));
 
 					if (enterNode != null)
 						return enterNode;
+				} catch (CloneNotSupportedException e) {
+					return null;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	public Node getNodeinformation(long id, Itinerary oldItinerary) {
+		if (this.id == id) return this;
+
+		if (this.neighbors.containsKey(id))
+			return this.neighbors.get(id);
+
+		for (Node node : this.neighbors.values()) {
+			if (!oldItinerary.hasAlreadyPassed(node.getId())) {
+				try {
+					Itinerary clone = (Itinerary) oldItinerary.clone();
+					Node tmp = node.getNodeinformation(id, clone.addNodeId(this.id));
+
+					if (tmp != null)
+						return tmp;
 				} catch (CloneNotSupportedException e) {
 					return null;
 				}
@@ -82,7 +94,13 @@ public class Node {
 		return this.neighbors.size();
 	}
 
+	public boolean isNotFull() {
+		return this.neighbors.size() < 5;
+	}
+
 	public Profile searchProfile(long id) throws NodeNotFoundException {
+		if (this.isNotFull() && !this.neighbors.containsKey(id))
+			this.addNeighbor(this.getNodeinformation(id, new Itinerary()));
 		Profile result = this.searchProfile(id, new Itinerary());
 
 		if (result != null)
