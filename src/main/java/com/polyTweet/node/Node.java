@@ -8,13 +8,15 @@ import java.util.*;
 public class Node {
 	private final HashMap<Long, Node> neighbors;
 	private final HashMap<Long, ProfileCache> cache;
+	private final ArrayList<Integer> follow;
 	private final Profile myProfile;
 	private final long id;
 	private static long count = 0;
 
 	public Node(Profile myProfile) {
-		this.neighbors = new HashMap<>();
-		this.cache = new HashMap<>();
+		this.neighbors = new HashMap<>(5);
+		this.cache = new HashMap<>(5);
+		this.follow = new ArrayList<>();
 		this.myProfile = myProfile;
 		this.id = count++;
 	}
@@ -30,9 +32,15 @@ public class Node {
 	public void addNeighbor(Node neighbor) {
 		if (neighbor == null) return;
 		if (this.isNotFull())
-			this.neighbors.put(neighbor.getId(), neighbor);
+			this.neighbors.put(neighbor.id, neighbor);
+			this.cache.put(neighbor.id, new ProfileCache(neighbor.getProfile()));
 		if (neighbor.isNotFull())
 			neighbor.neighbors.put(this.id, this);
+			neighbor.cache.put(this.id, new ProfileCache(this.myProfile));
+	}
+
+	public void addFollow(int id) {
+		follow.add(id);
 	}
 
 	public void searchEnterPoint(Node node) {
@@ -90,6 +98,22 @@ public class Node {
 		return null;
 	}
 
+	public List<Profile> getProfileFollowedInformation() {
+
+		ArrayList<Profile> profileFollowed = new ArrayList();
+
+		this.follow.forEach(id -> {
+			try {
+				profileFollowed.add(this.searchProfile(id));
+			} catch (NodeNotFoundException e) {
+				e.printStackTrace();
+			}
+		});
+
+		return profileFollowed;
+
+	}
+
 	public int getNbNeighbors() {
 		return this.neighbors.size();
 	}
@@ -110,14 +134,15 @@ public class Node {
 	}
 
 	public Profile searchProfile(long id, Itinerary oldItinerary) {
-		for (Node node : this.neighbors.values()) {
-			Profile tmp = node.getProfile();
-			if (tmp.getId() == id)
-				return tmp;
+
+		if( this.neighbors.containsKey(id) ) {
+			return this.neighbors.get(id).getProfile();
+		} else if ( this.cache.containsKey(id) ) {
+			return this.cache.get(id).getProfile();
 		}
 
 		for (Node node : this.neighbors.values()) {
-			if (!oldItinerary.hasAlreadyPassed(node.getId())) {
+			if (!oldItinerary.hasAlreadyPassed(node.id)) {
 				try {
 					Itinerary clone = (Itinerary) oldItinerary.clone();
 					Profile profile = node.searchProfile(id, clone.addNodeId(this.id));

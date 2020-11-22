@@ -8,8 +8,8 @@ public class ProfileCache {
 	private Date date;
 	private Profile profile;
 
-	public ProfileCache(Date date, Profile profile) {
-		this.date = date;
+	public ProfileCache(Profile profile) {
+		this.date = new Date();;
 		this.profile = profile;
 	}
 

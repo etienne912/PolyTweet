@@ -34,5 +34,11 @@ public class Main {
 		} catch (Exception e) {
 			System.err.println(e);
 		}
+
+		node2.addFollow(0);
+		node2.getProfileFollowedInformation().forEach(profile -> {
+			System.out.println(profile.toString());
+		});
+
 	}
 }
