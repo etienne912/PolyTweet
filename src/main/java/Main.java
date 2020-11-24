@@ -18,11 +18,11 @@ public class Main {
 		Node node3 = new Node(profile3);
 
 		try {
-			node0.searchEnterPoint(node1);
+			node0.askNodeContactInformation(node1);
 
-			node2.searchEnterPoint(node3);
+			node2.askNodeContactInformation(node3);
 
-			node3.searchEnterPoint(node0);
+			node3.askNodeContactInformation(node0);
 
 			System.out.println(node1.searchProfile(3));
 			System.out.println(node1.searchProfile(2));

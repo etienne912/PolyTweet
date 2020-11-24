@@ -8,17 +8,25 @@ import java.util.*;
 public class Node {
 	private final HashMap<Long, Node> neighbors;
 	private final HashMap<Long, ProfileCache> cache;
-	private final ArrayList<Integer> follow;
+	private final ArrayList<Long> follow;
+	private final HashMap<Long, Integer> traficMonitor;
 	private final Profile myProfile;
 	private final long id;
 	private static long count = 0;
+	private static final int MAX_NODE_INFORMATION_CAPACITY = 5;
 
 	public Node(Profile myProfile) {
-		this.neighbors = new HashMap<>(5);
-		this.cache = new HashMap<>(5);
-		this.follow = new ArrayList<>();
+		this.neighbors = new HashMap<>(MAX_NODE_INFORMATION_CAPACITY);
+		this.cache = new HashMap<>(MAX_NODE_INFORMATION_CAPACITY);
+		this.follow = new ArrayList<>(MAX_NODE_INFORMATION_CAPACITY);
+		this.traficMonitor = new HashMap<>();
 		this.myProfile = myProfile;
 		this.id = count++;
+	}
+
+	public Node(Profile profile, Node enterNode) {
+		this(profile);
+		this.askNodeContactInformation(enterNode);
 	}
 
 	public Profile getProfile() {
@@ -33,28 +41,48 @@ public class Node {
 		if (neighbor == null) return;
 		if (this.isNotFull())
 			this.neighbors.put(neighbor.id, neighbor);
-			this.cache.put(neighbor.id, new ProfileCache(neighbor.getProfile()));
+
+//		this.cache.put(neighbor.id, new ProfileCache(neighbor.getProfile()));
+
 		if (neighbor.isNotFull())
 			neighbor.neighbors.put(this.id, this);
-			neighbor.cache.put(this.id, new ProfileCache(this.myProfile));
+
+//		neighbor.cache.put(this.id, new ProfileCache(this.myProfile));
 	}
 
-	public void addFollow(int id) {
-		follow.add(id);
+	public void addNeighbors(List<Node> neighbors) {
+		neighbors.forEach(this::addNeighbor);
 	}
 
-	public void searchEnterPoint(Node node) {
-		this.addNeighbor(node.searchEnterPoint(new Itinerary()));
+	public void addFollow(long id) {
+		this.follow.add(id);
 	}
 
-	public Node searchEnterPoint(Itinerary oldItinerary) {
+	public void askNodeContactInformation(Node enterNode) {
+		this.addNeighbor(enterNode);
+		this.askNodeContactInformation();
+	}
+
+	public void askNodeContactInformation() {
+		this.askNodeContactInformation(MAX_NODE_INFORMATION_CAPACITY - this.getNbNeighbors());
+	}
+
+	public void askNodeContactInformation(int nbNodes) {
+		if (0 < nbNodes && nbNodes <= MAX_NODE_INFORMATION_CAPACITY - this.getNbNeighbors())
+			this.addNeighbors(this.askNodeContactInformation(nbNodes, new Itinerary()));
+	}
+
+	public List<Node> askNodeContactInformation(int nbNodes, Itinerary oldItinerary) {
+		if (nbNodes <= 0) return Collections.emptyList();
+
 		if (this.isNotFull()) {
-			return this;
+			return Collections.singletonList(this);
 		}
 
+		ArrayList<Node> nodesContactInformation = new ArrayList<>(nbNodes);
 		for (Node node : this.neighbors.values()) {
 			if (node.isNotFull()) {
-				return node;
+				nodesContactInformation.add(node);
 			}
 		}
 
@@ -62,20 +90,20 @@ public class Node {
 			if (!oldItinerary.hasAlreadyPassed(node.getId())) {
 				try {
 					Itinerary clone = (Itinerary) oldItinerary.clone();
-					Node enterNode = node.searchEnterPoint(clone.addNodeId(this.id));
+					List<Node> nodes = node.askNodeContactInformation(nbNodes, clone.addNodeId(this.id));
 
-					if (enterNode != null)
-						return enterNode;
+					if (nodes != null)
+						nodesContactInformation.addAll(nodes);
 				} catch (CloneNotSupportedException e) {
 					return null;
 				}
 			}
 		}
 
-		return null;
+		return nodesContactInformation;
 	}
 
-	public Node getNodeinformation(long id, Itinerary oldItinerary) {
+	public Node getNodeInformation(long id, Itinerary oldItinerary) {
 		if (this.id == id) return this;
 
 		if (this.neighbors.containsKey(id))
@@ -85,7 +113,7 @@ public class Node {
 			if (!oldItinerary.hasAlreadyPassed(node.getId())) {
 				try {
 					Itinerary clone = (Itinerary) oldItinerary.clone();
-					Node tmp = node.getNodeinformation(id, clone.addNodeId(this.id));
+					Node tmp = node.getNodeInformation(id, clone.addNodeId(this.id));
 
 					if (tmp != null)
 						return tmp;
@@ -99,8 +127,7 @@ public class Node {
 	}
 
 	public List<Profile> getProfileFollowedInformation() {
-
-		ArrayList<Profile> profileFollowed = new ArrayList();
+		ArrayList<Profile> profileFollowed = new ArrayList<>();
 
 		this.follow.forEach(id -> {
 			try {
@@ -111,7 +138,6 @@ public class Node {
 		});
 
 		return profileFollowed;
-
 	}
 
 	public int getNbNeighbors() {
@@ -119,12 +145,17 @@ public class Node {
 	}
 
 	public boolean isNotFull() {
-		return this.neighbors.size() < 5;
+		return this.neighbors.size() < MAX_NODE_INFORMATION_CAPACITY;
+	}
+
+	public void increaseMonitor(long id) {
+		this.traficMonitor.compute(id, (k, v) -> (v == null) ? 1 : v + 1);
 	}
 
 	public Profile searchProfile(long id) throws NodeNotFoundException {
+		this.increaseMonitor(id);
 		if (this.isNotFull() && !this.neighbors.containsKey(id))
-			this.addNeighbor(this.getNodeinformation(id, new Itinerary()));
+			this.addNeighbor(this.getNodeInformation(id, new Itinerary()));
 		Profile result = this.searchProfile(id, new Itinerary());
 
 		if (result != null)
@@ -134,10 +165,10 @@ public class Node {
 	}
 
 	public Profile searchProfile(long id, Itinerary oldItinerary) {
-
-		if( this.neighbors.containsKey(id) ) {
+		if (this.neighbors.containsKey(id)) {
+			this.cache.put(id, new ProfileCache(this.neighbors.get(id).getProfile()));
 			return this.neighbors.get(id).getProfile();
-		} else if ( this.cache.containsKey(id) ) {
+		} else if (this.cache.containsKey(id)) {
 			return this.cache.get(id).getProfile();
 		}
 

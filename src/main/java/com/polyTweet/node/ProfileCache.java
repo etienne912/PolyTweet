@@ -5,11 +5,11 @@ import com.polyTweet.profile.Profile;
 import java.util.Date;
 
 public class ProfileCache {
-	private Date date;
-	private Profile profile;
+	private final Date date;
+	private final Profile profile;
 
 	public ProfileCache(Profile profile) {
-		this.date = new Date();;
+		this.date = new Date();
 		this.profile = profile;
 	}
 
@@ -19,10 +19,5 @@ public class ProfileCache {
 
 	public Profile getProfile() {
 		return profile;
-	}
-
-	public void update(Profile profile) {
-		this.profile = profile;
-		this.date = new Date();
 	}
 }
