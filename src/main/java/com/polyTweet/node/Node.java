@@ -26,7 +26,7 @@ public class Node {
 
 	public Node(Profile profile, Node enterNode) {
 		this(profile);
-		this.askNodeContactInformation(enterNode);
+		this.askNewNodeContactInformation(enterNode);
 	}
 
 	public Profile getProfile() {
@@ -58,31 +58,30 @@ public class Node {
 		this.follow.add(id);
 	}
 
-	public void askNodeContactInformation(Node enterNode) {
+	public void askNewNodeContactInformation(Node enterNode) {
 		this.addNeighbor(enterNode);
-		this.askNodeContactInformation();
+		this.askNewNodeContactInformation();
 	}
 
-	public void askNodeContactInformation() {
-		this.askNodeContactInformation(MAX_NODE_INFORMATION_CAPACITY - this.getNbNeighbors());
+	public void askNewNodeContactInformation() {
+		this.askNewNodeContactInformation(MAX_NODE_INFORMATION_CAPACITY - this.getNbNeighbors());
 	}
 
-	public void askNodeContactInformation(int nbNodes) {
+	public void askNewNodeContactInformation(int nbNodes) {
 		if (0 < nbNodes && nbNodes <= MAX_NODE_INFORMATION_CAPACITY - this.getNbNeighbors())
-			this.addNeighbors(this.askNodeContactInformation(nbNodes, new Itinerary()));
+			this.addNeighbors(this.askNewNodeContactInformation(nbNodes, new Itinerary(Collections.singletonList(this.id))));
 	}
 
-	public List<Node> askNodeContactInformation(int nbNodes, Itinerary oldItinerary) {
+	public List<Node> askNewNodeContactInformation(int nbNodes, Itinerary oldItinerary) {
 		if (nbNodes <= 0) return Collections.emptyList();
 
-		if (this.isNotFull()) {
-			return Collections.singletonList(this);
-		}
-
 		ArrayList<Node> nodesContactInformation = new ArrayList<>(nbNodes);
+
 		for (Node node : this.neighbors.values()) {
-			if (node.isNotFull()) {
+			if (node.isNotFull() && nbNodes > 0 && !oldItinerary.hasAlreadyPassed(node.getId())) {
 				nodesContactInformation.add(node);
+				nbNodes--;
+				if (nbNodes == 0) return nodesContactInformation;
 			}
 		}
 
@@ -90,10 +89,17 @@ public class Node {
 			if (!oldItinerary.hasAlreadyPassed(node.getId())) {
 				try {
 					Itinerary clone = (Itinerary) oldItinerary.clone();
-					List<Node> nodes = node.askNodeContactInformation(nbNodes, clone.addNodeId(this.id));
+					List<Node> nodes = node.askNewNodeContactInformation(nbNodes, clone.addNodeId(this.id));
 
-					if (nodes != null)
-						nodesContactInformation.addAll(nodes);
+					if (nodes != null) {
+						if (nodes.size() < nbNodes) {
+							nodesContactInformation.addAll(nodes);
+							nbNodes -= nodes.size();
+						} else {
+							nodesContactInformation.addAll(nodes.subList(0, nbNodes));
+							return nodesContactInformation;
+						}
+					}
 				} catch (CloneNotSupportedException e) {
 					return null;
 				}

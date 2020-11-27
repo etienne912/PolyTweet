@@ -1,6 +1,7 @@
 package com.polyTweet.node;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Itinerary implements Cloneable {
 
@@ -8,6 +9,10 @@ public class Itinerary implements Cloneable {
 
 	public Itinerary() {
 		this.ids = new ArrayList<>();
+	}
+
+	public Itinerary(List<Long> id) {
+		this.ids = new ArrayList<>(id);
 	}
 
 	/**
