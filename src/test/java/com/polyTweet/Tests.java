@@ -53,7 +53,7 @@ public class Tests {
 		node4.addNeighbor(node1);
 		node4.addNeighbor(node2);
 
-		assertEquals("Success find test", node1.searchProfile(2).getId(), node3.getProfile().getId());
+		assertEquals("Success find test", node1.searchProfile(node3.getProfile().getId()), node3.getProfile());
 
 		assertThrows("Not found test", NodeNotFoundException.class, () -> node1.searchProfile(-1));
 

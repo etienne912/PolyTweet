@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
+import java.util.Objects;
 
 public class Profile implements Serializable {
 	private static long count = 0;
@@ -57,5 +58,20 @@ public class Profile implements Serializable {
 				", statut='" + status + '\'' +
 				", posts=" + posts +
 				'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Profile profile = (Profile) o;
+		return id == profile.id &&
+				Objects.equals(firstName, profile.firstName) &&
+				Objects.equals(lastName, profile.lastName);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, firstName, lastName);
 	}
 }
