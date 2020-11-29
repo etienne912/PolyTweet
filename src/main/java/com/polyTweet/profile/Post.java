@@ -1,13 +1,14 @@
 package com.polyTweet.profile;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Post {
+public class Post implements Serializable {
 	private final Date date;
 	private final String message;
 
-	public Post(Date date, String message) {
-		this.date = date;
+	public Post(String message) {
+		this.date = new Date();
 		this.message = message;
 	}
 

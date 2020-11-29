@@ -1,11 +1,17 @@
 import com.polyTweet.node.Node;
 import com.polyTweet.profile.Profile;
+import com.polyTweet.serialization.*;
 
 public class Main {
 	public static void main(String[] args) {
 
-		Profile profile0 = new Profile("Étienne", "Lécrivain");
-//		System.out.println(profile0);
+		System.out.println("\n*********** Deserialization ***********\n");
+
+		Profile profile0 = (Profile) Deserialization.deserialize("./tmp/profile-0.ser");
+
+		System.out.println("\n*********** Create Profile ***********\n");
+
+//		Profile profile0 = new Profile("Étienne", "Lécrivain");
 		Node node0 = new Node(profile0);
 
 		Profile profile1 = new Profile("Lucas", "Hervouet");
@@ -26,6 +32,8 @@ public class Main {
 		Profile profile6 = new Profile("Richard", "Stallman");
 		Node node6 = new Node(profile6, node4);
 
+		System.out.println("\n*********** Search a Profile ***********\n");
+
 		try {
 			System.out.println(node1.searchProfile(3));
 			System.out.println(node1.searchProfile(2));
@@ -41,9 +49,22 @@ public class Main {
 			System.err.println(e);
 		}
 
+		System.out.println("\n*********** Following ***********\n");
+
 		node2.addFollow(0);
 		node2.getProfileFollowedInformation().forEach(profile -> {
 			System.out.println(profile.toString());
 		});
+
+		System.out.println("\n*********** Update Profile ***********\n");
+
+		profile0.updateStatus();
+		profile0.writePost();
+
+		System.out.println("\n*********** Serialisation ***********\n");
+
+		Serialization.serialize(profile0, "./tmp/profile-" + profile0.getId() + ".ser");
+
+		System.exit(0);
 	}
 }

@@ -1,10 +1,9 @@
 package com.polyTweet.profile;
 
+import com.polyTweet.serialization.Serialization;
+
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 public class Profile implements Serializable {
 	private static long count = 0;
@@ -41,12 +40,28 @@ public class Profile implements Serializable {
 		this.status = status;
 	}
 
+	public void updateStatus() {
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.println("Write your status :\n");
+
+		this.status = scanner.nextLine();
+	}
+
 	public List<Post> getPosts() {
 		return posts;
 	}
 
+	public void writePost() {
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.println("Write your post :\n");
+
+		this.posts.add(new Post(scanner.nextLine()));
+	}
+
 	public void writePost(String message) {
-		this.posts.add(new Post(new Date(), message));
+		this.posts.add(new Post(message));
 	}
 
 	@Override
