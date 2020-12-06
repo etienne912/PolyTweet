@@ -25,8 +25,7 @@ public class Serialization {
 
             // serialization of the object
             oos.writeObject(o);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (Exception ignored) {
         }
     }
 

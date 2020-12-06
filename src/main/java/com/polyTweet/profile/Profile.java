@@ -1,7 +1,5 @@
 package com.polyTweet.profile;
 
-import com.polyTweet.serialization.Serialization;
-
 import java.io.Serializable;
 import java.util.*;
 

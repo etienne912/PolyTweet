@@ -24,8 +24,7 @@ public class Deserialization {
 
             return ois.readObject();
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (Exception ignored) {
         }
 
         return null;
