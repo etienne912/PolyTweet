@@ -1,17 +1,21 @@
 import com.polyTweet.node.Node;
 import com.polyTweet.profile.Profile;
-import com.polyTweet.serialization.*;
+import com.polyTweet.serialization.Deserialization;
+import com.polyTweet.serialization.Serialization;
 
 public class Main {
 	public static void main(String[] args) {
 
 		System.out.println("\n*********** Deserialization ***********\n");
 
-		Profile profile0 = (Profile) Deserialization.deserialize("./tmp/profile-0.ser");
+		Profile profile0;
+		profile0 = (Profile) Deserialization.deserialize("./tmp/myProfile.ser");
+		if (profile0 == null) {
+			profile0 = new Profile("Étienne", "Lécrivain");
+		}
 
 		System.out.println("\n*********** Create Profile ***********\n");
 
-//		Profile profile0 = new Profile("Étienne", "Lécrivain");
 		Node node0 = new Node(profile0);
 
 		Profile profile1 = new Profile("Lucas", "Hervouet");
@@ -63,7 +67,7 @@ public class Main {
 
 		System.out.println("\n*********** Serialisation ***********\n");
 
-		Serialization.serialize(profile0, "./tmp/profile-" + profile0.getId() + ".ser");
+		Serialization.serialize(profile0, "./tmp/profile-0.ser");
 
 		System.exit(0);
 	}

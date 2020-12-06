@@ -3,6 +3,7 @@ package com.polyTweet.serialization;
 import java.io.File;
 import java.io.ObjectOutputStream;
 import java.io.FileOutputStream;
+import java.io.Serializable;
 
 /**
  * Class allowing to serialize an Object
@@ -15,7 +16,7 @@ public class Serialization {
      * @param o Object to serialize
      * @param path File path of where to serialize the object
      */
-    public static void serialize(Object o, String path) {
+    public static void serialize(Serializable o, String path) {
         try {
             File fichier = new File(path);
 
