@@ -1,8 +1,16 @@
-apply plugin: 'java'
-apply plugin: 'application'
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+}
 
 group 'org.example'
 version '1.0-SNAPSHOT'
+
+javafx {
+    version = "15.0.1"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
 
 repositories {
     mavenCentral()
@@ -17,9 +25,12 @@ test {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
-    testImplementation("junit:junit:4.13")
+    implementation 'org.jetbrains:annotations:19.0.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testImplementation 'junit:junit:4.13'
     testImplementation 'org.junit.platform:junit-platform-commons:1.5.2'
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.7.0")
-    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.7.0")
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.7.0'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.7.0'
 }
+
+mainClassName = 'com.polyTweet.view.ProfileView'
