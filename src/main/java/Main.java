@@ -9,8 +9,9 @@ public class Main {
 		System.out.println("\n*********** Deserialization ***********\n");
 
 		Profile profile0;
-		profile0 = (Profile) Deserialization.deserialize("./tmp/myProfile.ser");
+		profile0 = (Profile) Deserialization.deserialize("./tmp/profile.ser");
 		if (profile0 == null) {
+			System.err.println("C'est nuuuuul !!");
 			profile0 = new Profile("Étienne", "Lécrivain");
 		}
 
@@ -62,12 +63,12 @@ public class Main {
 
 		System.out.println("\n*********** Update Profile ***********\n");
 
-		profile0.updateStatus();
+//		profile0.setStatus("Nouveau Status");
 		profile0.writePost();
 
 		System.out.println("\n*********** Serialisation ***********\n");
 
-		Serialization.serialize(profile0, "./tmp/profile-0.ser");
+		Serialization.serialize(profile0, "./tmp/profile.ser");
 
 		System.exit(0);
 	}

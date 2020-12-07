@@ -1,0 +1,8 @@
+.root {
+    -fx-background-color: #383838;
+    -fx-font-size: 11pt;
+}
+
+#profileContainer {
+    -fx-padding: 5 10 15 20;
+}

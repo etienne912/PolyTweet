@@ -1,8 +1,8 @@
 package com.polyTweet.serialization;
 
 import java.io.File;
-import java.io.ObjectInputStream;
 import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 
 /**
  * Class allowing to deserialize an Object
