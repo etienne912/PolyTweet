@@ -45,4 +45,9 @@ public class LoginController implements Initializable {
         MainView.switchScene("actualities");
     }
 
+    @FXML
+    public void registerClick(ActionEvent e) {
+        MainView.switchScene("register");
+    }
+
 }

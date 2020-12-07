@@ -3,7 +3,6 @@ package com.polyTweet.view;
 import com.polyTweet.controller.ProfileController;
 import com.polyTweet.controller.ScreenController;
 import com.polyTweet.profile.Profile;
-import com.polyTweet.serialization.Deserialization;
 import com.polyTweet.serialization.Serialization;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -27,48 +26,29 @@ public class MainView extends Application {
 
         window = primaryStage;
 
-        profileModel = (Profile) Deserialization.deserialize("./tmp/profile.ser");
+        try {
+            controllerMap = new HashMap<>();
 
-//        profileModel = new Profile("Étienne", "Lécrivain");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
+            VBox loginPane = loader.load();
+            controllerMap.put("login", loader.getController());
 
-        if (profileModel != null) {
+            loader = new FXMLLoader(getClass().getResource("/fxml/register.fxml"));
+            VBox registerPane = loader.load();
+            controllerMap.put("register", loader.getController());
 
-            try {
-                controllerMap = new HashMap<>();
+            Scene scene = new Scene(loginPane);
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
-                VBox loginPane = loader.load();
-                controllerMap.put("login", loader.getController());
+            screenController = new ScreenController(scene);
 
-                loader = new FXMLLoader(getClass().getResource("/fxml/profile.fxml"));
-                BorderPane profilePane = loader.load();
-                controllerMap.put("profile", loader.getController());
+            screenController.addScreen("login", loginPane);
+            screenController.addScreen("register", registerPane);
 
-                loader = new FXMLLoader(getClass().getResource("/fxml/actualities.fxml"));
-                BorderPane actualitiesPane = loader.load();
-                controllerMap.put("actualities", loader.getController());
-
-                loader = new FXMLLoader(getClass().getResource("/fxml/settings.fxml"));
-                BorderPane settingsPane = loader.load();
-                controllerMap.put("settings", loader.getController());
-
-                Scene scene = new Scene(loginPane);
-
-                screenController = new ScreenController(scene);
-
-                screenController.addScreen("login", loginPane);
-                screenController.addScreen("profile", profilePane);
-                screenController.addScreen("actualities", actualitiesPane);
-                screenController.addScreen("settings", settingsPane);
-
-                window.setTitle("PolyTweet");
-                window.setScene(scene);
-                window.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.err.println("Error : File not found Exception");
+            window.setTitle("PolyTweet");
+            window.setScene(scene);
+            window.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
@@ -97,6 +77,26 @@ public class MainView extends Application {
 
     public static void setProfile(Profile profile) {
         profileModel = profile;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(MainView.class.getResource("/fxml/profile.fxml"));
+            BorderPane profilePane = loader.load();
+            controllerMap.put("profile", loader.getController());
+
+            loader = new FXMLLoader(MainView.class.getResource("/fxml/actualities.fxml"));
+            BorderPane actualitiesPane = loader.load();
+            controllerMap.put("actualities", loader.getController());
+
+            loader = new FXMLLoader(MainView.class.getResource("/fxml/settings.fxml"));
+            BorderPane settingsPane = loader.load();
+            controllerMap.put("settings", loader.getController());
+
+            screenController.addScreen("profile", profilePane);
+            screenController.addScreen("actualities", actualitiesPane);
+            screenController.addScreen("settings", settingsPane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {

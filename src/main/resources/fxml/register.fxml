@@ -4,10 +4,9 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.polyTweet.controller.LoginController"
+      fx:controller="com.polyTweet.controller.RegisterController"
       prefHeight="400.0" prefWidth="600.0">
     <GridPane>
         <columnConstraints>
@@ -26,26 +25,18 @@
     <GridPane>
         <columnConstraints>
             <ColumnConstraints percentWidth="40.0"/>
-            <ColumnConstraints percentWidth="30.0"/>
-            <ColumnConstraints percentWidth="30.0"/>
+            <ColumnConstraints percentWidth="60.0"/>
         </columnConstraints>
-        <Label text="Profile"
+        <rowConstraints>
+            <RowConstraints percentHeight="50.0"/>
+            <RowConstraints percentHeight="50.0"/>
+        </rowConstraints>
+        <Label text="Prénom"
                GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-        <Label fx:id="filePath" text="Aucun Profile Sélectionné" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-        <Button text="Importer"
-                fx:id="importButton"
-                onAction="#importClick"
-                GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+        <TextField fx:id="firstName" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        <Label text="Nom"
+               GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <TextField fx:id="lastName" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
     </GridPane>
-    <Button text="Se Connecter" onAction="#connexionClick"/>
-    <GridPane>
-        <columnConstraints>
-            <ColumnConstraints percentWidth="50.0"/>
-            <ColumnConstraints percentWidth="50.0"/>
-        </columnConstraints>
-        <Label text="Pas de Profile ?"
-               GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-        <Button fx:id="registerButton" text="S'inscrire" onAction="#registerClick"
-               GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-    </GridPane>
+    <Button text="Valider" onAction="#registerClick"/>
 </VBox>
