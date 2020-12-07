@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Profile implements Serializable {
-	private static long count = 0;
+	private static long count = 1;
 	private final long id;
 	private final String firstName, lastName;
 	private String status;
