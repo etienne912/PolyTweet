@@ -6,14 +6,13 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Profile implements Serializable {
-	private static long count = 1;
 	private final long id;
 	private String firstName, lastName, status;
 	private final List<Post> posts;
 	private final ArrayList<Long> profileFollowed;
 
 	public Profile(String firstName, String lastName) {
-		this.id = count++;
+		this.id = Objects.hash(firstName, lastName, new Date());
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.status = "";
