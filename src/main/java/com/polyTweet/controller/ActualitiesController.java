@@ -19,111 +19,113 @@ import java.util.*;
 
 public class ActualitiesController implements Initializable {
 
-    private Profile profile;
-    private Node node;
-    private List<Profile> profiles;
+	private Profile profile;
+	private Node node;
+	private List<Profile> profiles;
 
-    @FXML
-    public TextField postText;
-    public Button postButton, refreshButton;
-    public VBox actualitiesPosts;
+	@FXML
+	public TextField postText;
+	public Button postButton, refreshButton;
+	public VBox actualitiesPosts;
 
-    public ActualitiesController() {
-        this.profile = MainView.getProfile();
-        this.node = MainView.getNode();
-    }
+	public ActualitiesController() {
+		this.profile = MainView.getProfile();
+		this.node = MainView.getNode();
+	}
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        this.initPost();
-    }
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		this.initPost();
+	}
 
-    private void initPost() {
-        Map<Date, Post> sortedPosts = new TreeMap<>();
+	private void initPost() {
+		List<Post> sortedPosts = new ArrayList<>();
 
-        this.profiles = this.node.getProfileFollowedInformation();
-        this.profiles.add(profile);
+		this.profiles = this.node.getProfileFollowedInformation();
+		this.profiles.add(profile);
 
-        this.profiles.forEach(pf -> {
-            if(pf != null) {
-                List<Post> posts = pf.getPosts();
-                posts.forEach(p -> sortedPosts.put(p.getDate(), p));
-            }
-        });
+		this.profiles.forEach(pf -> {
+			if (pf != null) {
+				List<Post> posts = pf.getPosts();
+				sortedPosts.addAll(posts);
+			}
+		});
 
-        this.actualitiesPosts.getChildren().clear();
+		sortedPosts.sort(Comparator.comparing(Post::getDate));
 
-        sortedPosts.forEach((k, v) -> {
+		this.actualitiesPosts.getChildren().clear();
 
-            try {
-                GridPane grid = new GridPane();
+		sortedPosts.forEach((post) -> {
 
-                Profile profileVisit = profile;
+			try {
+				GridPane grid = new GridPane();
 
-                System.out.println(v.getProfileId());
+				Profile profileVisit = profile;
 
-                if (v.getProfileId() != profile.getId()) {
+				System.out.println(post.getProfileId());
 
-                    profileVisit = this.node.searchProfile(v.getProfileId());
-                    System.out.println(profileVisit);
-                }
+				if (post.getProfileId() != profile.getId()) {
 
-                if (profileVisit != null) {
+					profileVisit = this.node.searchProfile(post.getProfileId());
+					System.out.println(profileVisit);
+				}
 
-                    Button button = new Button(profileVisit.getFirstName() + " " + profileVisit.getLastName());
-                    button.setOnAction(this::visitProfileClick);
+				if (profileVisit != null) {
 
-                    Label label = new Label(k.toString() + " - " + v.getMessage());
+					Button button = new Button(profileVisit.getFirstName() + " " + profileVisit.getLastName());
+					button.setOnAction(this::visitProfileClick);
 
-                    grid.addRow(0, button);
-                    grid.addRow(1, label);
+					Label label = new Label(post.getDate().toString() + " - " + post.getMessage());
 
-                    actualitiesPosts.getChildren().add(grid);
+					grid.addRow(0, button);
+					grid.addRow(1, label);
 
-                }
-            } catch (NodeNotFoundException e) {
-                e.printStackTrace();
-            }
+					actualitiesPosts.getChildren().add(grid);
 
-        });
-    }
+				}
+			} catch (NodeNotFoundException e) {
+				e.printStackTrace();
+			}
 
-    @FXML
-    public void postClick(ActionEvent e) {
-        String post = this.postText.getText();
-        if (!post.equals("")) {
-            this.postText.setText("");
-            profile.writePost(post);
-        }
-    }
+		});
+	}
 
-    @FXML
-    public void refresh(ActionEvent e) {
-        this.initPost();
-    }
+	@FXML
+	public void postClick(ActionEvent e) {
+		String post = this.postText.getText();
+		if (!post.equals("")) {
+			this.postText.setText("");
+			profile.writePost(post);
+		}
+	}
 
-    @FXML
-    public void visitProfileClick(ActionEvent e) {
+	@FXML
+	public void refresh(ActionEvent e) {
+		this.initPost();
+	}
 
-        Button button = (Button) e.getTarget();
-        String[] entireName = button.getText().split(" ");
+	@FXML
+	public void visitProfileClick(ActionEvent e) {
 
-        for (Profile p : profiles) {
-            if (entireName[0].equals(p.getFirstName()) && entireName[1].equals(p.getLastName())) {
-                if (p.equals(profile)) {
-                    MainView.switchScene("profile");
-                } else {
-                    MainView.initVisitProfile(p);
-                    MainView.switchScene("profileVisitor");
-                }
-                break;
-            }
-        }
+		Button button = (Button) e.getTarget();
+		String[] entireName = button.getText().split(" ");
 
-    }
+		for (Profile p : profiles) {
+			if (entireName[0].equals(p.getFirstName()) && entireName[1].equals(p.getLastName())) {
+				if (p.equals(profile)) {
+					MainView.switchScene("profile");
+				} else {
+					MainView.initVisitProfile(p);
+					MainView.switchScene("profileVisitor");
+				}
+				break;
+			}
+		}
 
-    public void update() {
-        this.initPost();
-    }
+	}
+
+	public void update() {
+		this.initPost();
+	}
 
 }
