@@ -13,7 +13,6 @@ public class Node {
 
 	private final HashMap<NodeInfo, ClientAdapter> neighbors;
 	private final HashMap<String, ProfileCache> cache;
-	private final ArrayList<Long> follow;
 	private final HashMap<Long, Integer> traficMonitor;
 	private final HashMap<String, Date> messageIdLog;
 	private final Profile myProfile;
@@ -22,7 +21,6 @@ public class Node {
 	public Node(Profile myProfile, NodeInfo nodeInfo) {
 		this.neighbors = new HashMap<>(MAX_NODE_INFORMATION_CAPACITY);
 		this.cache = new HashMap<>(MAX_NODE_INFORMATION_CAPACITY);
-		this.follow = new ArrayList<>(MAX_NODE_INFORMATION_CAPACITY);
 		this.traficMonitor = new HashMap<>();
 		this.messageIdLog = new HashMap<>();
 		this.myProfile = myProfile;
@@ -62,8 +60,12 @@ public class Node {
 		neighbors.remove(nodeInfo);
 	}
 
-	public void addFollow(long id) {
-		this.follow.add(id);
+	public void follow(long id) {
+		this.myProfile.follow(id);
+	}
+
+	public void unfollow(long id) {
+		this.myProfile.unfollow(id);
 	}
 
 	public void requestNodeConnection() {
@@ -94,7 +96,7 @@ public class Node {
 	public List<Profile> getProfileFollowedInformation() {
 		ArrayList<Profile> profileFollowed = new ArrayList<>();
 
-		this.follow.forEach(id -> {
+		this.myProfile.getProfileFollowed().forEach(id -> {
 			try {
 				profileFollowed.add(this.searchProfile(id));
 			} catch (NodeNotFoundException e) {
