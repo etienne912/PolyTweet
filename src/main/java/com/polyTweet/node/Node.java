@@ -17,6 +17,7 @@ public class Node {
 	private final HashMap<String, Date> messageIdLog;
 	private final Profile myProfile;
 	private final NodeInfo myNodeInfo;
+	private final ServerAdapter serverAdapter;
 
 	public Node(Profile myProfile, NodeInfo nodeInfo) {
 		this.neighbors = new HashMap<>(MAX_NODE_INFORMATION_CAPACITY);
@@ -25,7 +26,7 @@ public class Node {
 		this.messageIdLog = new HashMap<>();
 		this.myProfile = myProfile;
 		this.myNodeInfo = nodeInfo;
-		new ServerAdapter(nodeInfo, this);
+		this.serverAdapter = new ServerAdapter(nodeInfo, this);
 	}
 
 	public Profile getProfile() {
@@ -57,6 +58,8 @@ public class Node {
 	}
 
 	public void removeNeighbor(NodeInfo nodeInfo) {
+		if (neighbors.containsKey(nodeInfo))
+			neighbors.get(nodeInfo).close();
 		neighbors.remove(nodeInfo);
 	}
 
@@ -171,6 +174,16 @@ public class Node {
 		}
 
 		return profiles;
+	}
+
+	public void close() {
+		ArrayList<NodeInfo> neighbors = new ArrayList<>(this.neighbors.keySet());
+
+		for (NodeInfo neighbor : neighbors) {
+			this.removeNeighbor(neighbor);
+		}
+
+		serverAdapter.close();
 	}
 
 	@Override

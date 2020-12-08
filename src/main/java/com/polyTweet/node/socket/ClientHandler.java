@@ -2,6 +2,7 @@ package com.polyTweet.node.socket;
 
 import com.polyTweet.node.adapter.ServerAdapter;
 import com.polyTweet.node.message.Message;
+import com.polyTweet.node.message.MessageTypesEnum;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -32,6 +33,12 @@ public class ClientHandler implements Runnable {
 //				System.out.println("From : " + remoteAddress + " type : " + response.getType());
 
 				Message toSend = serverAdapter.adapt(response);
+
+				if (response.getType() == MessageTypesEnum.CLOSE_CONNECTION) {
+					this.close();
+					break;
+				}
+
 				outputStream = new ObjectOutputStream(sock.getOutputStream());
 
 				outputStream.writeObject(toSend);
@@ -39,15 +46,16 @@ public class ClientHandler implements Runnable {
 			} catch (SocketException e) {
 				System.err.println("Connection lost !");
 				break;
-			} catch (IOException | ClassNotFoundException e) {
+			} catch (Exception e) {
+				System.err.println(this.sock.getRemoteSocketAddress().toString());
 				e.printStackTrace();
+				break;
 			}
 		}
 	}
 
+
 	public void close() {
-		inputStream = null;
-		outputStream = null;
 		try {
 			sock.close();
 		} catch (IOException e) {

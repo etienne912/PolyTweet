@@ -50,10 +50,14 @@ public class ServerAdapter {
 			case CLOSE_CONNECTION -> {
 				CloseConnectionData data = (CloseConnectionData) message.getData();
 				node.removeNeighbor(data.getNeighborInfo());
-				server.close();
+//				server.close(data.getNeighborInfo());
 			}
 		}
 
 		return new Message(MessageTypesEnum.ACK, null, null);
+	}
+
+	public void close() {
+		server.close();
 	}
 }

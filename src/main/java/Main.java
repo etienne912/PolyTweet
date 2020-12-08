@@ -26,10 +26,10 @@ public class Main {
 
 		node0.addNeighbor(node1.getNodeInfo());
 
-		Profile profile2 = new Profile("Alan", "Turing");
-		Node node2 = new Node(profile2, new NodeInfo("127.0.0.3", 20000));
-
-		node2.addNeighbor(node1.getNodeInfo());
+//		Profile profile2 = new Profile("Alan", "Turing");
+//		Node node2 = new Node(profile2, new NodeInfo("127.0.0.3", 20000));
+//
+//		node2.addNeighbor(node1.getNodeInfo());
 
 //		Profile profile3 = new Profile("Ada", "Lovelace");
 //		Node node3 = new Node(profile3, new NodeInfo("127.0.0.4", 20000));
@@ -50,15 +50,15 @@ public class Main {
 		System.out.println("\n*********** Search a Profile ***********\n");
 
 		try {
-			System.out.println(node0.searchProfile(2));
+			System.out.println(node0.searchProfile(profile1.getId()));
 			System.out.println(node0.searchProfile("l"));
 //			System.out.println(node1.searchProfile(2));
 
 		} catch (NodeNotFoundException e) {
 			System.err.println(e);
 		}
-//		System.out.println(node0);
-//		System.out.println(node1);
+		System.out.println(node0);
+		System.out.println(node1);
 //		System.out.println(node2);
 //		System.out.println(node3);
 //		System.out.println(node4);
@@ -78,6 +78,10 @@ public class Main {
 		System.out.println("\n*********** Serialisation ***********\n");
 
 		Serialization.serialize(profile0, "./profiles/myProfile.ser");
+
+		node0.close();
+		node1.close();
+//		node2.close();
 
 //		System.exit(0);
 	}

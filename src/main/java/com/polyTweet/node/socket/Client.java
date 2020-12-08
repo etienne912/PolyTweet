@@ -51,9 +51,10 @@ public class Client {
 	}
 
 	public void close() throws IOException {
+		outputStream = new ObjectOutputStream(connexion.getOutputStream());
 		outputStream.writeObject(new Message(MessageTypesEnum.CLOSE_CONNECTION, null, new CloseConnectionData(nodeInfo)));
 		outputStream.flush();
-		outputStream.close();
+		connexion.close();
 	}
 
 }
