@@ -20,7 +20,7 @@ public class MainView extends Application {
 
     private static HashMap<String, Object> controllerMap;
     private static ScreenController screenController;
-    private static Profile profileModel;
+    private static Profile profileModel, profilVisitor;
     private static Node profileNode;
     private static Stage window;
 
@@ -58,6 +58,10 @@ public class MainView extends Application {
 
     public static Profile getProfile() {
         return profileModel;
+    }
+
+    public static Profile getProfileVisitor() {
+        return profilVisitor;
     }
 
     public static Node getNode() {
@@ -105,6 +109,24 @@ public class MainView extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void loadVisitorView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(MainView.class.getResource("/fxml/profileVisitor.fxml"));
+            BorderPane profileVisitorPane = loader.load();
+            controllerMap.put("profileVisitor", loader.getController());
+
+            screenController.addScreen("profileVisitor", profileVisitorPane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void initVisitProfile(Profile profile) {
+        profilVisitor = profile;
+
+        loadVisitorView();
     }
 
     public static void init(Profile profile, Node node) {

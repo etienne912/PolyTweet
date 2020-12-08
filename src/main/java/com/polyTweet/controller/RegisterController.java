@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 public class RegisterController implements Initializable {
 
     @FXML
-    public TextField firstName, lastName;
+    public TextField firstName, lastName, port;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -34,7 +34,7 @@ public class RegisterController implements Initializable {
             this.lastName.setText("");
 
             Profile profile = new Profile(firstName, lastName);
-            Node node = new Node(profile, new NodeInfo("127.0.0.1", 5000));
+            Node node = new Node(profile, new NodeInfo("127.0.0.1", Integer.parseInt(this.port.getText())));
 
             MainView.init(profile, node);
             MainView.switchScene("actualities");

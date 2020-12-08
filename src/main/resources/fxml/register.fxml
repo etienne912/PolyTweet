@@ -28,8 +28,9 @@
             <ColumnConstraints percentWidth="60.0"/>
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints percentHeight="50.0"/>
-            <RowConstraints percentHeight="50.0"/>
+            <RowConstraints percentHeight="33.0"/>
+            <RowConstraints percentHeight="33.0"/>
+            <RowConstraints percentHeight="33.0"/>
         </rowConstraints>
         <Label text="Prénom"
                GridPane.columnIndex="0" GridPane.rowIndex="0"/>
@@ -37,6 +38,8 @@
         <Label text="Nom"
                GridPane.columnIndex="0" GridPane.rowIndex="1"/>
         <TextField fx:id="lastName" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <Label text="Port" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <TextField fx:id="port" text="5000" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
     </GridPane>
     <Button text="Valider" onAction="#registerClick"/>
 </VBox>

@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -19,6 +20,7 @@ public class LoginController implements Initializable {
 
     @FXML
     public Label filePath;
+    public TextField portField;
 
     private final FileChooser chooser;
     private File file;
@@ -43,8 +45,7 @@ public class LoginController implements Initializable {
     @FXML
     public void connexionClick(ActionEvent e) {
         Profile profile = (Profile) Deserialization.deserialize(this.file.getPath());
-        System.out.println(profile);
-        Node node = new Node(profile, new NodeInfo("127.0.0.1", 5000));
+        Node node = new Node(profile, new NodeInfo("127.0.0.1", Integer.parseInt(this.portField.getText())));
 
         this.file = null;
         this.filePath.setText("");

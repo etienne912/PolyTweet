@@ -24,18 +24,32 @@
                GridPane.columnIndex="1" GridPane.rowIndex="0"/>
     </GridPane>
     <GridPane>
-        <columnConstraints>
-            <ColumnConstraints percentWidth="40.0"/>
-            <ColumnConstraints percentWidth="30.0"/>
-            <ColumnConstraints percentWidth="30.0"/>
-        </columnConstraints>
-        <Label text="Profile"
-               GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-        <Label fx:id="filePath" text="Aucun Profile Sélectionné" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-        <Button text="Importer"
-                fx:id="importButton"
-                onAction="#importClick"
-                GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+        <rowConstraints>
+            <RowConstraints percentHeight="50.0"/>
+            <RowConstraints percentHeight="50.0"/>
+        </rowConstraints>
+        <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="40.0"/>
+                <ColumnConstraints percentWidth="30.0"/>
+                <ColumnConstraints percentWidth="30.0"/>
+            </columnConstraints>
+            <Label text="Profile"
+                   GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <Label fx:id="filePath" text="Aucun Profile Sélectionné" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+            <Button text="Importer"
+                    fx:id="importButton"
+                    onAction="#importClick"
+                    GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+        </GridPane>
+        <GridPane GridPane.columnIndex="0" GridPane.rowIndex="1">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="40.0"/>
+                <ColumnConstraints percentWidth="60.0"/>
+            </columnConstraints>
+            <Label text="Port" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <TextField fx:id="portField" text="5000" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        </GridPane>
     </GridPane>
     <Button text="Se Connecter" onAction="#connexionClick"/>
     <GridPane>
