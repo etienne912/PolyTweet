@@ -23,9 +23,9 @@ public class Tests {
 //		assertEquals(p.getStatus(), "Codding an super new peer to peer software");
 
 		assertEquals(p.getPosts().size(), 0);
-		p.writePost("I wish a good day to all my PolyFollowers");
-		assertEquals(p.getPosts().size(), 1);
-		assertEquals(p.getPosts().get(0).getMessage(), "I wish a good day to all my PolyFollowers");
+//		p.writePost("I wish a good day to all my PolyFollowers");
+//		assertEquals(p.getPosts().size(), 1);
+//		assertEquals(p.getPosts().get(0).getMessage(), "I wish a good day to all my PolyFollowers");
 	}
 
 	@Test

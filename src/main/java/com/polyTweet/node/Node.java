@@ -77,7 +77,7 @@ public class Node {
 
 	public void requestNodeConnection(int nbNodes) {
 		if (0 < nbNodes && nbNodes <= MAX_NODE_INFORMATION_CAPACITY - this.getNbNeighbors())
-			this.requestNodeConnection(this.myNodeInfo, this.myNodeInfo.hashCode() + "requestNodeConnection" + new Date(), nbNodes);
+			this.requestNodeConnection(this.myNodeInfo, this.myNodeInfo.hashCode() + "requestNodeConnection" + new Date().getTime(), nbNodes);
 	}
 
 	public void requestNodeConnection(NodeInfo nodeInfo, String messageId, int nbNodes) {
@@ -124,7 +124,7 @@ public class Node {
 
 	public Profile searchProfile(long id) throws NodeNotFoundException {
 		this.increaseMonitor(id);
-		Profile result = this.searchProfile(id, this.myNodeInfo.hashCode() + "searchProfile" + new Date(), true);
+		Profile result = this.searchProfile(id, this.myNodeInfo.hashCode() + "searchProfile" + new Date().getTime(), true);
 
 //		if (result != null)
 		return result;
@@ -154,7 +154,7 @@ public class Node {
 	}
 
 	public List<Profile> searchProfile(String name) {
-		return this.searchProfile(name, this.myNodeInfo.hashCode() + "searchProfileByName" + new Date());
+		return this.searchProfile(name, this.myNodeInfo.hashCode() + "searchProfileByName" + new Date().getTime());
 	}
 
 	public List<Profile> searchProfile(String name, String messageId) {
