@@ -9,7 +9,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Objects;
 
-public class Client  {
+public class Client {
 	private static final int PORT = 8000;
 
 	private Socket connexion = null;
@@ -28,23 +28,23 @@ public class Client  {
 
 	public Message send(Message message) {
 //		new Thread(() -> {
-			try {
-				outputStream = new ObjectOutputStream(connexion.getOutputStream());
+		try {
+			outputStream = new ObjectOutputStream(connexion.getOutputStream());
 
-				System.out.println("Send : " + message.getType());
-				outputStream.writeObject(message);
-				outputStream.flush();
+//			System.out.println(nodeInfo + " Send : " + message.getType());
+			outputStream.writeObject(message);
+			outputStream.flush();
 
-				inputStream = new ObjectInputStream(connexion.getInputStream());
-				Message response = (Message) inputStream.readObject();
+			inputStream = new ObjectInputStream(connexion.getInputStream());
+			Message response = (Message) inputStream.readObject();
 
-				System.out.println("Receive response : " + response.getType());
+//			System.out.println(nodeInfo + " Receive response : " + response.getType());
 
-				return response;
+			return response;
 
-			} catch (IOException | ClassNotFoundException e1) {
-				e1.printStackTrace();
-			}
+		} catch (IOException | ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
 //		}).start();
 
 		return null;
