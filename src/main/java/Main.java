@@ -30,7 +30,7 @@ public class Main {
 		Node node2 = new Node(profile2, new NodeInfo("127.0.0.3", 20000));
 
 		node2.addNeighbor(node1.getNodeInfo());
-//
+
 		Profile profile3 = new Profile("Ada", "Lovelace");
 		Node node3 = new Node(profile3, new NodeInfo("127.0.0.4", 20000));
 		node3.addNeighbor(node1.getNodeInfo());
@@ -38,6 +38,8 @@ public class Main {
 		Profile profile4 = new Profile("Claude", "Shannon");
 		Node node4 = new Node(profile4, new NodeInfo("127.0.0.5", 20000));
 		node4.addNeighbor(node2.getNodeInfo());
+		
+		node0.requestNodeConnection();
 
 //		Profile profile5 = new Profile("Linus", "Torvalds");
 //		Node node5 = new Node(profile5, "127.0.0.1", node4.getIp());

@@ -84,7 +84,9 @@ public class Node {
 			nbNodes--;
 		}
 
-		for (ClientAdapter neighbor : this.neighbors.values()) {
+		ArrayList<ClientAdapter> neighbors = new ArrayList<>(this.neighbors.values());
+
+		for (ClientAdapter neighbor : neighbors) {
 			neighbor.requestNodeConnection(nodeInfo, messageId, nbNodes);
 		}
 	}
