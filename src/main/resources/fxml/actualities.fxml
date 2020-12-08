@@ -15,7 +15,7 @@
         <center>
                 <VBox>
                         <TextField fx:id="postText" text="Écrire un message..."/>
-                        <Button fx:id="postButton" text="Valider"/>
+                        <Button fx:id="postButton" onAction="#postClick" text="Valider"/>
                         <VBox fx:id="actualitiesPosts"/>
                 </VBox>
         </center>

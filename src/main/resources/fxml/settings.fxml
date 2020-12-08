@@ -22,11 +22,11 @@
                 </rowConstraints>
                 <Label fx:id="firstNameLabel" text="Prénom"
                        GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <TextField fx:id="firstNameField" text="Étienne"
+                <TextField fx:id="firstNameField"
                            GridPane.columnIndex="1" GridPane.rowIndex="0"/>
                 <Label fx:id="lastNameLabel" text="Nom"
                        GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <TextField fx:id="lastNameField" text="Lécrivain"
+                <TextField fx:id="lastNameField"
                            GridPane.columnIndex="1" GridPane.rowIndex="1"/>
             </GridPane>
             <TextField fx:id="statusField"/>

@@ -1,7 +1,9 @@
 package com.polyTweet.view;
 
+import com.polyTweet.controller.ActualitiesController;
 import com.polyTweet.controller.ProfileController;
 import com.polyTweet.controller.ScreenController;
+import com.polyTweet.node.Node;
 import com.polyTweet.profile.Profile;
 import com.polyTweet.serialization.Serialization;
 import javafx.application.Application;
@@ -19,6 +21,7 @@ public class MainView extends Application {
     private static HashMap<String, Object> controllerMap;
     private static ScreenController screenController;
     private static Profile profileModel;
+    private static Node profileNode;
     private static Stage window;
 
     @Override
@@ -57,27 +60,32 @@ public class MainView extends Application {
         return profileModel;
     }
 
+    public static Node getNode() {
+        return profileNode;
+    }
+
     public static void switchScene(String name) {
         screenController.activate(name);
     }
 
     public static void closeWindow() {
-        Serialization.serialize(profileModel, "./tmp/profile.ser");
-        window.close();
+        Serialization.serialize(profileModel, "./tmp/profile" + profileModel.getId() + ".ser");
+        switchScene("login");
     }
 
-    public static void updateProfile() {
+    public static void update() {
         ProfileController profileController = (ProfileController) controllerMap.get("profile");
+        ActualitiesController actualitiesController = (ActualitiesController) controllerMap.get("actualities");
+
         profileController.update();
+        actualitiesController.update();
     }
 
     public static Stage getPrimaryStage() {
         return window;
     }
 
-    public static void setProfile(Profile profile) {
-        profileModel = profile;
-
+    private static void loadViews() {
         try {
             FXMLLoader loader = new FXMLLoader(MainView.class.getResource("/fxml/profile.fxml"));
             BorderPane profilePane = loader.load();
@@ -97,6 +105,13 @@ public class MainView extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void init(Profile profile, Node node) {
+        profileModel = profile;
+        profileNode = node;
+
+        loadViews();
     }
 
     public static void main(String[] args) {

@@ -1,5 +1,7 @@
 package com.polyTweet.controller;
 
+import com.polyTweet.node.Node;
+import com.polyTweet.node.NodeInfo;
 import com.polyTweet.profile.Profile;
 import com.polyTweet.view.MainView;
 import javafx.event.ActionEvent;
@@ -26,14 +28,15 @@ public class RegisterController implements Initializable {
         String firstName = this.firstName.getText();
         String lastName = this.lastName.getText();
 
-        System.out.println(firstName);
-        System.out.println(lastName);
+        if(!firstName.equals("") && !lastName.equals("")) {
 
-        if( firstName != "" && lastName != "") {
             this.firstName.setText("");
             this.lastName.setText("");
+
             Profile profile = new Profile(firstName, lastName);
-            MainView.setProfile(profile);
+            Node node = new Node(profile, new NodeInfo("127.0.0.1", 5000));
+
+            MainView.init(profile, node);
             MainView.switchScene("actualities");
         } else {
             System.err.println("Error : Le prénom ou le nom est manquant !");

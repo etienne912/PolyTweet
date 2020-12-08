@@ -1,5 +1,7 @@
 package com.polyTweet.controller;
 
+import com.polyTweet.node.Node;
+import com.polyTweet.node.NodeInfo;
 import com.polyTweet.profile.Profile;
 import com.polyTweet.serialization.Deserialization;
 import com.polyTweet.view.MainView;
@@ -18,7 +20,7 @@ public class LoginController implements Initializable {
     @FXML
     public Label filePath;
 
-    private FileChooser chooser;
+    private final FileChooser chooser;
     private File file;
 
     public LoginController() {
@@ -41,7 +43,13 @@ public class LoginController implements Initializable {
     @FXML
     public void connexionClick(ActionEvent e) {
         Profile profile = (Profile) Deserialization.deserialize(this.file.getPath());
-        MainView.setProfile(profile);
+        System.out.println(profile);
+        Node node = new Node(profile, new NodeInfo("127.0.0.1", 5000));
+
+        this.file = null;
+        this.filePath.setText("");
+
+        MainView.init(profile, node);
         MainView.switchScene("actualities");
     }
 

@@ -39,17 +39,17 @@ public class Profile implements Serializable {
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
-		MainView.updateProfile();
+		MainView.update();
 	}
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-		MainView.updateProfile();
+		MainView.update();
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
-		MainView.updateProfile();
+		MainView.update();
 	}
 
 
@@ -57,16 +57,9 @@ public class Profile implements Serializable {
 		return posts;
 	}
 
-	public void writePost() {
-		Scanner scanner = new Scanner(System.in);
-
-		System.out.println("Write your post :\n");
-
-		this.posts.add(new Post(scanner.nextLine()));
-	}
-
-	public void writePost(String message) {
-		this.posts.add(new Post(message));
+    public void writePost(String message) {
+		this.posts.add(new Post(message, this));
+		MainView.update();
 	}
 
 	public ArrayList<Long> getProfileFollowed() {
