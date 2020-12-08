@@ -71,12 +71,12 @@ public class Profile implements Serializable {
 
 	public void unfollow(Long id) {
 		this.profileFollowed.remove(id);
-		MainView.update();
+		MainView.updateProfileVisitor();
 	}
 
 	public void follow(Long id) {
 		this.profileFollowed.add(id);
-		MainView.update();
+		MainView.updateProfileVisitor();
 	}
 
 	public boolean isFollowing(Long id) {

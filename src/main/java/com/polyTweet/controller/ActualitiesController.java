@@ -62,13 +62,9 @@ public class ActualitiesController implements Initializable {
 
 				Profile profileVisit = profile;
 
-				System.out.println(post.getProfileId());
-
-				if (post.getProfileId() != profile.getId()) {
-
-					profileVisit = this.node.searchProfile(post.getProfileId());
-					System.out.println(profileVisit);
-				}
+                if (post.getProfileId() != profile.getId()) {
+                    profileVisit = this.node.searchProfile(post.getProfileId());
+                }
 
 				if (profileVisit != null) {
 

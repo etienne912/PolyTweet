@@ -82,10 +82,14 @@ public class MainView extends Application {
     public static void update() {
         ProfileController profileController = (ProfileController) controllerMap.get("profile");
         ActualitiesController actualitiesController = (ActualitiesController) controllerMap.get("actualities");
-        ProfileVisitorController profileVisitorController = (ProfileVisitorController) controllerMap.get("profileVisitor");
 
         profileController.update();
         actualitiesController.update();
+    }
+
+    public static void updateProfileVisitor() {
+        ProfileVisitorController profileVisitorController = (ProfileVisitorController) controllerMap.get("profileVisitor");
+
         profileVisitorController.update();
     }
 
