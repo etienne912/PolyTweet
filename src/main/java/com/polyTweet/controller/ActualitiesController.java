@@ -51,7 +51,7 @@ public class ActualitiesController implements Initializable {
 			}
 		});
 
-		sortedPosts.sort(Comparator.comparing(Post::getDate));
+		sortedPosts.sort((p1, p2) -> p2.getDate().compareTo(p1.getDate()));
 
 		this.actualitiesPosts.getChildren().clear();
 
