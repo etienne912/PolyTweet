@@ -75,6 +75,8 @@ public class HeaderController implements Initializable {
         Button button = (Button) e.getTarget();
         String[] entireName = button.getText().split(" ");
 
+        this.listProfile.getChildren().clear();
+
         for( Profile p : this.profiles ) {
             if( entireName[0].equals(p.getFirstName()) && entireName[1].equals(p.getLastName()) ){
                 if(p.equals(profile)){

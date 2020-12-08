@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 public class RegisterController implements Initializable {
 
     @FXML
-    public TextField firstName, lastName, localPortField, networkIpField, networkPortField;
+    public TextField firstName, lastName, localPortField, networkIpField, networkPortField, localIpField;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -31,7 +31,7 @@ public class RegisterController implements Initializable {
         if(!firstName.equals("") && !lastName.equals("")) {
 
             Profile profile = new Profile(firstName, lastName);
-            Node node = new Node(profile, new NodeInfo("127.0.0.1", Integer.parseInt(this.localPortField.getText())));
+            Node node = new Node(profile, new NodeInfo(this.localIpField.getText(), Integer.parseInt(this.localPortField.getText())));
 
             if( !this.networkIpField.getText().equals("") && !this.networkPortField.getText().equals("") )
                 node.addNeighbor(new NodeInfo(this.networkIpField.getText(), Integer.parseInt(this.networkPortField.getText())));

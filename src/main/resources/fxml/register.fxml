@@ -8,6 +8,14 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.polyTweet.controller.RegisterController"
       prefHeight="400.0" prefWidth="600.0">
+    <HBox>
+        <ImageView fx:id="return"
+                   fitHeight="20.0" fitWidth="20.0"
+                   preserveRatio="true"
+                   GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <Image url="@/img/return.png"/>
+        </ImageView>
+    </HBox>
     <GridPane>
         <columnConstraints>
             <ColumnConstraints percentWidth="50.0"/>
@@ -48,12 +56,14 @@
             <RowConstraints percentHeight="33.0"/>
             <RowConstraints percentHeight="33.0"/>
         </rowConstraints>
-        <Label text="Port Local" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-        <TextField fx:id="localPortField" text="5000" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-        <Label text="Adresse IP Réseau" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-        <TextField fx:id="networkIpField" text="127.0.0.1" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-        <Label text="Port Réseau" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-        <TextField fx:id="networkPortField" text="5000" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        <Label text="Adresse IP Locale" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextField fx:id="localIpField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        <Label text="Port Local" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <TextField fx:id="localPortField" text="5000" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <Label text="Adresse IP Réseau" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <TextField fx:id="networkIpField" text="127.0.0.1" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        <Label text="Port Réseau" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+        <TextField fx:id="networkPortField" text="5000" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
     </GridPane>
     <Button text="Valider" onAction="#registerClick"/>
 </VBox>

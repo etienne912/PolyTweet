@@ -9,10 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
-import java.util.Date;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.TreeMap;
+import java.util.*;
 
 public class ProfileController implements Initializable {
 
@@ -35,14 +32,11 @@ public class ProfileController implements Initializable {
         this.status.setText(profile.getStatus());
         this.followedNb.setText(Integer.toString(profile.getProfileFollowed().size()));
 
-        Map<Date, Post> sortedPosts = new TreeMap<>();
-
-        profile.getPosts().forEach(p -> sortedPosts.put(p.getDate(), p));
+        ArrayList<Post> sortedPosts = new ArrayList<>(profile.getPosts());
+        sortedPosts.sort((p1, p2) -> p2.getDate().compareTo(p1.getDate()));
 
         if( this.profilePosts.getChildren().size() != 0 ) this.profilePosts.getChildren().clear();
-        sortedPosts.forEach( (k, v) -> {
-            this.profilePosts.getChildren().add(new Label(k.toString() + " - " + v.getMessage()));
-        });
+        sortedPosts.forEach( (post) -> this.profilePosts.getChildren().add(new Label(post.toString() + " - " + post.getMessage())));
     }
 
     public void update() {

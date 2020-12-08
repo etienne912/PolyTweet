@@ -20,7 +20,7 @@ public class LoginController implements Initializable {
 
     @FXML
     public Label filePath;
-    public TextField networkPortField, localPortField, networkIpField;
+    public TextField networkPortField, localPortField, networkIpField, localIpField;
 
     private final FileChooser chooser;
     private File file;
@@ -45,7 +45,7 @@ public class LoginController implements Initializable {
     @FXML
     public void connexionClick(ActionEvent e) {
         Profile profile = (Profile) Deserialization.deserialize(this.file.getPath());
-        Node node = new Node(profile, new NodeInfo("127.0.0.1", Integer.parseInt(this.localPortField.getText())));
+        Node node = new Node(profile, new NodeInfo(this.localIpField.getText(), Integer.parseInt(this.localPortField.getText())));
 
         if( !this.networkIpField.getText().equals("") && !this.networkPortField.getText().equals("") )
             node.addNeighbor(new NodeInfo(this.networkIpField.getText(), Integer.parseInt(this.networkPortField.getText())));
