@@ -33,6 +33,10 @@ public class Profile implements Serializable {
 		return this.lastName;
 	}
 
+	public String getName() {
+		return this.firstName + " " + this.lastName;
+	}
+
 	public String getStatus() {
 		return this.status;
 	}
@@ -57,7 +61,7 @@ public class Profile implements Serializable {
 		return posts;
 	}
 
-    public void writePost(String message) {
+	public void writePost(String message) {
 		this.posts.add(new Post(message, this));
 		MainView.update();
 	}

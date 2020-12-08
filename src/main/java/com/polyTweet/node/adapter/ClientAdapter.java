@@ -3,12 +3,11 @@ package com.polyTweet.node.adapter;
 import com.polyTweet.node.NodeInfo;
 import com.polyTweet.node.message.Message;
 import com.polyTweet.node.message.MessageTypesEnum;
-import com.polyTweet.node.message.data.AddMeData;
-import com.polyTweet.node.message.data.RequestConnectionData;
-import com.polyTweet.node.message.data.ReturnProfileData;
-import com.polyTweet.node.message.data.SearchProfileData;
+import com.polyTweet.node.message.data.*;
 import com.polyTweet.node.socket.Client;
 import com.polyTweet.profile.Profile;
+
+import java.util.List;
 
 public class ClientAdapter {
 
@@ -22,6 +21,12 @@ public class ClientAdapter {
 		ReturnProfileData result = (ReturnProfileData) client.send(new Message(MessageTypesEnum.SEARCH_PROFILE, messageId, new SearchProfileData(id, broadcast))).getData();
 
 		return result.getProfile();
+	}
+
+	public List<Profile> searchProfile(String name, String messageId) {
+		ReturnProfilesData result = (ReturnProfilesData) client.send(new Message(MessageTypesEnum.SEARCH_PROFILE_BY_NAME, messageId, new SearchProfileByNameData(name))).getData();
+
+		return result.getProfiles();
 	}
 
 	public void addMyNode(NodeInfo nodeInfo) {

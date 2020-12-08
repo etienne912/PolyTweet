@@ -74,14 +74,14 @@ public class Node {
 
 	public void requestNodeConnection(int nbNodes) {
 		if (0 < nbNodes && nbNodes <= MAX_NODE_INFORMATION_CAPACITY - this.getNbNeighbors())
-			this.requestNodeConnection(this.myNodeInfo, this.myNodeInfo.hashCode() + "" + new Date(), nbNodes);
+			this.requestNodeConnection(this.myNodeInfo, this.myNodeInfo.hashCode() + "requestNodeConnection" + new Date(), nbNodes);
 	}
 
 	public void requestNodeConnection(NodeInfo nodeInfo, String messageId, int nbNodes) {
 		if (nbNodes <= 0 || this.messageIdLog.containsKey(messageId)) return;
 		this.messageIdLog.put(messageId, new Date());
 
-		if (this.getNbNeighbors() < MAX_NODE_INFORMATION_CAPACITY) {
+		if (this.isNotFull()) {
 			this.addNeighbor(nodeInfo);
 			nbNodes--;
 		}
@@ -121,12 +121,10 @@ public class Node {
 
 	public Profile searchProfile(long id) throws NodeNotFoundException {
 		this.increaseMonitor(id);
-		Profile result = this.searchProfile(id, this.myNodeInfo.hashCode() + "" + new Date(), true);
+		Profile result = this.searchProfile(id, this.myNodeInfo.hashCode() + "searchProfile" + new Date(), true);
 
-		if (result != null)
-			return result;
-		else
-			throw new NodeNotFoundException(id);
+//		if (result != null)
+		return result;
 	}
 
 	public Profile searchProfile(long id, String messageId, boolean broadcast) {
@@ -150,6 +148,29 @@ public class Node {
 		}
 
 		return null;
+	}
+
+	public List<Profile> searchProfile(String name) {
+		return this.searchProfile(name, this.myNodeInfo.hashCode() + "searchProfileByName" + new Date());
+	}
+
+	public List<Profile> searchProfile(String name, String messageId) {
+		if (this.messageIdLog.containsKey(messageId)) return null;
+		this.messageIdLog.put(messageId, new Date());
+
+		ArrayList<Profile> profiles = new ArrayList<>();
+
+		if (this.myProfile.getName().toLowerCase(Locale.ROOT).contains(name.toLowerCase(Locale.ROOT)))
+			profiles.add(myProfile);
+
+		for (ClientAdapter neighbor : this.neighbors.values()) {
+			List<Profile> result = neighbor.searchProfile(name, messageId);
+
+			if (result != null)
+				profiles.addAll(result);
+		}
+
+		return profiles;
 	}
 
 	@Override

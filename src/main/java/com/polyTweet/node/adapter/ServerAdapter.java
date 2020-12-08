@@ -8,6 +8,8 @@ import com.polyTweet.node.message.data.*;
 import com.polyTweet.node.socket.Server;
 import com.polyTweet.profile.Profile;
 
+import java.util.List;
+
 public class ServerAdapter {
 
 	private final Node node;
@@ -33,6 +35,12 @@ public class ServerAdapter {
 				Profile result = node.searchProfile(data.getId(), message.getMessageId(), data.needBroadcast());
 
 				return new Message(MessageTypesEnum.ACK, null, new ReturnProfileData(result));
+			}
+			case SEARCH_PROFILE_BY_NAME -> {
+				SearchProfileByNameData data = (SearchProfileByNameData) message.getData();
+				List<Profile> result = node.searchProfile(data.getName(), message.getMessageId());
+
+				return new Message(MessageTypesEnum.ACK, null, new ReturnProfilesData(result));
 			}
 			case REQUEST_CONNECTION -> {
 				RequestConnectionData data = (RequestConnectionData) message.getData();

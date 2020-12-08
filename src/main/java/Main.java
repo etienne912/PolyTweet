@@ -31,15 +31,15 @@ public class Main {
 
 		node2.addNeighbor(node1.getNodeInfo());
 
-		Profile profile3 = new Profile("Ada", "Lovelace");
-		Node node3 = new Node(profile3, new NodeInfo("127.0.0.4", 20000));
-		node3.addNeighbor(node1.getNodeInfo());
-
-		Profile profile4 = new Profile("Claude", "Shannon");
-		Node node4 = new Node(profile4, new NodeInfo("127.0.0.5", 20000));
-		node4.addNeighbor(node2.getNodeInfo());
-		
-		node0.requestNodeConnection();
+//		Profile profile3 = new Profile("Ada", "Lovelace");
+//		Node node3 = new Node(profile3, new NodeInfo("127.0.0.4", 20000));
+//		node3.addNeighbor(node1.getNodeInfo());
+//
+//		Profile profile4 = new Profile("Claude", "Shannon");
+//		Node node4 = new Node(profile4, new NodeInfo("127.0.0.5", 20000));
+//		node4.addNeighbor(node2.getNodeInfo());
+//
+//		node0.requestNodeConnection();
 
 //		Profile profile5 = new Profile("Linus", "Torvalds");
 //		Node node5 = new Node(profile5, "127.0.0.1", node4.getIp());
@@ -51,16 +51,17 @@ public class Main {
 
 		try {
 			System.out.println(node0.searchProfile(2));
+			System.out.println(node0.searchProfile("l"));
 //			System.out.println(node1.searchProfile(2));
 
 		} catch (NodeNotFoundException e) {
 			System.err.println(e);
 		}
-		System.out.println(node0);
-		System.out.println(node1);
-		System.out.println(node2);
-		System.out.println(node3);
-		System.out.println(node4);
+//		System.out.println(node0);
+//		System.out.println(node1);
+//		System.out.println(node2);
+//		System.out.println(node3);
+//		System.out.println(node4);
 //		System.out.println(node5);
 //		System.out.println(node6);
 
