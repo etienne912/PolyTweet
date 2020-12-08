@@ -8,10 +8,10 @@ public class Post implements Serializable {
     private final String message;
     private final long id;
 
-    public Post(String message, Profile profile) {
+    public Post(String message, long profileId) {
         this.date = new Date();
         this.message = message;
-        this.id = profile.getId();
+        this.id = profileId;
     }
 
     public Date getDate() {

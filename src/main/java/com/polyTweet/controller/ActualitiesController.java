@@ -25,7 +25,7 @@ public class ActualitiesController implements Initializable {
 
     @FXML
     public TextField postText;
-    public Button postButton;
+    public Button postButton, refreshButton;
     public VBox actualitiesPosts;
 
     public ActualitiesController() {
@@ -45,32 +45,42 @@ public class ActualitiesController implements Initializable {
         this.profiles.add(profile);
 
         this.profiles.forEach(pf -> {
-            List<Post> posts = pf.getPosts();
-            posts.forEach(p -> sortedPosts.put(p.getDate(), p));
+            if(pf != null) {
+                List<Post> posts = pf.getPosts();
+                posts.forEach(p -> sortedPosts.put(p.getDate(), p));
+            }
         });
 
-        if( this.actualitiesPosts.getChildren().size() != 0 ) this.actualitiesPosts.getChildren().clear();
-        sortedPosts.forEach( (k, v) -> {
+        this.actualitiesPosts.getChildren().clear();
+
+        sortedPosts.forEach((k, v) -> {
 
             try {
                 GridPane grid = new GridPane();
 
                 Profile profileVisit = profile;
 
-                if( v.getProfileId() != profile.getId() ) {
+                System.out.println(v.getProfileId());
+
+                if (v.getProfileId() != profile.getId()) {
+
                     profileVisit = this.node.searchProfile(v.getProfileId());
+                    System.out.println(profileVisit);
                 }
 
-                Button button = new Button(profileVisit.getFirstName() + " " + profileVisit.getLastName());
-                button.setOnAction(this::visitProfileClick);
+                if (profileVisit != null) {
 
-                Label label = new Label(k.toString() + " - " + v.getMessage());
+                    Button button = new Button(profileVisit.getFirstName() + " " + profileVisit.getLastName());
+                    button.setOnAction(this::visitProfileClick);
 
-                grid.addRow(0, button);
-                grid.addRow(1, label);
+                    Label label = new Label(k.toString() + " - " + v.getMessage());
 
-                actualitiesPosts.getChildren().add(grid);
+                    grid.addRow(0, button);
+                    grid.addRow(1, label);
 
+                    actualitiesPosts.getChildren().add(grid);
+
+                }
             } catch (NodeNotFoundException e) {
                 e.printStackTrace();
             }
@@ -81,10 +91,15 @@ public class ActualitiesController implements Initializable {
     @FXML
     public void postClick(ActionEvent e) {
         String post = this.postText.getText();
-        if(!post.equals("")) {
+        if (!post.equals("")) {
             this.postText.setText("");
             profile.writePost(post);
         }
+    }
+
+    @FXML
+    public void refresh(ActionEvent e) {
+        this.initPost();
     }
 
     @FXML
@@ -93,9 +108,9 @@ public class ActualitiesController implements Initializable {
         Button button = (Button) e.getTarget();
         String[] entireName = button.getText().split(" ");
 
-        for( Profile p : profiles ) {
-            if( entireName[0].equals(p.getFirstName())  && entireName[1].equals(p.getLastName()) ){
-                if(p.equals(profile)){
+        for (Profile p : profiles) {
+            if (entireName[0].equals(p.getFirstName()) && entireName[1].equals(p.getLastName())) {
+                if (p.equals(profile)) {
                     MainView.switchScene("profile");
                 } else {
                     MainView.initVisitProfile(p);

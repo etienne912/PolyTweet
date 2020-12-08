@@ -28,9 +28,8 @@
             <ColumnConstraints percentWidth="60.0"/>
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints percentHeight="33.0"/>
-            <RowConstraints percentHeight="33.0"/>
-            <RowConstraints percentHeight="33.0"/>
+            <RowConstraints percentHeight="50.0"/>
+            <RowConstraints percentHeight="50.0"/>
         </rowConstraints>
         <Label text="Prénom"
                GridPane.columnIndex="0" GridPane.rowIndex="0"/>
@@ -38,8 +37,23 @@
         <Label text="Nom"
                GridPane.columnIndex="0" GridPane.rowIndex="1"/>
         <TextField fx:id="lastName" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-        <Label text="Port" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-        <TextField fx:id="port" text="5000" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    </GridPane>
+    <GridPane GridPane.columnIndex="0" GridPane.rowIndex="1">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="40.0"/>
+            <ColumnConstraints percentWidth="60.0"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints percentHeight="33.0"/>
+            <RowConstraints percentHeight="33.0"/>
+            <RowConstraints percentHeight="33.0"/>
+        </rowConstraints>
+        <Label text="Port Local" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextField fx:id="localPortField" text="5000" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        <Label text="Adresse IP Réseau" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <TextField fx:id="networkIpField" text="127.0.0.1" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <Label text="Port Réseau" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <TextField fx:id="networkPortField" text="5000" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
     </GridPane>
     <Button text="Valider" onAction="#registerClick"/>
 </VBox>

@@ -5,6 +5,7 @@ import com.polyTweet.profile.Profile;
 import com.polyTweet.view.MainView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
@@ -19,10 +20,13 @@ public class ProfileVisitorController implements Initializable {
     @FXML
     public Label firstName, lastName, status;
     public VBox profilePosts;
+    public Button followButton;
 
     private static Profile profile;
 
-    public ProfileVisitorController() { profile = MainView.getProfileVisitor(); }
+    public ProfileVisitorController() {
+        profile = MainView.getProfileVisitor();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -34,16 +38,23 @@ public class ProfileVisitorController implements Initializable {
         this.lastName.setText(profile.getLastName());
         this.status.setText(profile.getStatus());
 
+        if( MainView.getProfile().isFollowing(profile.getId())) this.followButton.setText("Unfollow");
+        else this.followButton.setText("Follow");
+
         Map<Date, Post> sortedPosts = new TreeMap<>();
 
         profile.getPosts().forEach(p -> sortedPosts.put(p.getDate(), p));
 
-        if( this.profilePosts.getChildren().size() != 0 ) this.profilePosts.getChildren().clear();
+        this.profilePosts.getChildren().clear();
         sortedPosts.forEach( (k, v) -> this.profilePosts.getChildren().add(new Label(k.toString() + " - " + v.getMessage())));
     }
 
     public void followClick() {
-        MainView.getProfile().follow(profile.getId());
+        if(!MainView.getProfile().isFollowing(profile.getId())){
+            MainView.getProfile().follow(profile.getId());
+        } else {
+            MainView.getProfile().unfollow(profile.getId());
+        }
     }
 
     public void update() {

@@ -4,15 +4,21 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TextField?>
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="com.polyTweet.controller.HeaderController" hgap="30">
+    <rowConstraints>
+        <RowConstraints percentHeight="50.0"/>
+        <RowConstraints prefHeight="50.0"/>
+    </rowConstraints>
     <columnConstraints>
-        <ColumnConstraints percentWidth="20.0"/>
-        <ColumnConstraints percentWidth="20.0"/>
-        <ColumnConstraints percentWidth="20.0"/>
-        <ColumnConstraints percentWidth="20.0"/>
-        <ColumnConstraints percentWidth="20.0"/>
+        <ColumnConstraints percentWidth="16.5"/>
+        <ColumnConstraints percentWidth="16.5"/>
+        <ColumnConstraints percentWidth="16.5"/>
+        <ColumnConstraints percentWidth="16.5"/>
+        <ColumnConstraints percentWidth="16.5"/>
+        <ColumnConstraints percentWidth="16.5"/>
     </columnConstraints>
     <ImageView fx:id="polytweet"
                fitHeight="20.0" fitWidth="20.0"
@@ -26,7 +32,10 @@
             text="Actualités" fx:id="actualitiesButton" onAction="#actualitiesClick"/>
     <Button GridPane.columnIndex="3" GridPane.rowIndex="0"
             text="Paramètres" fx:id="settingsButton" onAction="#settingsClick"/>
-    <ImageView GridPane.columnIndex="4" GridPane.rowIndex="0"
+    <TextField fx:id="searchField" onAction="#searchProfile" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
+    <VBox fx:id="listProfile" prefHeight="100.0"
+          GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+    <ImageView GridPane.columnIndex="5" GridPane.rowIndex="0"
                fx:id="logout"
                fitHeight="20.0" fitWidth="20.0"
                preserveRatio="true" onMouseClicked="#logoutClick">

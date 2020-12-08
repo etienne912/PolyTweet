@@ -61,7 +61,7 @@ public class Profile implements Serializable {
 	}
 
 	public void writePost(String message) {
-		this.posts.add(new Post(message, this));
+		this.posts.add(new Post(message, this.id));
 		MainView.update();
 	}
 
@@ -71,10 +71,16 @@ public class Profile implements Serializable {
 
 	public void unfollow(Long id) {
 		this.profileFollowed.remove(id);
+		MainView.update();
 	}
 
 	public void follow(Long id) {
 		this.profileFollowed.add(id);
+		MainView.update();
+	}
+
+	public boolean isFollowing(Long id) {
+		return this.profileFollowed.contains(id);
 	}
 
 	@Override

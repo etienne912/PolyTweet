@@ -2,6 +2,7 @@ package com.polyTweet.view;
 
 import com.polyTweet.controller.ActualitiesController;
 import com.polyTweet.controller.ProfileController;
+import com.polyTweet.controller.ProfileVisitorController;
 import com.polyTweet.controller.ScreenController;
 import com.polyTweet.node.Node;
 import com.polyTweet.profile.Profile;
@@ -73,16 +74,19 @@ public class MainView extends Application {
     }
 
     public static void closeWindow() {
-        Serialization.serialize(profileModel, "./tmp/profile" + profileModel.getId() + ".ser");
+        profileNode.close();
+        Serialization.serialize(profileModel, "./tmp/profile" + profileModel.getFirstName() + ".ser");
         switchScene("login");
     }
 
     public static void update() {
         ProfileController profileController = (ProfileController) controllerMap.get("profile");
         ActualitiesController actualitiesController = (ActualitiesController) controllerMap.get("actualities");
+        ProfileVisitorController profileVisitorController = (ProfileVisitorController) controllerMap.get("profileVisitor");
 
         profileController.update();
         actualitiesController.update();
+        profileVisitorController.update();
     }
 
     public static Stage getPrimaryStage() {
