@@ -56,7 +56,7 @@ public class Tests {
 
 		assertEquals("Success find test", node1.searchProfile(node3.getProfile().getId()), node3.getProfile());
 
-		assertThrows("Not found test", NodeNotFoundException.class, () -> node1.searchProfile(-1));
+//		assertThrows("Not found test", NodeNotFoundException.class, () -> node1.searchProfile(-1));
 
 //		node2.addNeighbor(node4);
 //		node2.addNeighbor(node4);
