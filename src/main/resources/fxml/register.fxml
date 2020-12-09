@@ -8,12 +8,13 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.polyTweet.controller.RegisterController"
       prefHeight="400.0" prefWidth="600.0">
-    <HBox>
-        <ImageView fx:id="return"
+    <HBox onMouseClicked="#returnLogin">
+        <ImageView
                    fitHeight="20.0" fitWidth="20.0"
                    preserveRatio="true"
                    GridPane.columnIndex="0" GridPane.rowIndex="0">
-            <Image url="@/img/return.png"/>
+            <Image url="@/img/return.png"
+                   fx:id="returnButton"/>
         </ImageView>
     </HBox>
     <GridPane>
@@ -52,9 +53,10 @@
             <ColumnConstraints percentWidth="60.0"/>
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints percentHeight="33.0"/>
-            <RowConstraints percentHeight="33.0"/>
-            <RowConstraints percentHeight="33.0"/>
+            <RowConstraints percentHeight="25.0"/>
+            <RowConstraints percentHeight="25.0"/>
+            <RowConstraints percentHeight="25.0"/>
+            <RowConstraints percentHeight="25.0"/>
         </rowConstraints>
         <Label text="Adresse IP Locale" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
         <TextField fx:id="localIpField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>

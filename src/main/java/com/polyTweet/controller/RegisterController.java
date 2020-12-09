@@ -47,4 +47,9 @@ public class RegisterController implements Initializable {
 
     }
 
+    @FXML
+    public void returnLogin() {
+        MainView.switchScene("login");
+    }
+
 }

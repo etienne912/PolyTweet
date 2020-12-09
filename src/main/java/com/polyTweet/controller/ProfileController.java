@@ -36,7 +36,7 @@ public class ProfileController implements Initializable {
         sortedPosts.sort((p1, p2) -> p2.getDate().compareTo(p1.getDate()));
 
         if( this.profilePosts.getChildren().size() != 0 ) this.profilePosts.getChildren().clear();
-        sortedPosts.forEach( (post) -> this.profilePosts.getChildren().add(new Label(post.toString() + " - " + post.getMessage())));
+        sortedPosts.forEach( (post) -> this.profilePosts.getChildren().add(new Label(post.getDate().toString() + " - " + post.getMessage())));
     }
 
     public void update() {
