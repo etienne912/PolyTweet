@@ -1,6 +1,7 @@
 package com.polyTweet.controller;
 
-import com.polyTweet.profile.Profile;
+import com.polyTweet.Observable;
+import com.polyTweet.model.Profile;
 import com.polyTweet.view.MainView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -44,8 +45,8 @@ public class ProfileVisitorController extends ProfileController implements Initi
 		}
 	}
 
-	public void update() {
+	@Override
+	public void update(Observable observable) {
 		this.initView();
 	}
-
 }

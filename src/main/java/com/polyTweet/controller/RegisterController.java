@@ -1,8 +1,7 @@
 package com.polyTweet.controller;
 
-import com.polyTweet.node.Node;
-import com.polyTweet.profile.Profile;
-import com.polyTweet.profile.ProfileView;
+import com.polyTweet.dao.Node;
+import com.polyTweet.model.Profile;
 import com.polyTweet.view.MainView;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
@@ -22,6 +21,13 @@ public class RegisterController implements Initializable {
 	public TextField firstName, lastName, networkIpField, localIpField;
 	public Button registerButton;
 
+	private MainView view;
+
+
+	public void setVars(MainView view) {
+		this.view = view;
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		BooleanBinding booleanBind = Bindings.or(firstName.textProperty().isEmpty(),
@@ -38,7 +44,7 @@ public class RegisterController implements Initializable {
 		String lastName = this.lastName.getText();
 
 
-		Profile profile = new ProfileView(firstName, lastName);
+		Profile profile = new Profile(firstName, lastName);
 		Node node;
 		try {
 			node = new Node(profile, this.localIpField.getText());
@@ -55,13 +61,13 @@ public class RegisterController implements Initializable {
 		this.firstName.setText("");
 		this.lastName.setText("");
 
-		MainView.init(profile, node);
-		MainView.switchScene("actualities");
+		view.init(profile, node);
+		view.switchScene("actualities");
 	}
 
 	@FXML
 	public void returnLogin() {
-		MainView.switchScene("login");
+		view.switchScene("login");
 	}
 
 }

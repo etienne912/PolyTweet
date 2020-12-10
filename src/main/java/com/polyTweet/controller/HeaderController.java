@@ -1,7 +1,7 @@
 package com.polyTweet.controller;
 
-import com.polyTweet.node.Node;
-import com.polyTweet.profile.Profile;
+import com.polyTweet.dao.Node;
+import com.polyTweet.model.Profile;
 import com.polyTweet.view.MainView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

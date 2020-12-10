@@ -1,8 +1,8 @@
 package com.polyTweet;
 
-import com.polyTweet.node.Node;
-import com.polyTweet.node.exceptions.NodeNotFoundException;
-import com.polyTweet.profile.Profile;
+import com.polyTweet.dao.Node;
+import com.polyTweet.dao.exceptions.NodeNotFoundException;
+import com.polyTweet.model.Profile;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

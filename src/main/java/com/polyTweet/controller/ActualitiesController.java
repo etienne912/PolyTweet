@@ -1,9 +1,10 @@
 package com.polyTweet.controller;
 
-import com.polyTweet.node.Node;
-import com.polyTweet.node.exceptions.NodeNotFoundException;
-import com.polyTweet.profile.Post;
-import com.polyTweet.profile.Profile;
+import com.polyTweet.Observable;
+import com.polyTweet.Observer;
+import com.polyTweet.dao.exceptions.NodeNotFoundException;
+import com.polyTweet.model.Post;
+import com.polyTweet.model.Profile;
 import com.polyTweet.view.MainView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,10 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ActualitiesController implements Initializable {
+public class ActualitiesController implements Initializable, Observer {
 
 	private final Profile profile;
-	private final Node node;
 	private List<Profile> profiles;
 
 	@FXML
@@ -32,7 +32,6 @@ public class ActualitiesController implements Initializable {
 
 	public ActualitiesController() {
 		this.profile = MainView.getProfile();
-		this.node = MainView.getNode();
 	}
 
 	@Override
@@ -43,7 +42,7 @@ public class ActualitiesController implements Initializable {
 	private void initPost() {
 		List<Post> sortedPosts = new ArrayList<>();
 
-		this.profiles = this.node.getProfileFollowedInformation();
+		this.profiles = MainView.getNode().getProfileFollowedInformation();
 		this.profiles.add(profile);
 
 		this.profiles.forEach(pf -> {
@@ -53,7 +52,7 @@ public class ActualitiesController implements Initializable {
 			}
 		});
 
-		sortedPosts.sort((p1, p2) -> p2.getDate().compareTo(p1.getDate()));
+		sortedPosts.sort((p1, p2) -> p2.getWrittenDate().compareTo(p1.getWrittenDate()));
 
 		this.actualitiesPosts.getChildren().clear();
 
@@ -64,8 +63,8 @@ public class ActualitiesController implements Initializable {
 
 				Profile profileVisit = profile;
 
-				if (post.getProfileId() != profile.getId()) {
-					profileVisit = this.node.searchProfile(post.getProfileId());
+				if (post.getWriterId() != profile.getId()) {
+					profileVisit = MainView.getNode().searchProfile(post.getWriterId());
 				}
 
 				if (profileVisit != null) {
@@ -73,7 +72,7 @@ public class ActualitiesController implements Initializable {
 					Button button = new Button(profileVisit.getFirstName() + " " + profileVisit.getLastName());
 					button.setOnAction(this::visitProfileClick);
 
-					Label label = new Label(post.getDate().toString() + " - " + post.getMessage());
+					Label label = new Label(post.getWrittenDate().toString() + " - " + post.getMessage());
 
 					grid.addRow(0, button);
 					grid.addRow(1, label);
@@ -124,8 +123,8 @@ public class ActualitiesController implements Initializable {
 
 	}
 
-	public void update() {
+	@Override
+	public void update(Observable observable) {
 		this.initPost();
 	}
-
 }

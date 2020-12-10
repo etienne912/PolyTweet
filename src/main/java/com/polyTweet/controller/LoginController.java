@@ -1,9 +1,8 @@
 package com.polyTweet.controller;
 
-import com.polyTweet.node.Node;
-import com.polyTweet.profile.Profile;
-import com.polyTweet.profile.ProfileView;
-import com.polyTweet.serialization.Deserialization;
+import com.polyTweet.dao.Node;
+import com.polyTweet.model.Profile;
+import com.polyTweet.utils.serialization.Deserialization;
 import com.polyTweet.view.MainView;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
@@ -25,6 +24,8 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
+	MainView view;
+
 	@FXML
 	public Label filePath;
 	public TextField networkIpField, localIpField;
@@ -39,6 +40,10 @@ public class LoginController implements Initializable {
 		this.chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Serialized profile", "*.ser"));
 	}
 
+	public void setVars(MainView mainView) {
+		this.view = mainView;
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		BooleanBinding fileSelectedCompleted = fileSelected.isNotEqualTo(new SimpleBooleanProperty(true));
@@ -50,7 +55,7 @@ public class LoginController implements Initializable {
 
 	@FXML
 	public void importClick(ActionEvent e) {
-		this.file = chooser.showOpenDialog(MainView.getPrimaryStage());
+		this.file = chooser.showOpenDialog(this.view.getPrimaryStage());
 		if (this.file != null) {
 			String path = this.file.getPath();
 			this.filePath.setTextFill(Color.BLACK);
@@ -61,13 +66,13 @@ public class LoginController implements Initializable {
 
 	@FXML
 	public void connexionClick(ActionEvent e) {
-		Profile profile = (ProfileView) Deserialization.deserialize(this.file.getPath());
+		Profile profile = (Profile) Deserialization.deserialize(this.file.getPath());
 
 		if (profile == null) {
 			this.filePath.setText("Profile incompatible");
 			this.filePath.setTextFill(Color.RED);
 			this.file = null;
-			fileSelected.setValue(true);
+			fileSelected.setValue(false);
 			return;
 		}
 
@@ -88,13 +93,13 @@ public class LoginController implements Initializable {
 		this.filePath.setText("Aucun Profile Sélectionné");
 		fileSelected.setValue(false);
 
-		MainView.init(profile, node);
-		MainView.switchScene("actualities");
+		this.view.init(profile, node);
+		this.view.switchScene("actualities");
 	}
 
 	@FXML
 	public void registerClick(ActionEvent e) {
-		MainView.switchScene("register");
+		this.view.switchScene("register");
 	}
 
 }

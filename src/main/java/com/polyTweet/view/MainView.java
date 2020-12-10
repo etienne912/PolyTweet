@@ -1,13 +1,10 @@
 package com.polyTweet.view;
 
 import com.jfoenix.assets.JFoenixResources;
-import com.polyTweet.controller.ActualitiesController;
-import com.polyTweet.controller.ProfilePersonalController;
-import com.polyTweet.controller.ProfileVisitorController;
-import com.polyTweet.controller.ScreenController;
-import com.polyTweet.node.Node;
-import com.polyTweet.profile.Profile;
-import com.polyTweet.serialization.Serialization;
+import com.polyTweet.controller.*;
+import com.polyTweet.dao.Node;
+import com.polyTweet.model.Profile;
+import com.polyTweet.utils.serialization.Serialization;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -24,8 +21,8 @@ public class MainView extends Application {
 
 	private static HashMap<String, Object> controllerMap;
 	private static ScreenController screenController;
-	private static Profile profileModel, profilVisitor;
-	private static Node profileNode;
+	private static Profile myProfile, profilVisitor;
+	private static Node myNode;
 	private static Stage window;
 
 	@Override
@@ -38,11 +35,15 @@ public class MainView extends Application {
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
 			VBox loginPane = loader.load();
-			controllerMap.put("login", loader.getController());
+			LoginController loginController = loader.getController();
+			loginController.setVars(this);
+			controllerMap.put("login", loginController);
 
 			loader = new FXMLLoader(getClass().getResource("/fxml/register.fxml"));
 			VBox registerPane = loader.load();
-			controllerMap.put("register", loader.getController());
+			RegisterController registerController = loader.getController();
+			registerController.setVars(this);
+			controllerMap.put("register", registerController);
 
 
 			Scene scene = new Scene(loginPane);
@@ -55,8 +56,8 @@ public class MainView extends Application {
 			final ObservableList<String> stylesheets = scene.getStylesheets();
 			stylesheets.addAll(JFoenixResources.load("css/jfoenix-fonts.css").toExternalForm(),
 					JFoenixResources.load("css/jfoenix-design.css").toExternalForm(),
-					MainView.class.getResource("/css/application.css").toExternalForm(),
-					MainView.class.getResource("/css/composants.css").toExternalForm());
+					getClass().getResource("/css/application.css").toExternalForm(),
+					getClass().getResource("/css/composants.css").toExternalForm());
 
 			primaryStage.getIcons().add(new Image("/img/polytweet.png"));
 			window.setTitle("PolyTweet");
@@ -72,7 +73,7 @@ public class MainView extends Application {
 	}
 
 	public static Profile getProfile() {
-		return profileModel;
+		return myProfile;
 	}
 
 	public static Profile getProfileVisitor() {
@@ -80,7 +81,7 @@ public class MainView extends Application {
 	}
 
 	public static Node getNode() {
-		return profileNode;
+		return myNode;
 	}
 
 	public static void switchScene(String name) {
@@ -88,49 +89,41 @@ public class MainView extends Application {
 	}
 
 	public static void closeWindow() {
-		if (profileNode != null) {
-			profileNode.close();
-			profileNode = null;
+		if (myNode != null) {
+			myNode.close();
+			myNode = null;
 		}
-		if (profileModel != null) {
-			Serialization.serialize(profileModel, "./tmp/profile" + profileModel.getFirstName() + ".ser");
-			profileModel = null;
+		if (myProfile != null) {
+			Serialization.serialize(myProfile, "./tmp/profile" + myProfile.getFirstName() + ".ser");
+			myProfile = null;
 			switchScene("login");
 		}
-	}
-
-	public static void update() {
-		ProfilePersonalController profileController = (ProfilePersonalController) controllerMap.get("profile");
-		ActualitiesController actualitiesController = (ActualitiesController) controllerMap.get("actualities");
-
-		profileController.update();
-		actualitiesController.update();
-	}
-
-	public static void updateProfileVisitor() {
-		ProfileVisitorController profileVisitorController = (ProfileVisitorController) controllerMap.get("profileVisitor");
-
-		profileVisitorController.update();
 	}
 
 	public static Stage getPrimaryStage() {
 		return window;
 	}
 
-	private static void loadViews() {
+	private void loadViews() {
 		try {
 			FXMLLoader loader = new FXMLLoader(MainView.class.getResource("/fxml/profile.fxml"));
 			BorderPane profilePane = loader.load();
-			controllerMap.put("profile", loader.getController());
+			ProfileController profileController = loader.getController();
+			controllerMap.put("profile", profileController);
 
 			loader = new FXMLLoader(MainView.class.getResource("/fxml/actualities.fxml"));
 			BorderPane actualitiesPane = loader.load();
-			controllerMap.put("actualities", loader.getController());
+			ActualitiesController actualitiesController = loader.getController();
+			controllerMap.put("actualities", actualitiesController);
 
 			loader = new FXMLLoader(MainView.class.getResource("/fxml/settings.fxml"));
 			BorderPane settingsPane = loader.load();
-			controllerMap.put("settings", loader.getController());
+			SettingsController settingsController = loader.getController();
+			controllerMap.put("settings", settingsController);
 
+			myProfile.addObserver(profileController);
+			myProfile.addObserver(actualitiesController);
+			myProfile.addObserver(settingsController);
 			screenController.addScreen("profile", profilePane);
 			screenController.addScreen("actualities", actualitiesPane);
 			screenController.addScreen("settings", settingsPane);
@@ -143,7 +136,8 @@ public class MainView extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader(MainView.class.getResource("/fxml/profileVisitor.fxml"));
 			BorderPane profileVisitorPane = loader.load();
-			controllerMap.put("profileVisitor", loader.getController());
+			ProfileVisitorController profileVisitorController = loader.getController();
+			controllerMap.put("profileVisitor", profileVisitorController);
 
 			screenController.addScreen("profileVisitor", profileVisitorPane);
 		} catch (IOException e) {
@@ -157,9 +151,9 @@ public class MainView extends Application {
 		loadVisitorView();
 	}
 
-	public static void init(Profile profile, Node node) {
-		profileModel = profile;
-		profileNode = node;
+	public void init(Profile profile, Node node) {
+		myProfile = profile;
+		myNode = node;
 
 		loadViews();
 	}
@@ -167,5 +161,4 @@ public class MainView extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-
 }
