@@ -31,4 +31,5 @@ dependencies {
     testImplementation 'org.junit.platform:junit-platform-commons:1.5.2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.7.0'
     testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.7.0'
+    compile 'com.jfoenix:jfoenix:9.0.10'
 }

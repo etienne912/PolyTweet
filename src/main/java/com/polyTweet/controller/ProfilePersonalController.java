@@ -4,23 +4,21 @@ import com.polyTweet.profile.Profile;
 import com.polyTweet.view.MainView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ProfileVisitorController extends ProfileController implements Initializable {
+public class ProfilePersonalController extends ProfileController implements Initializable {
 
 	@FXML
-	public Label firstName, lastName, status;
+	public Label followedNb;
 	public VBox profilePosts;
-	public Button followButton;
 
 	private static Profile profile;
 
-	public ProfileVisitorController() {
+	public ProfilePersonalController() {
 		super();
 		profile = MainView.getProfile();
 	}
@@ -31,17 +29,8 @@ public class ProfileVisitorController extends ProfileController implements Initi
 	}
 
 	public void initView() {
-		if (MainView.getProfile().isFollowing(profile.getId())) this.followButton.setText("Unfollow");
-		else this.followButton.setText("Follow");
+		this.followedNb.setText(Integer.toString(profile.getProfileFollowed().size()));
 		super.initView();
-	}
-
-	public void followClick() {
-		if (!MainView.getProfile().isFollowing(profile.getId())) {
-			MainView.getProfile().follow(profile.getId());
-		} else {
-			MainView.getProfile().unfollow(profile.getId());
-		}
 	}
 
 	public void update() {

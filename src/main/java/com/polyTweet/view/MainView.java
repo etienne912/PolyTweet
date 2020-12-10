@@ -1,7 +1,7 @@
 package com.polyTweet.view;
 
 import com.polyTweet.controller.ActualitiesController;
-import com.polyTweet.controller.ProfileController;
+import com.polyTweet.controller.ProfilePersonalController;
 import com.polyTweet.controller.ProfileVisitorController;
 import com.polyTweet.controller.ScreenController;
 import com.polyTweet.node.Node;
@@ -82,7 +82,7 @@ public class MainView extends Application {
 	}
 
 	public static void update() {
-		ProfileController profileController = (ProfileController) controllerMap.get("profile");
+		ProfilePersonalController profileController = (ProfilePersonalController) controllerMap.get("profile");
 		ActualitiesController actualitiesController = (ActualitiesController) controllerMap.get("actualities");
 
 		profileController.update();

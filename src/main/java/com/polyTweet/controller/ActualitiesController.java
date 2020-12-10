@@ -109,14 +109,16 @@ public class ActualitiesController implements Initializable {
 		String[] entireName = button.getText().split(" ");
 
 		for (Profile p : profiles) {
-			if (entireName[0].equals(p.getFirstName()) && entireName[1].equals(p.getLastName())) {
-				if (p.equals(profile)) {
-					MainView.switchScene("profile");
-				} else {
-					MainView.initVisitProfile(p);
-					MainView.switchScene("profileVisitor");
+			if( p != null ) {
+				if (entireName[0].equals(p.getFirstName()) && entireName[1].equals(p.getLastName())) {
+					if (p.equals(profile)) {
+						MainView.switchScene("profile");
+					} else {
+						MainView.initVisitProfile(p);
+						MainView.switchScene("profileVisitor");
+					}
+					break;
 				}
-				break;
 			}
 		}
 

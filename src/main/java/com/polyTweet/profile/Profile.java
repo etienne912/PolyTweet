@@ -20,7 +20,7 @@ public class Profile implements Serializable {
 		this.lastName = lastName;
 		this.status = "";
 		this.posts = new ArrayList<>();
-		profileFollowed = new ArrayList<>();
+		this.profileFollowed = new ArrayList<>();
 	}
 
 	public long getId() {
@@ -57,7 +57,6 @@ public class Profile implements Serializable {
 		this.status = status;
 		MainView.update();
 	}
-
 
 	public List<Post> getPosts() {
 		return posts;
