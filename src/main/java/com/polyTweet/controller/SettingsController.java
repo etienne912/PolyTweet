@@ -12,26 +12,29 @@ import java.util.ResourceBundle;
 
 public class SettingsController implements Initializable {
 
-    private Profile profile;
+	private final Profile profile;
 
-    @FXML
-    public TextField firstNameField, lastNameField, statusField;
+	@FXML
+	public TextField firstNameField, lastNameField, statusField;
 
-    public SettingsController() {
-        this.profile = MainView.getProfile();
-    }
+	public SettingsController() {
+		this.profile = MainView.getProfile();
+	}
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        this.firstNameField.setText(profile.getFirstName());
-        this.lastNameField.setText(profile.getLastName());
-        this.statusField.setText(profile.getStatus());
-    }
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		this.firstNameField.setText(profile.getFirstName());
+		this.lastNameField.setText(profile.getLastName());
+		this.statusField.setText(profile.getStatus());
+	}
 
-    @FXML
-    public void validateClick(ActionEvent e) {
-        if(!this.firstNameField.getText().equals(this.profile.getFirstName())) this.profile.setFirstName(this.firstNameField.getText());
-        if(!this.lastNameField.getText().equals(this.profile.getLastName())) this.profile.setLastName(this.lastNameField.getText());
-        if(!this.statusField.getText().equals(this.profile.getStatus())) this.profile.setStatus(this.statusField.getText());
-    }
+	@FXML
+	public void validateClick(ActionEvent e) {
+		if (!this.firstNameField.getText().equals(this.profile.getFirstName()))
+			this.profile.setFirstName(this.firstNameField.getText());
+		if (!this.lastNameField.getText().equals(this.profile.getLastName()))
+			this.profile.setLastName(this.lastNameField.getText());
+		if (!this.statusField.getText().equals(this.profile.getStatus()))
+			this.profile.setStatus(this.statusField.getText());
+	}
 }

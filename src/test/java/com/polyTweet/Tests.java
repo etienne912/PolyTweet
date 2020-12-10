@@ -1,14 +1,14 @@
 package com.polyTweet;
 
 import com.polyTweet.node.Node;
-import com.polyTweet.node.NodeInfo;
 import com.polyTweet.node.exceptions.MaxNodeException;
 import com.polyTweet.node.exceptions.NodeNotFoundException;
 import com.polyTweet.profile.Profile;
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
 
 public class Tests {
 	@Test
@@ -29,30 +29,30 @@ public class Tests {
 	}
 
 	@Test
-	public void searchTest() throws MaxNodeException, NodeNotFoundException {
+	public void searchTest() throws MaxNodeException, NodeNotFoundException, IOException {
 		Profile profile1 = new Profile("Étienne", "Lécrivain");
-		Node node1 = new Node(profile1, new NodeInfo("127.0.0.1", 9000));
+		Node node1 = new Node(profile1, "127.0.0.1");
 
 		Profile profile2 = new Profile("Lucas", "Hervouet");
-		Node node2 = new Node(profile2, new NodeInfo("127.0.0.1", 9001));
+		Node node2 = new Node(profile2, "127.0.0.2");
 
 		Profile profile3 = new Profile("Alan", "Turing");
-		Node node3 = new Node(profile3, new NodeInfo("127.0.0.1", 9002));
+		Node node3 = new Node(profile3, "127.0.0.3");
 
 		Profile profile4 = new Profile("Ada", "Lovelace");
-		Node node4 = new Node(profile4, new NodeInfo("127.0.0.1", 9003));
+		Node node4 = new Node(profile4, "127.0.0.4");
 
-		node1.addNeighbor(node2.getNodeInfo());
-		node1.addNeighbor(node4.getNodeInfo());
+		node1.addNeighbor(node2.getNodeIp());
+		node1.addNeighbor(node4.getNodeIp());
 
-		node2.addNeighbor(node1.getNodeInfo());
-		node2.addNeighbor(node3.getNodeInfo());
-		node2.addNeighbor(node4.getNodeInfo());
+		node2.addNeighbor(node1.getNodeIp());
+		node2.addNeighbor(node3.getNodeIp());
+		node2.addNeighbor(node4.getNodeIp());
 
-		node3.addNeighbor(node2.getNodeInfo());
+		node3.addNeighbor(node2.getNodeIp());
 
-		node4.addNeighbor(node1.getNodeInfo());
-		node4.addNeighbor(node2.getNodeInfo());
+		node4.addNeighbor(node1.getNodeIp());
+		node4.addNeighbor(node2.getNodeIp());
 
 		assertEquals("Success find test", node1.searchProfile(node3.getProfile().getId()), node3.getProfile());
 
@@ -61,5 +61,10 @@ public class Tests {
 //		node2.addNeighbor(node4);
 //		node2.addNeighbor(node4);
 //		assertThrows("Max neighbor test", MaxNodeException.class, () -> node2.addNeighbor(node4));
+
+		node1.close();
+		node2.close();
+		node3.close();
+		node4.close();
 	}
 }

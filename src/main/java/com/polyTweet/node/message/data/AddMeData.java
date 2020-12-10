@@ -1,17 +1,15 @@
 package com.polyTweet.node.message.data;
 
-import com.polyTweet.node.NodeInfo;
-
 public class AddMeData extends Data {
 
-	private final NodeInfo nodeInfo;
+	private final String nodeIp;
 
-	public AddMeData(NodeInfo pNodeInfo) {
+	public AddMeData(String pNodeIp) {
 		super(false);
-		this.nodeInfo = pNodeInfo;
+		this.nodeIp = pNodeIp;
 	}
 
-	public NodeInfo getNeighborInfo() {
-		return nodeInfo;
+	public String getNeighborIp() {
+		return nodeIp;
 	}
 }

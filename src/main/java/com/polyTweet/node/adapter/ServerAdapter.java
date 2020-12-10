@@ -1,13 +1,13 @@
 package com.polyTweet.node.adapter;
 
 import com.polyTweet.node.Node;
-import com.polyTweet.node.NodeInfo;
 import com.polyTweet.node.message.Message;
 import com.polyTweet.node.message.MessageTypesEnum;
 import com.polyTweet.node.message.data.*;
 import com.polyTweet.node.socket.Server;
 import com.polyTweet.profile.Profile;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ServerAdapter {
@@ -15,9 +15,9 @@ public class ServerAdapter {
 	private final Node node;
 	private final Server server;
 
-	public ServerAdapter(NodeInfo nodeInfo, Node pNode) {
+	public ServerAdapter(String nodeIp, Node pNode) throws IOException {
 		node = pNode;
-		server = new Server(nodeInfo, this);
+		server = new Server(nodeIp, this);
 		server.open();
 	}
 
@@ -28,7 +28,7 @@ public class ServerAdapter {
 			case ADD_ME -> {
 				AddMeData data = (AddMeData) message.getData();
 
-				node.addNeighborSimple(data.getNeighborInfo());
+				node.addNeighborSimple(data.getNeighborIp());
 			}
 			case SEARCH_PROFILE -> {
 				SearchProfileData data = (SearchProfileData) message.getData();
@@ -45,11 +45,11 @@ public class ServerAdapter {
 			case REQUEST_CONNECTION -> {
 				RequestConnectionData data = (RequestConnectionData) message.getData();
 
-				node.requestNodeConnection(data.getNodeInfo(), message.getMessageId(), data.getNbNodes());
+				node.requestNodeConnection(data.getNodeIp(), message.getMessageId(), data.getNbNodes());
 			}
 			case CLOSE_CONNECTION -> {
 				CloseConnectionData data = (CloseConnectionData) message.getData();
-				node.removeNeighbor(data.getNeighborInfo());
+				node.removeNeighbor(data.getNeighborIp());
 //				server.close(data.getNeighborInfo());
 			}
 		}

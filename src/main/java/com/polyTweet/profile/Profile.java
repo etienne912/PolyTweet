@@ -3,7 +3,10 @@ package com.polyTweet.profile;
 import com.polyTweet.view.MainView;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 public class Profile implements Serializable {
 	private final long id;
@@ -90,7 +93,7 @@ public class Profile implements Serializable {
 				", firstName='" + firstName + '\'' +
 				", lastName='" + lastName + '\'' +
 				", statut='" + status + '\'' +
-				", posts=" + posts +
+				", posts=" + posts.toString() +
 				'}';
 	}
 
@@ -99,13 +102,11 @@ public class Profile implements Serializable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Profile profile = (Profile) o;
-		return id == profile.id &&
-				Objects.equals(firstName, profile.firstName) &&
-				Objects.equals(lastName, profile.lastName);
+		return id == profile.id;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, firstName, lastName);
+		return Objects.hash(id);
 	}
 }

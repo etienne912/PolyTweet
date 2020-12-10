@@ -1,20 +1,18 @@
 package com.polyTweet.node.message.data;
 
-import com.polyTweet.node.NodeInfo;
-
 public class RequestConnectionData extends Data {
 
-	private final NodeInfo nodeInfo;
+	private final String nodeIp;
 	private final int nbNodes;
 
-	public RequestConnectionData(NodeInfo nodeInfo, int nbNodes, boolean broadcast) {
+	public RequestConnectionData(String nodeIp, int nbNodes, boolean broadcast) {
 		super(broadcast);
-		this.nodeInfo = nodeInfo;
+		this.nodeIp = nodeIp;
 		this.nbNodes = nbNodes;
 	}
 
-	public NodeInfo getNodeInfo() {
-		return nodeInfo;
+	public String getNodeIp() {
+		return nodeIp;
 	}
 
 	public int getNbNodes() {

@@ -15,12 +15,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class ActualitiesController implements Initializable {
 
-	private Profile profile;
-	private Node node;
+	private final Profile profile;
+	private final Node node;
 	private List<Profile> profiles;
 
 	@FXML
@@ -62,9 +64,9 @@ public class ActualitiesController implements Initializable {
 
 				Profile profileVisit = profile;
 
-                if (post.getProfileId() != profile.getId()) {
-                    profileVisit = this.node.searchProfile(post.getProfileId());
-                }
+				if (post.getProfileId() != profile.getId()) {
+					profileVisit = this.node.searchProfile(post.getProfileId());
+				}
 
 				if (profileVisit != null) {
 

@@ -1,6 +1,5 @@
 package com.polyTweet.node.adapter;
 
-import com.polyTweet.node.NodeInfo;
 import com.polyTweet.node.message.Message;
 import com.polyTweet.node.message.MessageTypesEnum;
 import com.polyTweet.node.message.data.*;
@@ -14,8 +13,8 @@ public class ClientAdapter {
 
 	private final Client client;
 
-	public ClientAdapter(NodeInfo nodeInfo) {
-		client = new Client(nodeInfo);
+	public ClientAdapter(String nodeIp) {
+		client = new Client(nodeIp);
 	}
 
 	public Profile searchProfile(long id, String messageId, boolean broadcast) {
@@ -30,19 +29,15 @@ public class ClientAdapter {
 		return result.getProfiles();
 	}
 
-	public void addMyNode(NodeInfo nodeInfo) {
+	public void addMyNode(String nodeInfo) {
 		client.send(new Message(MessageTypesEnum.ADD_ME, null, new AddMeData(nodeInfo)));
 	}
 
-	public void requestNodeConnection(NodeInfo nodeInfo, String messageId, int nbNodes) {
+	public void requestNodeConnection(String nodeInfo, String messageId, int nbNodes) {
 		client.send(new Message(MessageTypesEnum.REQUEST_CONNECTION, messageId, new RequestConnectionData(nodeInfo, nbNodes, true)));
 	}
 
 	public void close() {
-		try {
-			this.client.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.client.close();
 	}
 }

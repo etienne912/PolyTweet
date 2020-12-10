@@ -1,13 +1,14 @@
 package com.polyTweet.node.socket;
 
-import com.polyTweet.node.NodeInfo;
 import com.polyTweet.node.message.Message;
 import com.polyTweet.node.message.MessageTypesEnum;
 import com.polyTweet.node.message.data.CloseConnectionData;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Objects;
+import java.net.SocketException;
 
 public class Client {
 	private static final int PORT = 8000;
@@ -15,12 +16,12 @@ public class Client {
 	private Socket connexion = null;
 	private ObjectInputStream inputStream = null;
 	private ObjectOutputStream outputStream = null;
-	private final NodeInfo nodeInfo;
+	private final String nodeIp;
 
-	public Client(NodeInfo nodeInfo) {
-		this.nodeInfo = nodeInfo;
+	public Client(String nodeIp) {
+		this.nodeIp = nodeIp;
 		try {
-			connexion = new Socket(nodeInfo.getIp(), Objects.requireNonNullElse(nodeInfo.getPort(), PORT));
+			connexion = new Socket(nodeIp, PORT);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -50,11 +51,16 @@ public class Client {
 		return null;
 	}
 
-	public void close() throws IOException {
-		outputStream = new ObjectOutputStream(connexion.getOutputStream());
-		outputStream.writeObject(new Message(MessageTypesEnum.CLOSE_CONNECTION, null, new CloseConnectionData(nodeInfo)));
-		outputStream.flush();
-		connexion.close();
+	public void close() {
+		try {
+			outputStream = new ObjectOutputStream(connexion.getOutputStream());
+			outputStream.writeObject(new Message(MessageTypesEnum.CLOSE_CONNECTION, null, new CloseConnectionData(nodeIp)));
+			outputStream.flush();
+			connexion.close();
+		} catch (SocketException ignored) {
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

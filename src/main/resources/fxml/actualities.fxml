@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.polyTweet.controller.ActualitiesController"
             prefHeight="400.0" prefWidth="600.0">
-        <top>
-                <fx:include source="header.fxml"/>
-        </top>
-        <center>
-                <VBox>
-                        <TextField fx:id="postText"/>
-                        <HBox>
-                                <Button fx:id="postButton" onAction="#postClick" text="Valider"/>
-                                <Button fx:id="refreshButton" onAction="#refresh" text="Actualiser"/>
-                        </HBox>
-                        <VBox fx:id="actualitiesPosts"/>
-                </VBox>
-        </center>
+    <top>
+        <fx:include source="header.fxml"/>
+    </top>
+    <center>
+        <VBox>
+            <TextField fx:id="postText"/>
+            <HBox>
+                <Button fx:id="postButton" onAction="#postClick" text="Valider"/>
+                <Button fx:id="refreshButton" onAction="#refresh" text="Actualiser"/>
+            </HBox>
+            <VBox fx:id="actualitiesPosts"/>
+        </VBox>
+    </center>
 </BorderPane>

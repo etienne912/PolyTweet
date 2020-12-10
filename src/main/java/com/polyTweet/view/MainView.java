@@ -20,134 +20,134 @@ import java.util.HashMap;
 
 public class MainView extends Application {
 
-    private static HashMap<String, Object> controllerMap;
-    private static ScreenController screenController;
-    private static Profile profileModel, profilVisitor;
-    private static Node profileNode;
-    private static Stage window;
+	private static HashMap<String, Object> controllerMap;
+	private static ScreenController screenController;
+	private static Profile profileModel, profilVisitor;
+	private static Node profileNode;
+	private static Stage window;
 
-    @Override
-    public void start(Stage primaryStage) {
+	@Override
+	public void start(Stage primaryStage) {
 
-        window = primaryStage;
+		window = primaryStage;
 
-        try {
-            controllerMap = new HashMap<>();
+		try {
+			controllerMap = new HashMap<>();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
-            VBox loginPane = loader.load();
-            controllerMap.put("login", loader.getController());
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
+			VBox loginPane = loader.load();
+			controllerMap.put("login", loader.getController());
 
-            loader = new FXMLLoader(getClass().getResource("/fxml/register.fxml"));
-            VBox registerPane = loader.load();
-            controllerMap.put("register", loader.getController());
+			loader = new FXMLLoader(getClass().getResource("/fxml/register.fxml"));
+			VBox registerPane = loader.load();
+			controllerMap.put("register", loader.getController());
 
-            Scene scene = new Scene(loginPane);
+			Scene scene = new Scene(loginPane);
 
-            screenController = new ScreenController(scene);
+			screenController = new ScreenController(scene);
 
-            screenController.addScreen("login", loginPane);
-            screenController.addScreen("register", registerPane);
+			screenController.addScreen("login", loginPane);
+			screenController.addScreen("register", registerPane);
 
-            primaryStage.getIcons().add(new Image("/img/polytweet.png"));
-            window.setTitle("PolyTweet");
-            window.setScene(scene);
-            window.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+			primaryStage.getIcons().add(new Image("/img/polytweet.png"));
+			window.setTitle("PolyTweet");
+			window.setScene(scene);
+			window.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-    }
+	}
 
-    public static Profile getProfile() {
-        return profileModel;
-    }
+	public static Profile getProfile() {
+		return profileModel;
+	}
 
-    public static Profile getProfileVisitor() {
-        return profilVisitor;
-    }
+	public static Profile getProfileVisitor() {
+		return profilVisitor;
+	}
 
-    public static Node getNode() {
-        return profileNode;
-    }
+	public static Node getNode() {
+		return profileNode;
+	}
 
-    public static void switchScene(String name) {
-        screenController.activate(name);
-    }
+	public static void switchScene(String name) {
+		screenController.activate(name);
+	}
 
-    public static void closeWindow() {
-        profileNode.close();
-        Serialization.serialize(profileModel, "./tmp/profile" + profileModel.getFirstName() + ".ser");
-        switchScene("login");
-    }
+	public static void closeWindow() {
+		profileNode.close();
+		Serialization.serialize(profileModel, "./tmp/profile" + profileModel.getFirstName() + ".ser");
+		switchScene("login");
+	}
 
-    public static void update() {
-        ProfileController profileController = (ProfileController) controllerMap.get("profile");
-        ActualitiesController actualitiesController = (ActualitiesController) controllerMap.get("actualities");
+	public static void update() {
+		ProfileController profileController = (ProfileController) controllerMap.get("profile");
+		ActualitiesController actualitiesController = (ActualitiesController) controllerMap.get("actualities");
 
-        profileController.update();
-        actualitiesController.update();
-    }
+		profileController.update();
+		actualitiesController.update();
+	}
 
-    public static void updateProfileVisitor() {
-        ProfileVisitorController profileVisitorController = (ProfileVisitorController) controllerMap.get("profileVisitor");
+	public static void updateProfileVisitor() {
+		ProfileVisitorController profileVisitorController = (ProfileVisitorController) controllerMap.get("profileVisitor");
 
-        profileVisitorController.update();
-    }
+		profileVisitorController.update();
+	}
 
-    public static Stage getPrimaryStage() {
-        return window;
-    }
+	public static Stage getPrimaryStage() {
+		return window;
+	}
 
-    private static void loadViews() {
-        try {
-            FXMLLoader loader = new FXMLLoader(MainView.class.getResource("/fxml/profile.fxml"));
-            BorderPane profilePane = loader.load();
-            controllerMap.put("profile", loader.getController());
+	private static void loadViews() {
+		try {
+			FXMLLoader loader = new FXMLLoader(MainView.class.getResource("/fxml/profile.fxml"));
+			BorderPane profilePane = loader.load();
+			controllerMap.put("profile", loader.getController());
 
-            loader = new FXMLLoader(MainView.class.getResource("/fxml/actualities.fxml"));
-            BorderPane actualitiesPane = loader.load();
-            controllerMap.put("actualities", loader.getController());
+			loader = new FXMLLoader(MainView.class.getResource("/fxml/actualities.fxml"));
+			BorderPane actualitiesPane = loader.load();
+			controllerMap.put("actualities", loader.getController());
 
-            loader = new FXMLLoader(MainView.class.getResource("/fxml/settings.fxml"));
-            BorderPane settingsPane = loader.load();
-            controllerMap.put("settings", loader.getController());
+			loader = new FXMLLoader(MainView.class.getResource("/fxml/settings.fxml"));
+			BorderPane settingsPane = loader.load();
+			controllerMap.put("settings", loader.getController());
 
-            screenController.addScreen("profile", profilePane);
-            screenController.addScreen("actualities", actualitiesPane);
-            screenController.addScreen("settings", settingsPane);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+			screenController.addScreen("profile", profilePane);
+			screenController.addScreen("actualities", actualitiesPane);
+			screenController.addScreen("settings", settingsPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-    public static void loadVisitorView() {
-        try {
-            FXMLLoader loader = new FXMLLoader(MainView.class.getResource("/fxml/profileVisitor.fxml"));
-            BorderPane profileVisitorPane = loader.load();
-            controllerMap.put("profileVisitor", loader.getController());
+	public static void loadVisitorView() {
+		try {
+			FXMLLoader loader = new FXMLLoader(MainView.class.getResource("/fxml/profileVisitor.fxml"));
+			BorderPane profileVisitorPane = loader.load();
+			controllerMap.put("profileVisitor", loader.getController());
 
-            screenController.addScreen("profileVisitor", profileVisitorPane);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+			screenController.addScreen("profileVisitor", profileVisitorPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-    public static void initVisitProfile(Profile profile) {
-        profilVisitor = profile;
+	public static void initVisitProfile(Profile profile) {
+		profilVisitor = profile;
 
-        loadVisitorView();
-    }
+		loadVisitorView();
+	}
 
-    public static void init(Profile profile, Node node) {
-        profileModel = profile;
-        profileNode = node;
+	public static void init(Profile profile, Node node) {
+		profileModel = profile;
+		profileNode = node;
 
-        loadViews();
-    }
+		loadViews();
+	}
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+	public static void main(String[] args) {
+		launch(args);
+	}
 
 }

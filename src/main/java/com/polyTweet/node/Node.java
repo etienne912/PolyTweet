@@ -5,51 +5,53 @@ import com.polyTweet.node.adapter.ServerAdapter;
 import com.polyTweet.node.exceptions.NodeNotFoundException;
 import com.polyTweet.profile.Profile;
 
+import java.io.IOException;
+import java.net.BindException;
 import java.util.*;
 
 public class Node {
 
 	private static final int MAX_NODE_INFORMATION_CAPACITY = 5;
 
-	private final HashMap<NodeInfo, ClientAdapter> neighbors;
+	private final HashMap<String, ClientAdapter> neighbors;
 	private final HashMap<String, ProfileCache> cache;
 	private final HashMap<Long, Integer> traficMonitor;
 	private final HashMap<String, Date> messageIdLog;
 	private final Profile myProfile;
-	private final NodeInfo myNodeInfo;
+	private final String myIp;
 	private final ServerAdapter serverAdapter;
 
-	public Node(Profile myProfile, NodeInfo nodeInfo) {
+	public Node(Profile myProfile, String nodeIp) throws IOException {
 		this.neighbors = new HashMap<>(MAX_NODE_INFORMATION_CAPACITY);
 		this.cache = new HashMap<>(MAX_NODE_INFORMATION_CAPACITY);
 		this.traficMonitor = new HashMap<>();
 		this.messageIdLog = new HashMap<>();
 		this.myProfile = myProfile;
-		this.myNodeInfo = nodeInfo;
-		this.serverAdapter = new ServerAdapter(nodeInfo, this);
+		this.myIp = nodeIp;
+		this.serverAdapter = new ServerAdapter(nodeIp, this);
 	}
 
 	public Profile getProfile() {
 		return this.myProfile;
 	}
 
-	public NodeInfo getNodeInfo() {
-		return this.myNodeInfo;
+	public String getNodeIp() {
+		return this.myIp;
 	}
 
-	public void addNeighborSimple(NodeInfo nodeInfo) {
-		if (nodeInfo == null) return;
+	public void addNeighborSimple(String nodeIp) {
+		if (nodeIp == null) return;
 		if (this.isNotFull()) {
-			ClientAdapter neighbor = new ClientAdapter(nodeInfo);
-			this.neighbors.put(nodeInfo, neighbor);
+			ClientAdapter neighbor = new ClientAdapter(nodeIp);
+			this.neighbors.put(nodeIp, neighbor);
 		}
 	}
 
-	public void addNeighbor(NodeInfo nodeInfo) {
+	public void addNeighbor(String nodeInfo) {
 		if (nodeInfo != null && !this.neighbors.containsKey(nodeInfo) && this.isNotFull()) {
 			ClientAdapter neighbor = new ClientAdapter(nodeInfo);
 			this.neighbors.put(nodeInfo, neighbor);
-			neighbor.addMyNode(this.myNodeInfo);
+			neighbor.addMyNode(this.myIp);
 
 //			if (this.getNbNeighbors() == 1) {
 //				this.requestNodeConnection();
@@ -57,10 +59,10 @@ public class Node {
 		}
 	}
 
-	public void removeNeighbor(NodeInfo nodeInfo) {
-		if (neighbors.containsKey(nodeInfo))
-			neighbors.get(nodeInfo).close();
-		neighbors.remove(nodeInfo);
+	public void removeNeighbor(String nodeIp) {
+		if (neighbors.containsKey(nodeIp))
+			neighbors.get(nodeIp).close();
+		neighbors.remove(nodeIp);
 	}
 
 	public void follow(long id) {
@@ -77,10 +79,10 @@ public class Node {
 
 	public void requestNodeConnection(int nbNodes) {
 		if (0 < nbNodes && nbNodes <= MAX_NODE_INFORMATION_CAPACITY - this.getNbNeighbors())
-			this.requestNodeConnection(this.myNodeInfo, this.myNodeInfo.hashCode() + "requestNodeConnection" + new Date().getTime(), nbNodes);
+			this.requestNodeConnection(this.myIp, this.myIp.hashCode() + "requestNodeConnection" + new Date().getTime(), nbNodes);
 	}
 
-	public void requestNodeConnection(NodeInfo nodeInfo, String messageId, int nbNodes) {
+	public void requestNodeConnection(String nodeInfo, String messageId, int nbNodes) {
 		if (nbNodes <= 0 || this.messageIdLog.containsKey(messageId)) return;
 		this.messageIdLog.put(messageId, new Date());
 
@@ -124,7 +126,7 @@ public class Node {
 
 	public Profile searchProfile(long id) throws NodeNotFoundException {
 		this.increaseMonitor(id);
-		Profile result = this.searchProfile(id, this.myNodeInfo.hashCode() + "searchProfile" + new Date().getTime(), true);
+		Profile result = this.searchProfile(id, this.myIp.hashCode() + "searchProfile" + new Date().getTime(), true);
 
 //		if (result != null)
 		return result;
@@ -154,7 +156,7 @@ public class Node {
 	}
 
 	public List<Profile> searchProfile(String name) {
-		return this.searchProfile(name, this.myNodeInfo.hashCode() + "searchProfileByName" + new Date().getTime());
+		return this.searchProfile(name, this.myIp.hashCode() + "searchProfileByName" + new Date().getTime());
 	}
 
 	public List<Profile> searchProfile(String name, String messageId) {
@@ -177,10 +179,10 @@ public class Node {
 	}
 
 	public void close() {
-		ArrayList<NodeInfo> neighbors = new ArrayList<>(this.neighbors.keySet());
+		ArrayList<String> neighbors = new ArrayList<>(this.neighbors.keySet());
 
-		for (NodeInfo neighbor : neighbors) {
-			this.removeNeighbor(neighbor);
+		for (String neighborIp : neighbors) {
+			this.removeNeighbor(neighborIp);
 		}
 
 		serverAdapter.close();
@@ -190,7 +192,7 @@ public class Node {
 	public String toString() {
 		return "Node{" +
 				"ProfileId=" + myProfile.getId() +
-				", NodeInfo=" + myNodeInfo +
+				", NodeIp=" + myIp +
 				", neighbors=" + neighbors.keySet() +
 				'}';
 	}
@@ -200,12 +202,12 @@ public class Node {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Node node = (Node) o;
-		return myNodeInfo.equals(node.myNodeInfo);
+		return myIp.equals(node.myIp);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(myNodeInfo);
+		return Objects.hash(myIp);
 	}
 
 }

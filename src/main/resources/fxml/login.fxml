@@ -4,7 +4,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.polyTweet.controller.LoginController"
@@ -54,16 +53,12 @@
                 <RowConstraints percentHeight="25.0"/>
             </rowConstraints>
             <Label text="Adresse IP Locale" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-            <TextField fx:id="localIpField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-            <Label text="Port Local" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-            <TextField fx:id="localPortField" text="5000" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <TextField fx:id="localIpField" text="127.0.0.1" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
             <Label text="Adresse IP Réseau" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
             <TextField fx:id="networkIpField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-            <Label text="Port Réseau" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-            <TextField fx:id="networkPortField" text="5000" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
         </GridPane>
     </GridPane>
-    <Button text="Se Connecter" onAction="#connexionClick"/>
+    <Button fx:id="loginButton" text="Se Connecter" disable="true" onAction="#connexionClick"/>
     <GridPane>
         <columnConstraints>
             <ColumnConstraints percentWidth="50.0"/>
@@ -72,6 +67,6 @@
         <Label text="Pas de Profile ?"
                GridPane.columnIndex="0" GridPane.rowIndex="0"/>
         <Button fx:id="registerButton" text="S'inscrire" onAction="#registerClick"
-               GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                GridPane.columnIndex="1" GridPane.rowIndex="0"/>
     </GridPane>
 </VBox>
