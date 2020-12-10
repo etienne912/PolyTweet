@@ -1,5 +1,6 @@
 package com.polyTweet.view;
 
+import com.jfoenix.assets.JFoenixResources;
 import com.polyTweet.controller.ActualitiesController;
 import com.polyTweet.controller.ProfilePersonalController;
 import com.polyTweet.controller.ProfileVisitorController;
@@ -8,6 +9,7 @@ import com.polyTweet.node.Node;
 import com.polyTweet.profile.Profile;
 import com.polyTweet.serialization.Serialization;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -42,12 +44,19 @@ public class MainView extends Application {
 			VBox registerPane = loader.load();
 			controllerMap.put("register", loader.getController());
 
+
 			Scene scene = new Scene(loginPane);
 
 			screenController = new ScreenController(scene);
 
 			screenController.addScreen("login", loginPane);
 			screenController.addScreen("register", registerPane);
+
+			final ObservableList<String> stylesheets = scene.getStylesheets();
+			stylesheets.addAll(JFoenixResources.load("css/jfoenix-fonts.css").toExternalForm(),
+					JFoenixResources.load("css/jfoenix-design.css").toExternalForm(),
+					MainView.class.getResource("/css/application.css").toExternalForm(),
+					MainView.class.getResource("/css/composants.css").toExternalForm());
 
 			primaryStage.getIcons().add(new Image("/img/polytweet.png"));
 			window.setTitle("PolyTweet");
