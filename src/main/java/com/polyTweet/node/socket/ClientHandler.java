@@ -24,15 +24,12 @@ public class ClientHandler implements Runnable {
 	}
 
 	public void run() {
-//		System.out.println("Start client " + sock.getRemoteSocketAddress().toString());
 
 		while (!sock.isClosed()) {
 			try {
 				inputStream = new ObjectInputStream(sock.getInputStream());
 
 				Message response = (Message) inputStream.readObject();
-				String remoteAddress = ((InetSocketAddress) sock.getRemoteSocketAddress()).getAddress().getHostAddress();
-//				System.out.println("From : " + remoteAddress + " type : " + response.getType());
 
 				Message toSend = serverAdapter.adapt(response);
 
@@ -49,7 +46,6 @@ public class ClientHandler implements Runnable {
 				System.err.println("Connection lost !");
 				break;
 			} catch (Exception e) {
-				System.err.println(this.sock.getRemoteSocketAddress().toString());
 				e.printStackTrace();
 				break;
 			}

@@ -2,6 +2,7 @@ package com.polyTweet.controller;
 
 import com.polyTweet.node.Node;
 import com.polyTweet.profile.Profile;
+import com.polyTweet.profile.ProfileView;
 import com.polyTweet.view.MainView;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
@@ -11,7 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-import java.io.IOException;
 import java.net.BindException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -38,15 +38,12 @@ public class RegisterController implements Initializable {
 		String lastName = this.lastName.getText();
 
 
-		Profile profile = new Profile(firstName, lastName);
-		Node node = null;
+		Profile profile = new ProfileView(firstName, lastName);
+		Node node;
 		try {
 			node = new Node(profile, this.networkIpField.getText());
 		} catch (BindException bindException) {
 			System.err.println("Address already in use");
-			return;
-		} catch (IOException ioException) {
-			ioException.printStackTrace();
 			return;
 		}
 

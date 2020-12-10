@@ -10,8 +10,9 @@ import org.junit.Test;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-public class TestS1 {
+public class TestS5 {
 
 	private Node node1, node2, node3;
 	private Profile profile1, profile2, profile3;
@@ -39,7 +40,14 @@ public class TestS1 {
 	}
 
 	@Test
-	public void rootingTest() throws NodeNotFoundException {
-		assertEquals(profile3, node1.searchProfile(profile3.getId()));
+	public void shareRootingInfoTest1() throws NodeNotFoundException {
+		node1.requestNodeConnection();
+		node2.close();
+
+		Profile profile = node1.searchProfile(profile3.getId());
+
+		assertNotNull(profile);
+		assertEquals(profile3.getId(), profile.getId());
 	}
+
 }

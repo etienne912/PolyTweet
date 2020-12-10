@@ -6,7 +6,6 @@ import com.polyTweet.node.message.data.*;
 import com.polyTweet.node.socket.Client;
 import com.polyTweet.profile.Profile;
 
-import java.io.IOException;
 import java.util.List;
 
 public class ClientAdapter {
@@ -37,7 +36,7 @@ public class ClientAdapter {
 		client.send(new Message(MessageTypesEnum.REQUEST_CONNECTION, messageId, new RequestConnectionData(nodeInfo, nbNodes, true)));
 	}
 
-	public void close() {
-		this.client.close();
+	public void close(String myIp) {
+		this.client.close(myIp);
 	}
 }

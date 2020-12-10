@@ -7,7 +7,7 @@ import com.polyTweet.node.message.data.*;
 import com.polyTweet.node.socket.Server;
 import com.polyTweet.profile.Profile;
 
-import java.io.IOException;
+import java.net.BindException;
 import java.util.List;
 
 public class ServerAdapter {
@@ -15,7 +15,7 @@ public class ServerAdapter {
 	private final Node node;
 	private final Server server;
 
-	public ServerAdapter(String nodeIp, Node pNode) throws IOException {
+	public ServerAdapter(String nodeIp, Node pNode) throws BindException {
 		node = pNode;
 		server = new Server(nodeIp, this);
 		server.open();

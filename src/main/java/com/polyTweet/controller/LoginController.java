@@ -2,6 +2,7 @@ package com.polyTweet.controller;
 
 import com.polyTweet.node.Node;
 import com.polyTweet.profile.Profile;
+import com.polyTweet.profile.ProfileView;
 import com.polyTweet.serialization.Deserialization;
 import com.polyTweet.view.MainView;
 import javafx.beans.binding.Bindings;
@@ -18,7 +19,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.BindException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -36,7 +36,7 @@ public class LoginController implements Initializable {
 
 	public LoginController() {
 		this.chooser = new FileChooser();
-		this.chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichier Sérialisé", "*.ser"));
+		this.chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Serialized profile", "*.ser"));
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class LoginController implements Initializable {
 
 	@FXML
 	public void connexionClick(ActionEvent e) {
-		Profile profile = (Profile) Deserialization.deserialize(this.file.getPath());
+		Profile profile = (ProfileView) Deserialization.deserialize(this.file.getPath());
 
 		if (profile == null) {
 			this.filePath.setText("Profile incompatible");
@@ -76,8 +76,6 @@ public class LoginController implements Initializable {
 			node = new Node(profile, this.localIpField.getText());
 		} catch (BindException bindException) {
 			System.err.println("Address already in use");
-			return;
-		} catch (IOException ignored) {
 			return;
 		}
 

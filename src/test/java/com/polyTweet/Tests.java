@@ -6,7 +6,7 @@ import com.polyTweet.node.exceptions.NodeNotFoundException;
 import com.polyTweet.profile.Profile;
 import org.junit.Test;
 
-import java.io.IOException;
+import java.net.BindException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,17 +19,17 @@ public class Tests {
 		assertEquals("Lécrivain", p.getLastName());
 
 		assertEquals(p.getStatus(), "");
-//		p.setStatus("Codding an super new peer to peer software");
-//		assertEquals(p.getStatus(), "Codding an super new peer to peer software");
+		p.setStatus("Codding an super new peer to peer software");
+		assertEquals(p.getStatus(), "Codding an super new peer to peer software");
 
 		assertEquals(p.getPosts().size(), 0);
-//		p.writePost("I wish a good day to all my PolyFollowers");
-//		assertEquals(p.getPosts().size(), 1);
-//		assertEquals(p.getPosts().get(0).getMessage(), "I wish a good day to all my PolyFollowers");
+		p.writePost("I wish a good day to all my PolyFollowers");
+		assertEquals(p.getPosts().size(), 1);
+		assertEquals(p.getPosts().get(0).getMessage(), "I wish a good day to all my PolyFollowers");
 	}
 
 	@Test
-	public void searchTest() throws MaxNodeException, NodeNotFoundException, IOException {
+	public void searchTest() throws MaxNodeException, NodeNotFoundException, BindException {
 		Profile profile1 = new Profile("Étienne", "Lécrivain");
 		Node node1 = new Node(profile1, "127.0.0.1");
 
@@ -54,7 +54,7 @@ public class Tests {
 		node4.addNeighbor(node1.getNodeIp());
 		node4.addNeighbor(node2.getNodeIp());
 
-		assertEquals("Success find test", node1.searchProfile(node3.getProfile().getId()), node3.getProfile());
+		assertEquals("Success find test", node3.getProfile(), node1.searchProfile(node3.getProfile().getId()));
 
 //		assertThrows("Not found test", NodeNotFoundException.class, () -> node1.searchProfile(-1));
 

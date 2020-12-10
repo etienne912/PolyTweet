@@ -14,10 +14,13 @@ public class Server {
 	private final ServerAdapter serverAdapter;
 	private final HashMap<String, ClientHandler> clientHandlers;
 
-	public Server(String nodeIp, ServerAdapter pServerAdapter) throws IOException {
+	public Server(String nodeIp, ServerAdapter pServerAdapter) throws BindException {
 		try {
 			server = new ServerSocket(PORT, 5, InetAddress.getByName(nodeIp));
-		} catch (UnknownHostException ignored) {
+		} catch (BindException bindException) {
+			throw bindException;
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		serverAdapter = pServerAdapter;
 		clientHandlers = new HashMap<>();

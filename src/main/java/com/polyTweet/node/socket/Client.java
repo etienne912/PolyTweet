@@ -32,16 +32,13 @@ public class Client {
 		try {
 			outputStream = new ObjectOutputStream(connexion.getOutputStream());
 
-//			System.out.println(nodeInfo + " Send : " + message.getType());
 			outputStream.writeObject(message);
 			outputStream.flush();
 
 			inputStream = new ObjectInputStream(connexion.getInputStream());
-			Message response = (Message) inputStream.readObject();
 
-//			System.out.println(nodeInfo + " Receive response : " + response.getType());
 
-			return response;
+			return (Message) inputStream.readObject();
 
 		} catch (IOException | ClassNotFoundException e1) {
 			e1.printStackTrace();
@@ -51,15 +48,13 @@ public class Client {
 		return null;
 	}
 
-	public void close() {
+	public void close(String myIp) {
 		try {
 			outputStream = new ObjectOutputStream(connexion.getOutputStream());
-			outputStream.writeObject(new Message(MessageTypesEnum.CLOSE_CONNECTION, null, new CloseConnectionData(nodeIp)));
+			outputStream.writeObject(new Message(MessageTypesEnum.CLOSE_CONNECTION, null, new CloseConnectionData(myIp)));
 			outputStream.flush();
 			connexion.close();
-		} catch (SocketException ignored) {
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException ignored) {
 		}
 	}
 

@@ -4,8 +4,8 @@ import com.polyTweet.node.adapter.ClientAdapter;
 import com.polyTweet.node.adapter.ServerAdapter;
 import com.polyTweet.node.exceptions.NodeNotFoundException;
 import com.polyTweet.profile.Profile;
+import com.polyTweet.profile.ProfileCache;
 
-import java.io.IOException;
 import java.net.BindException;
 import java.util.*;
 
@@ -14,16 +14,16 @@ public class Node {
 	private static final int MAX_NODE_INFORMATION_CAPACITY = 5;
 
 	private final HashMap<String, ClientAdapter> neighbors;
-	private final HashMap<String, ProfileCache> cache;
+	private final HashMap<Long, ProfileCache> cache;
 	private final HashMap<Long, Integer> traficMonitor;
 	private final HashMap<String, Date> messageIdLog;
 	private final Profile myProfile;
 	private final String myIp;
-	private final ServerAdapter serverAdapter;
+	private ServerAdapter serverAdapter;
 
-	public Node(Profile myProfile, String nodeIp) throws IOException {
+	public Node(Profile myProfile, String nodeIp) throws BindException {
 		this.neighbors = new HashMap<>(MAX_NODE_INFORMATION_CAPACITY);
-		this.cache = new HashMap<>(MAX_NODE_INFORMATION_CAPACITY);
+		this.cache = new HashMap<>();
 		this.traficMonitor = new HashMap<>();
 		this.messageIdLog = new HashMap<>();
 		this.myProfile = myProfile;
@@ -59,9 +59,13 @@ public class Node {
 		}
 	}
 
+	public HashMap<Long, ProfileCache> getCache() {
+		return cache;
+	}
+
 	public void removeNeighbor(String nodeIp) {
 		if (neighbors.containsKey(nodeIp))
-			neighbors.get(nodeIp).close();
+			neighbors.get(nodeIp).close(this.myIp);
 		neighbors.remove(nodeIp);
 	}
 
@@ -132,6 +136,10 @@ public class Node {
 		return result;
 	}
 
+	public void flushCache() {
+		this.cache.clear();
+	}
+
 	public Profile searchProfile(long id, String messageId, boolean broadcast) {
 		if (this.messageIdLog.containsKey(messageId)) return null;
 		if (broadcast)
@@ -146,13 +154,24 @@ public class Node {
 			for (ClientAdapter neighbor : this.neighbors.values()) {
 				Profile profile = neighbor.searchProfile(id, messageId, b);
 
-				if (profile != null)
-					return profile;
+				if (profile != null) {
+					if (profile instanceof ProfileCache) {
+						if (this.cache.containsKey(profile.getId()) && ((ProfileCache) profile).getDate().compareTo(this.cache.get(profile.getId()).getDate()) >= 0) {
+							return this.cache.get(profile.getId());
+						} else {
+							this.cache.put(profile.getId(), (ProfileCache) profile);
+							return profile;
+						}
+					} else {
+						this.cache.put(profile.getId(), new ProfileCache(profile));
+						return profile;
+					}
+				}
 			}
 			b = true;
 		}
 
-		return null;
+		return this.cache.getOrDefault(id, null);
 	}
 
 	public List<Profile> searchProfile(String name) {
@@ -171,9 +190,27 @@ public class Node {
 		for (ClientAdapter neighbor : this.neighbors.values()) {
 			List<Profile> result = neighbor.searchProfile(name, messageId);
 
-			if (result != null)
-				profiles.addAll(result);
+			if (result != null) {
+				result.forEach(profile -> {
+					if (profile instanceof ProfileCache) {
+						if (this.cache.containsKey(profile.getId()) && ((ProfileCache) profile).getDate().compareTo(this.cache.get(profile.getId()).getDate()) >= 0) {
+							profiles.add(this.cache.get(profile.getId()));
+						} else {
+							this.cache.put(profile.getId(), (ProfileCache) profile);
+							profiles.add(profile);
+						}
+					} else {
+						this.cache.put(profile.getId(), new ProfileCache(profile));
+						profiles.add(profile);
+					}
+				});
+			}
 		}
+
+		this.cache.values().forEach(profile -> {
+			if (profile.getName().toLowerCase(Locale.ROOT).contains(name.toLowerCase(Locale.ROOT)) && !profiles.contains(profile))
+				profiles.add(profile);
+		});
 
 		return profiles;
 	}
@@ -185,7 +222,9 @@ public class Node {
 			this.removeNeighbor(neighborIp);
 		}
 
-		serverAdapter.close();
+		if (serverAdapter != null)
+			serverAdapter.close();
+		serverAdapter = null;
 	}
 
 	@Override

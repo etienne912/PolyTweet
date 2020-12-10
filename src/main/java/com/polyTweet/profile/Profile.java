@@ -1,7 +1,5 @@
 package com.polyTweet.profile;
 
-import com.polyTweet.view.MainView;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,6 +19,15 @@ public class Profile implements Serializable {
 		this.status = "";
 		this.posts = new ArrayList<>();
 		this.profileFollowed = new ArrayList<>();
+	}
+
+	public Profile(Profile profile) {
+		this.id = profile.id;
+		this.firstName = profile.firstName;
+		this.lastName = profile.lastName;
+		this.status = profile.status;
+		this.posts = profile.posts;
+		this.profileFollowed = profile.profileFollowed;
 	}
 
 	public long getId() {
@@ -45,17 +52,14 @@ public class Profile implements Serializable {
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
-		MainView.update();
 	}
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-		MainView.update();
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
-		MainView.update();
 	}
 
 	public List<Post> getPosts() {
@@ -64,7 +68,6 @@ public class Profile implements Serializable {
 
 	public void writePost(String message) {
 		this.posts.add(new Post(message, this.id));
-		MainView.update();
 	}
 
 	public ArrayList<Long> getProfileFollowed() {
@@ -73,12 +76,10 @@ public class Profile implements Serializable {
 
 	public void unfollow(Long id) {
 		this.profileFollowed.remove(id);
-		MainView.updateProfileVisitor();
 	}
 
 	public void follow(Long id) {
 		this.profileFollowed.add(id);
-		MainView.updateProfileVisitor();
 	}
 
 	public boolean isFollowing(Long id) {
