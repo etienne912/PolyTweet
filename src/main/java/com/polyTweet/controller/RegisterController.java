@@ -41,14 +41,16 @@ public class RegisterController implements Initializable {
 		Profile profile = new ProfileView(firstName, lastName);
 		Node node;
 		try {
-			node = new Node(profile, this.networkIpField.getText());
+			node = new Node(profile, this.localIpField.getText());
 		} catch (BindException bindException) {
 			System.err.println("Address already in use");
 			return;
 		}
 
-		if (!this.networkIpField.getText().equals(""))
+		if (!this.networkIpField.getText().equals("")) {
 			node.addNeighbor(this.networkIpField.getText());
+			new Thread(node::requestNodeConnection).start();
+		}
 
 		this.firstName.setText("");
 		this.lastName.setText("");

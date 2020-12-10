@@ -79,8 +79,10 @@ public class LoginController implements Initializable {
 			return;
 		}
 
-		if (!this.networkIpField.getText().equals(""))
+		if (!this.networkIpField.getText().equals("")) {
 			node.addNeighbor(this.networkIpField.getText());
+			new Thread(node::requestNodeConnection).start();
+		}
 
 		this.file = null;
 		this.filePath.setText("Aucun Profile Sélectionné");
