@@ -62,6 +62,9 @@ public class MainView extends Application {
 			window.setTitle("PolyTweet");
 			window.setScene(scene);
 			window.show();
+
+			window.setOnCloseRequest(event -> closeWindow());
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -85,9 +88,15 @@ public class MainView extends Application {
 	}
 
 	public static void closeWindow() {
-		profileNode.close();
-		Serialization.serialize(profileModel, "./tmp/profile" + profileModel.getFirstName() + ".ser");
-		switchScene("login");
+		if (profileNode != null) {
+			profileNode.close();
+			profileNode = null;
+		}
+		if (profileModel != null) {
+			Serialization.serialize(profileModel, "./tmp/profile" + profileModel.getFirstName() + ".ser");
+			profileModel = null;
+			switchScene("login");
+		}
 	}
 
 	public static void update() {

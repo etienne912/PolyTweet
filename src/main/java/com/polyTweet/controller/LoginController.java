@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -52,6 +53,7 @@ public class LoginController implements Initializable {
 		this.file = chooser.showOpenDialog(MainView.getPrimaryStage());
 		if (this.file != null) {
 			String path = this.file.getPath();
+			this.filePath.setTextFill(Color.BLACK);
 			this.filePath.setText(path);
 			fileSelected.setValue(true);
 		}
@@ -61,7 +63,15 @@ public class LoginController implements Initializable {
 	public void connexionClick(ActionEvent e) {
 		Profile profile = (Profile) Deserialization.deserialize(this.file.getPath());
 
-		Node node = null;
+		if (profile == null) {
+			this.filePath.setText("Profile incompatible");
+			this.filePath.setTextFill(Color.RED);
+			this.file = null;
+			fileSelected.setValue(true);
+			return;
+		}
+
+		Node node;
 		try {
 			node = new Node(profile, this.localIpField.getText());
 		} catch (BindException bindException) {

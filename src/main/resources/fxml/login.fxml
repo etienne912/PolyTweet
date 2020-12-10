@@ -34,12 +34,12 @@
                 <ColumnConstraints percentWidth="30.0"/>
                 <ColumnConstraints percentWidth="30.0"/>
             </columnConstraints>
-            <Label text="Profile"
+            <Label text="Profile file"
                    GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-            <Label fx:id="filePath" text="Aucun Profile Sélectionné" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <Label fx:id="filePath" text="No selected profile" GridPane.columnIndex="1" GridPane.rowIndex="0">
             </Label>
-            <JFXButton text="Importer"
-                       style="-jfx-button-type: RAISED;-fx-background-color: white;-fx-text-fill: black;"
+            <JFXButton text="Import"
+                       style="-jfx-button-type: RAISED;-fx-background-color: white;-fx-text-fill: black;-fx-start-margin: 10px"
                        fx:id="importButton"
                        onAction="#importClick"
                        GridPane.columnIndex="2" GridPane.rowIndex="0"/>
@@ -55,10 +55,10 @@
                 <RowConstraints percentHeight="25.0"/>
                 <RowConstraints percentHeight="25.0"/>
             </rowConstraints>
-            <Label text="Adresse IP Locale" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <Label text="Your IP address" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
             <JFXTextField style="-fx-label-float:true;-fx-background-color:transparent" fx:id="localIpField"
                           text="127.0.0.1" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-            <Label text="Adresse IP Réseau" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <Label text="Network IP address" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
             <JFXTextField style="-fx-label-float:true;-fx-background-color:transparent" fx:id="networkIpField"
                           GridPane.columnIndex="1" GridPane.rowIndex="2"/>
         </GridPane>
@@ -66,20 +66,20 @@
     <FlowPane style="-fx-alignment: center;">
         <VBox.margin>
             <Insets>
-                <bottom>10</bottom>
+                <bottom>30</bottom>
             </Insets>
         </VBox.margin>
-        <JFXButton fx:id="loginButton" text="Se Connecter" disable="true"
+        <JFXButton fx:id="loginButton" text="Login" disable="true" minWidth="100"
                    style="-jfx-button-type: RAISED;-fx-background-color: green;-fx-text-fill: white;"
                    onAction="#connexionClick"/>
     </FlowPane>
     <FlowPane style="-fx-alignment: center;">
-        <Label text="Pas de Profile ?">
+        <Label text="You don't have a profile?">
             <FlowPane.margin>
                 <Insets right="50.0"/>
             </FlowPane.margin>
         </Label>
-        <JFXButton fx:id="registerButton" text="S'inscrire" onAction="#registerClick"
+        <JFXButton fx:id="registerButton" text="Register" onAction="#registerClick" minWidth="100"
                    style="-jfx-button-type: RAISED;-fx-background-color: green;-fx-text-fill: white;"/>
     </FlowPane>
 </VBox>
