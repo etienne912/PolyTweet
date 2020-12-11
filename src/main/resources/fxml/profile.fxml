@@ -24,7 +24,7 @@
                 </columnConstraints>
                 <Label fx:id="firstName" styleClass="nameLabel" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
                 <Label fx:id="lastName" styleClass="nameLabel" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                <Label styleClass="followLabel" GridPane.columnIndex="2" GridPane.rowIndex="0" text="Personnes Suivies : "/>
+                <Label styleClass="followLabel" GridPane.columnIndex="2" GridPane.rowIndex="0" text="Followed profiles : "/>
                 <JFXButton styleClass="followedButton" fx:id="followedNb" onAction="#followClick" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
             </GridPane>
             <Label styleClass="statusLabel" fx:id="status"/>

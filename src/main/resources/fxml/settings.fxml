@@ -25,11 +25,11 @@
                     <RowConstraints prefHeight="50.0"/>
                     <RowConstraints prefHeight="50.0"/>
                 </rowConstraints>
-                <Label styleClass="settingsLabel, gridLabel" text="Prénom"
+                <Label styleClass="settingsLabel, gridLabel" text="First Name"
                        GridPane.columnIndex="0" GridPane.rowIndex="0"/>
                 <JFXTextField styleClass="settingsField" fx:id="firstNameField"
                               GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                <Label styleClass="settingsLabel, gridLabel" text="Nom"
+                <Label styleClass="settingsLabel, gridLabel" text="Last Name"
                        GridPane.columnIndex="0" GridPane.rowIndex="1"/>
                 <JFXTextField styleClass="settingsField" fx:id="lastNameField"
                            GridPane.columnIndex="1" GridPane.rowIndex="1"/>
@@ -37,7 +37,7 @@
             <Label styleClass="settingsLabel" text="Status"
                    GridPane.columnIndex="0" GridPane.rowIndex="1"/>
             <JFXTextField promptText="Type your status..." styleClass="settingsField" fx:id="statusField"/>
-            <JFXButton styleClass="validateSettings" text="Valider" onAction="#validateClick"/>
+            <JFXButton styleClass="validateSettings" text="Validate" onAction="#validateClick"/>
         </VBox>
     </center>
 </BorderPane>

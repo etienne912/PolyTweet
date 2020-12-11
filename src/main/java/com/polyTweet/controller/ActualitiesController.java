@@ -41,9 +41,9 @@ public class ActualitiesController implements Initializable, Observer {
 	}
 
 	/**
-	 * Initialisation of the view.
-	 * @param location location of the view.
-	 * @param resources information for the initialisation.
+	 * Initialization of the view.
+	 * @param location location of the view
+	 * @param resources information for the initialisation
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -51,7 +51,7 @@ public class ActualitiesController implements Initializable, Observer {
 	}
 
 	/**
-	 * Initialisation of personal and profiles followed posts.
+	 * Initialization of personal and profiles followed posts.
 	 */
 	private void initPost() {
 		List<Post> sortedPosts = new ArrayList<>();
@@ -101,8 +101,8 @@ public class ActualitiesController implements Initializable, Observer {
 	}
 
 	/**
-	 * Listener called when user click on the button to create a new post.
-	 * @param e Event.
+	 * Listener called when the user click on the button to create a new post.
+	 * @param e Event
 	 */
 	@FXML
 	public void postClick(ActionEvent e) {
@@ -115,7 +115,7 @@ public class ActualitiesController implements Initializable, Observer {
 
 	/**
 	 * Listener to refresh posts.
-	 * @param e Event.
+	 * @param e Event
 	 */
 	@FXML
 	public void refresh(ActionEvent e) {
@@ -123,8 +123,8 @@ public class ActualitiesController implements Initializable, Observer {
 	}
 
 	/**
-	 * Listener called when user click on the name of the owner of a post.
-	 * @param e Event.
+	 * Listener called when the user click on the name of the owner of a post.
+	 * @param e Event
 	 */
 	@FXML
 	public void visitProfileClick(ActionEvent e) {
@@ -150,7 +150,7 @@ public class ActualitiesController implements Initializable, Observer {
 
 	/**
 	 * Function to update the view.
-	 * @param observable Observable element.
+	 * @param observable Observable element
 	 */
 	@Override
 	public void update(Observable observable) {

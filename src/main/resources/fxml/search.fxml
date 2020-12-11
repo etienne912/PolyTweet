@@ -17,7 +17,7 @@
     </top>
     <center>
         <VBox styleClass="vboxSearch">
-            <Label styleClass="resultLabel" text="Résultats"/>
+            <Label styleClass="resultLabel" text="Results"/>
             <ScrollPane>
                 <JFXListView prefHeight="500" prefWidth="698" fx:id="listResult" styleClass="listProfile"/>
             </ScrollPane>

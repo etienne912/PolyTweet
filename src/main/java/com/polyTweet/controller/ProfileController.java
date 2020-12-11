@@ -11,6 +11,9 @@ import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
+/**
+ * Abstract class of Profile view controller.
+ */
 public abstract class ProfileController implements Observer {
 
 	@FXML
@@ -19,14 +22,25 @@ public abstract class ProfileController implements Observer {
 
 	private static Profile profile;
 
+
+	/**
+	 * Profile Constructor.
+	 */
 	public ProfileController(Profile p) {
 		profile = p;
 	}
 
+	/**
+	 * Function to set Profile variable.
+	 * @param myProfile Profile to set
+	 */
 	public void setVars(Profile myProfile) {
 		this.profile = myProfile;
 	}
 
+	/**
+	 * Function to initialise the user profile.
+	 */
 	public void initView() {
 		this.firstName.setText(profile.getFirstName());
 		this.lastName.setText(profile.getLastName());

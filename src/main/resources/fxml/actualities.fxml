@@ -20,8 +20,8 @@
         <VBox spacing="20" styleClass="vboxAcutalities">
             <JFXTextArea promptText="Type your message..." styleClass="areaPost" minHeight="100" minWidth="700" fx:id="postText"/>
             <HBox spacing="20">
-                <JFXButton styleClass="postButton" fx:id="postButton" onAction="#postClick" text="Valider"/>
-                <JFXButton styleClass="postButton" fx:id="refreshButton" onAction="#refresh" text="Actualiser"/>
+                <JFXButton styleClass="postButton" fx:id="postButton" onAction="#postClick" text="Validate"/>
+                <JFXButton styleClass="postButton" fx:id="refreshButton" onAction="#refresh" text="Refresh"/>
             </HBox>
             <ScrollPane>
                 <VBox spacing="20" prefHeight="600" fx:id="vboxPost"/>

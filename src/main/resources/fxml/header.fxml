@@ -30,9 +30,9 @@
         <JFXButton GridPane.columnIndex="0" GridPane.rowIndex="0" alignment="CENTER" minHeight="40" minWidth="160"
                    text="Profile" styleClass="navButton" fx:id="profileButton" onAction="#profileClick"/>
         <JFXButton GridPane.columnIndex="1" GridPane.rowIndex="0" alignment="CENTER" minHeight="40" minWidth="150"
-                   text="Actualités" styleClass="navButton" fx:id="actualitiesButton" onAction="#actualitiesClick"/>
+                   text="Actualities" styleClass="navButton" fx:id="actualitiesButton" onAction="#actualitiesClick"/>
         <JFXButton GridPane.columnIndex="2" GridPane.rowIndex="0" alignment="CENTER" minHeight="40" minWidth="150"
-                   text="Paramètres" styleClass="navButton" fx:id="settingsButton" onAction="#settingsClick"/>
+                   text="Settings" styleClass="navButton" fx:id="settingsButton" onAction="#settingsClick"/>
     </GridPane>
     <GridPane alignment="CENTER" GridPane.columnIndex="2">
         <JFXTextField promptText="Search" styleClass="searchField" prefHeight="30"  fx:id="searchField" GridPane.columnIndex="0" GridPane.rowIndex="0"/>

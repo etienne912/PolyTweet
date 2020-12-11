@@ -15,6 +15,9 @@ import java.net.BindException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Register view Controller.
+ */
 public class RegisterController implements Initializable {
 
 	@FXML
@@ -23,11 +26,18 @@ public class RegisterController implements Initializable {
 
 	private MainView view;
 
-
+	/**
+	 * Register Constructor.
+	 */
 	public void setVars(MainView view) {
 		this.view = view;
 	}
 
+	/**
+	 * Initialization of the view.
+	 * @param location location of the view
+	 * @param resources information for the initialisation
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		BooleanBinding booleanBind = Bindings.or(firstName.textProperty().isEmpty(),
@@ -37,6 +47,10 @@ public class RegisterController implements Initializable {
 		this.registerButton.disableProperty().bind(booleanBind);
 	}
 
+	/**
+	 * Listener called when the user click on the button to register.
+	 * @param e Event
+	 */
 	@FXML
 	public void registerClick(ActionEvent e) {
 
@@ -65,6 +79,10 @@ public class RegisterController implements Initializable {
 		view.switchScene("actualities");
 	}
 
+	/**
+	 * Listener called when the user click on the return button to come back to the login view.
+	 * @param e Event
+	 */
 	@FXML
 	public void returnLogin(ActionEvent e) {
 		view.switchScene("login");

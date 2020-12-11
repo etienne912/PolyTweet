@@ -19,6 +19,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Search list view controller.
+ */
 public class SearchController implements Initializable, Observer {
 
     private final Profile profile;
@@ -28,11 +31,19 @@ public class SearchController implements Initializable, Observer {
     @FXML
     public JFXListView listResult;
 
+    /**
+     * Search list Controller.
+     */
     public SearchController() {
         this.profile = MainView.getProfile();
         this.node = MainView.getNode();
     }
 
+    /**
+     * Initialization of the view.
+     * @param location location of the view
+     * @param resources information for the initialisation
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.listResult.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -64,6 +75,10 @@ public class SearchController implements Initializable, Observer {
 		});
     }
 
+    /**
+     * Display of all profiles which correspond to the search.
+     * @param search Text to search profiles which contain it in their name
+     */
     public void initResult(String search) {
 
         profiles = node.searchProfile(search);
@@ -77,6 +92,10 @@ public class SearchController implements Initializable, Observer {
         }
     }
 
+    /**
+     * Display of all profiles followed by the user.
+     * @param profiles Profiles list
+     */
     public void initResult(HashSet<Long> profiles) {
 
         if( profiles.size() > 0 ) {
@@ -88,6 +107,10 @@ public class SearchController implements Initializable, Observer {
         }
     }
 
+    /**
+     * Function to update the view.
+     * @param observable Observable element
+     */
     @Override
     public void update(Observable observable) {}
 }

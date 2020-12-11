@@ -12,6 +12,9 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Settings view controller.
+ */
 public class SettingsController implements Initializable, Observer {
 
 	private Profile profile;
@@ -19,10 +22,18 @@ public class SettingsController implements Initializable, Observer {
 	@FXML
 	public TextField firstNameField, lastNameField, statusField;
 
+	/**
+	 * Settings Constructor.
+	 */
 	public SettingsController() {
 		this.profile = MainView.getProfile();
 	}
 
+	/**
+	 * Initialization of the view.
+	 * @param location location of the view
+	 * @param resources information for the initialisation
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.firstNameField.setText(profile.getFirstName());
@@ -30,6 +41,10 @@ public class SettingsController implements Initializable, Observer {
 		this.statusField.setText(profile.getStatus());
 	}
 
+	/**
+	 * Listener called when the user click on the button to update his personal information.
+	 * @param e Event
+	 */
 	@FXML
 	public void validateClick(ActionEvent e) {
 		if (!this.firstNameField.getText().equals(this.profile.getFirstName()))
@@ -40,6 +55,10 @@ public class SettingsController implements Initializable, Observer {
 			this.profile.setStatus(this.statusField.getText());
 	}
 
+	/**
+	 * Function to update the view.
+	 * @param observable Observable element
+	 */
 	@Override
 	public void update(Observable observable) {
 		this.firstNameField.setText(profile.getFirstName());

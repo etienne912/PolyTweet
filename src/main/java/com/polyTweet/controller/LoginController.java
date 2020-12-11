@@ -22,6 +22,9 @@ import java.net.BindException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Log in view controller.
+ */
 public class LoginController implements Initializable {
 
 	MainView view;
@@ -35,15 +38,27 @@ public class LoginController implements Initializable {
 	private final FileChooser chooser;
 	private File file;
 
+	/**
+	 * Log in Constructor.
+	 */
 	public LoginController() {
 		this.chooser = new FileChooser();
 		this.chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Serialized profile", "*.ser"));
 	}
 
+	/**
+	 * Function to set MainView.
+	 * @param mainView MainView class
+	 */
 	public void setVars(MainView mainView) {
 		this.view = mainView;
 	}
 
+	/**
+	 * Initialization of the view.
+	 * @param location location of the view
+	 * @param resources information for the initialisation
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		BooleanBinding fileSelectedCompleted = fileSelected.isNotEqualTo(new SimpleBooleanProperty(true));
@@ -53,6 +68,10 @@ public class LoginController implements Initializable {
 		this.loginButton.disableProperty().bind(booleanBind);
 	}
 
+	/**
+	 * Listener called when the user click on the button to import a serialized profile.
+	 * @param e Event
+	 */
 	@FXML
 	public void importClick(ActionEvent e) {
 		this.file = chooser.showOpenDialog(this.view.getPrimaryStage());
@@ -64,6 +83,10 @@ public class LoginController implements Initializable {
 		}
 	}
 
+	/**
+	 * Listener called when the user click on the button to connect to his profile.
+	 * @param e Event
+	 */
 	@FXML
 	public void connexionClick(ActionEvent e) {
 		Profile profile = (Profile) Deserialization.deserialize(this.file.getPath());
@@ -97,6 +120,10 @@ public class LoginController implements Initializable {
 		this.view.switchScene("actualities");
 	}
 
+	/**
+	 * Listener called when the user click on the button to create a new profile.
+	 * @param e Event
+	 */
 	@FXML
 	public void registerClick(ActionEvent e) {
 		this.view.switchScene("register");

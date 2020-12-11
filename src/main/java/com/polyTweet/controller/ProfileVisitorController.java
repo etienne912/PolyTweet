@@ -12,6 +12,9 @@ import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Visited Profile view Controller.
+ */
 public class ProfileVisitorController extends ProfileController implements Initializable {
 
 	@FXML
@@ -21,11 +24,19 @@ public class ProfileVisitorController extends ProfileController implements Initi
 
 	private static Profile profile;
 
+	/**
+	 * Visited profile Constructor.
+	 */
 	public ProfileVisitorController() {
 		super(MainView.getProfileVisitor());
 		profile = MainView.getProfileVisitor();
 	}
 
+	/**
+	 * Initialization of the view.
+	 * @param location location of the view
+	 * @param resources information for the initialisation
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.initView();
@@ -37,6 +48,10 @@ public class ProfileVisitorController extends ProfileController implements Initi
 		super.initView();
 	}
 
+	/**
+	 * Listener called when the user click on the button to follow / unfollow the profile.
+	 * @param e Event
+	 */
 	public void followClick() {
 		if (!MainView.getProfile().isFollowing(profile.getId())) {
 			MainView.getProfile().follow(profile.getId());
@@ -45,6 +60,10 @@ public class ProfileVisitorController extends ProfileController implements Initi
 		}
 	}
 
+	/**
+	 * Function to update the view.
+	 * @param observable Observable element
+	 */
 	@Override
 	public void update(Observable observable) {
 		this.initView();

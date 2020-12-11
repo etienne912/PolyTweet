@@ -12,6 +12,9 @@ import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * User Profile view Controller.
+ */
 public class ProfilePersonalController extends ProfileController implements Initializable {
 
 	@FXML
@@ -20,26 +23,45 @@ public class ProfilePersonalController extends ProfileController implements Init
 
 	private static Profile profile;
 
+	/**
+	 * User profile Constructor.
+	 */
 	public ProfilePersonalController() {
 		super(MainView.getProfile());
 		profile = MainView.getProfile();
 	}
 
+	/**
+	 * Initialization of the view.
+	 * @param location location of the view
+	 * @param resources information for the initialisation
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.initView();
 	}
 
+	/**
+	 * Function to initialise the user profile.
+	 */
 	public void initView() {
 		this.followedNb.setText(Integer.toString(profile.getFollowedProfiles().size()));
 		super.initView();
 	}
 
+	/**
+	 * Function to update the view.
+	 * @param observable Observable element
+	 */
 	@Override
 	public void update(Observable observable) {
 		this.initView();
 	}
 
+	/**
+	 * Listener called when the user click on the number of followed profiles to load a list of them.
+	 * @param e Event
+	 */
 	@FXML
 	public void followClick(ActionEvent e) {
 		MainView.initSearchResult(profile.getFollowedProfiles());

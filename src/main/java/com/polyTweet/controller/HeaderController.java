@@ -1,8 +1,6 @@
 package com.polyTweet.controller;
 
 import com.jfoenix.controls.JFXTextField;
-import com.polyTweet.dao.Node;
-import com.polyTweet.model.Profile;
 import com.polyTweet.view.MainView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,43 +10,68 @@ import javafx.scene.control.Button;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Header view controller.
+ */
 public class HeaderController implements Initializable {
-
-	private static Profile profile;
-	private static Node node;
 
 	@FXML
 	public Button profileButton, actualitiesButton, settingsButton;
 	public JFXTextField searchField;
 
-	public HeaderController() {
-		node = MainView.getNode();
-		profile = MainView.getProfile();
-	}
+	/**
+	 * Header Constructor.
+	 */
+	public HeaderController() {}
 
+	/**
+	 * Initialization of the view.
+	 * @param location location of the view
+	 * @param resources information for the initialisation
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {}
 
+	/**
+	 * Listener called when the user click on the button to load the profile view.
+	 * @param e Event
+	 */
 	@FXML
 	public void profileClick(ActionEvent e) {
 		MainView.switchScene("profile");
 	}
 
+	/**
+	 * Listener called when the user click on the button to load the actualities view.
+	 * @param e Event
+	 */
 	@FXML
 	private void actualitiesClick(ActionEvent e) {
 		MainView.switchScene("actualities");
 	}
 
+	/**
+	 * Listener called when the user click on the button to load the settings view.
+	 * @param e Event
+	 */
 	@FXML
 	private void settingsClick(ActionEvent e) {
 		MainView.switchScene("settings");
 	}
 
+	/**
+	 * Listener called when the user click on the button to log out.
+	 * @param e Event
+	 */
 	@FXML
 	private void logoutClick() {
 		MainView.disconnection();
 	}
 
+	/**
+	 * Listener called when the user click on the button to search a profile in the network.
+	 * @param e Event
+	 */
 	@FXML
 	private void searchClick(ActionEvent e) {
 		if(!this.searchField.getText().equals("")){

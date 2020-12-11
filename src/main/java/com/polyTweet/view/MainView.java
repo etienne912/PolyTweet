@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * Class to run to launch the software.
+ */
 public class MainView extends Application {
 
     private static HashMap<String, Object> controllerMap;
@@ -26,6 +29,10 @@ public class MainView extends Application {
     private static Node myNode;
     private static Stage window;
 
+    /**
+     * Initialization of the software
+     * @param primaryStage Main window of the software
+     */
     @Override
     public void start(Stage primaryStage) {
 
@@ -72,22 +79,41 @@ public class MainView extends Application {
 
     }
 
+    /**
+     * Function to get user profile model.
+     * @return User profile model
+     */
     public static Profile getProfile() {
         return myProfile;
     }
 
+    /**
+     * Function to get visited profile model.
+     * @return Visited profile model
+     */
     public static Profile getProfileVisitor() {
         return profilVisitor;
     }
 
+    /**
+     * Function to get node model of the user profile.
+     * @return Node model of the user profile
+     */
     public static Node getNode() {
         return myNode;
     }
 
+    /**
+     * Function called to switch of view.
+     * @param name Name of the view to display
+     */
     public static void switchScene(String name) {
         screenController.activate(name);
     }
 
+    /**
+     * Function to save user profile, close the connection properly and disconnect him.
+     */
     public static void disconnection() {
         if (myNode != null) {
             myNode.close();
@@ -101,10 +127,17 @@ public class MainView extends Application {
         }
     }
 
+    /**
+     * Function to get this class.
+     * @return This class
+     */
     public static Stage getPrimaryStage() {
         return window;
     }
 
+    /**
+     * Function called to load views when the user log in.
+     */
     private void loadViews() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/profile.fxml"));
@@ -133,6 +166,9 @@ public class MainView extends Application {
         }
     }
 
+    /**
+     * Function called to load the profile view that the user want to visit.
+     */
     public static void loadVisitorView() {
         try {
             FXMLLoader loader = new FXMLLoader(MainView.class.getResource("/fxml/profileVisitor.fxml"));
@@ -146,12 +182,20 @@ public class MainView extends Application {
         }
     }
 
+    /**
+     * Initialization of the profile to visit.
+     * @param profile Profile to visit.
+     */
     public static void initVisitProfile(Profile profile) {
         profilVisitor = profile;
 
         loadVisitorView();
     }
 
+    /**
+     * Initialization of the search list view
+     * @param o Profiles list or text to search.
+     */
     public static void initSearchResult(Object o) {
         try {
             FXMLLoader loader = new FXMLLoader(MainView.class.getResource("/fxml/search.fxml"));
@@ -167,6 +211,11 @@ public class MainView extends Application {
         }
     }
 
+    /**
+     * Initialization of the user profile and node when he connects.
+     * @param profile User profile
+     * @param node User profile node
+     */
     public void init(Profile profile, Node node) {
         myProfile = profile;
         myNode = node;
@@ -174,6 +223,10 @@ public class MainView extends Application {
         loadViews();
     }
 
+    /**
+     * Function to run to launch the software.
+     * @param args Additional information.
+     */
     public static void main(String[] args) {
         launch(args);
     }
