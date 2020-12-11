@@ -67,6 +67,10 @@ public class Node {
 		}
 	}
 
+	public Set<String> getNeighbors() {
+		return this.neighbors.keySet();
+	}
+
 	/**
 	 * Used to close a connection between the node and another node and ask it to close its connection too
 	 *

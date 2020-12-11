@@ -16,7 +16,7 @@ public class ReturnProfileData extends Data {
 	 */
 	public ReturnProfileData(Profile pProfile) {
 		super(false);
-		profile = pProfile;
+		profile = pProfile == null ? null : new Profile(pProfile);
 	}
 
 	public Profile getProfile() {

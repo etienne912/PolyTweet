@@ -62,7 +62,6 @@ public class SearchController implements Initializable, Observer {
                             if (p.equals(profile)) {
                                 MainView.switchScene("profile");
                             } else {
-                                System.out.println(p.toString());
                                 MainView.initVisitProfile(p);
                                 MainView.switchScene("profileVisitor");
                             }

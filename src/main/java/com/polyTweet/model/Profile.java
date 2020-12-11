@@ -38,7 +38,7 @@ public class Profile implements Serializable, Observable {
 		this.status = profile.status;
 		this.posts = profile.posts;
 		this.followedProfiles = profile.followedProfiles;
-		observers = profile.observers;
+		observers = new ArrayList<>();
 	}
 
 	public long getId() {

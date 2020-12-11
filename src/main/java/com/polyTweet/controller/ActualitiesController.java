@@ -16,8 +16,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -88,7 +90,9 @@ public class ActualitiesController implements Initializable, Observer {
 
 				// Fri Dec 11 17:47:11 CET 2020
 
-				String date = post.getWrittenDate().toString().replaceAll("(.{3}) (.{3}) ([0-9]{2}) ([0-9]{2}:[0-9]{2}):[0-9]{2} CET ([0-9]{4})", "$3 $2 $5, $4" );
+				Locale locale = new Locale("fr", "FR");
+				DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, locale);
+				String date = dateFormat.format(post.getWrittenDate());
 
 				Label label = new Label(date + " - " + post.getMessage());
 				label.getStyleClass().add("postLabel");

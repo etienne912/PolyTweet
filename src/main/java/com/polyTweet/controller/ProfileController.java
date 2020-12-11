@@ -8,7 +8,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Abstract class of Profile view controller.
@@ -31,6 +33,7 @@ public abstract class ProfileController implements Observer {
 
 	/**
 	 * Function to set Profile variable.
+	 *
 	 * @param myProfile Profile to set
 	 */
 	public void setVars(Profile myProfile) {
@@ -55,8 +58,9 @@ public abstract class ProfileController implements Observer {
 			Label labelName = new Label(profile.getFirstName() + " " + profile.getLastName());
 			labelName.getStyleClass().add("profileNameLabel");
 
-
-			String date = post.getWrittenDate().toString().replaceAll("(.{3}) (.{3}) ([0-9]{2}) ([0-9]{2}:[0-9]{2}):[0-9]{2} CET ([0-9]{4})", "$3 $2 $5, $4" );
+			Locale locale = new Locale("fr", "FR");
+			DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, locale);
+			String date = dateFormat.format(post.getWrittenDate());
 
 			Label labelPost = new Label(date + " - " + post.getMessage());
 			labelPost.getStyleClass().add("postLabel");
