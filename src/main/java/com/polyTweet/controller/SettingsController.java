@@ -42,7 +42,8 @@ public class SettingsController implements Initializable, Observer {
 
 	/**
 	 * Initialization of the view.
-	 * @param location location of the view
+	 *
+	 * @param location  location of the view
 	 * @param resources information for the initialisation
 	 */
 	@Override
@@ -55,9 +56,9 @@ public class SettingsController implements Initializable, Observer {
 		this.lastNameField.setText(profile.getLastName());
 		this.statusField.setText(profile.getStatus());
 
-		if( node.getNbNeighbors() > 0 ) {
+		if (node.getNbNeighbors() > 0) {
 			this.removeButton.setDisable(false);
-			if(node.getNbNeighbors() < 5) {
+			if (node.getNbNeighbors() < 5) {
 				this.addButton.setDisable(false);
 				this.hboxNeighbors.getChildren().clear();
 				node.getNeighbors().forEach(neighbor -> {
@@ -83,6 +84,7 @@ public class SettingsController implements Initializable, Observer {
 
 	/**
 	 * Listener called when the user click on the button to update his personal information.
+	 *
 	 * @param e Event
 	 */
 	@FXML
@@ -98,7 +100,7 @@ public class SettingsController implements Initializable, Observer {
 	@FXML
 	public void addClick(ActionEvent e) {
 		String ip = this.ipField.getText();
-		if(!ip.equals("")){
+		if (!ip.equals("")) {
 			this.ipField.setText("");
 			try {
 				node.addNeighbor(ip);
@@ -109,6 +111,7 @@ public class SettingsController implements Initializable, Observer {
 				this.displayError("Error: wrong ip address! Please try with an IP address");
 			}
 		}
+		this.errorLabel.setVisible(false);
 	}
 
 	private void displayError(String errorMessage) {
@@ -120,7 +123,7 @@ public class SettingsController implements Initializable, Observer {
 	@FXML
 	public void removeClick(ActionEvent e) {
 		String ip = this.ipField.getText();
-		if(!ip.equals("")){
+		if (!ip.equals("")) {
 			this.ipField.setText("");
 			node.removeNeighbor(ip);
 			this.initSettings();
@@ -134,6 +137,7 @@ public class SettingsController implements Initializable, Observer {
 
 	/**
 	 * Function to update the view.
+	 *
 	 * @param observable Observable element
 	 */
 	@Override

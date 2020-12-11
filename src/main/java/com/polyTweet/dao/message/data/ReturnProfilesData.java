@@ -1,6 +1,7 @@
 package com.polyTweet.dao.message.data;
 
 import com.polyTweet.model.Profile;
+import com.polyTweet.model.ProfileCache;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class ReturnProfilesData extends Data {
 		super(false);
 		profiles = new ArrayList<>(pProfiles == null ? 0 : pProfiles.size());
 		if (pProfiles != null)
-			pProfiles.forEach(profile -> profiles.add(new Profile(profile)));
+			pProfiles.forEach(profile -> profiles.add(profile.getClass() == ProfileCache.class ? new ProfileCache(profile) : new Profile(profile)));
 	}
 
 	public List<Profile> getProfiles() {

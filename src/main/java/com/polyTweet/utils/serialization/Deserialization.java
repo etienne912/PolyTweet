@@ -9,25 +9,25 @@ import java.io.ObjectInputStream;
  */
 public class Deserialization {
 
-    /**
-     * Deserialize constructor
-     *
-     * @param path Path of the file containing the object to deserialize
-     * @return Object deserialized
-     */
-    public static Object deserialize(String path) {
-        try {
-            File file = new File(path);
+	/**
+	 * Deserialize constructor
+	 *
+	 * @param path Path of the file containing the object to deserialize
+	 * @return Object deserialized
+	 */
+	public static Object deserialize(String path) {
+		try {
+			File file = new File(path);
 
-            // Open the file
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+			// Open the file
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
 
-            return ois.readObject();
+			return ois.readObject();
 
-        } catch (Exception ignored) {
-        }
+		} catch (Exception ignored) {
+		}
 
-        return null;
-    }
+		return null;
+	}
 
 }

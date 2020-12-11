@@ -10,14 +10,14 @@ import java.net.*;
  */
 public class Server {
 	private static final int PORT = 8000;
-
+	private final ServerAdapter serverAdapter;
 	private ServerSocket server = null;
 	private boolean isRunning = true;
-	private final ServerAdapter serverAdapter;
 
 	/**
 	 * Server's constructor
-	 * @param nodeIp Ip that the server is going to have
+	 *
+	 * @param nodeIp         Ip that the server is going to have
 	 * @param pServerAdapter The message adapter for the server
 	 * @throws BindException Throw if the address nodeIp is already in use
 	 */

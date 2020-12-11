@@ -7,25 +7,25 @@ import java.util.Date;
  * Represents the post written by the users
  */
 public class Post implements Serializable {
-    private final Date writtenDate;
-    private final String message;
-    private final long writerId;
+	private final Date writtenDate;
+	private final String message;
+	private final long writerId;
 
-    public Post(String message, long profileId) {
-        this.writtenDate = new Date();
-        this.message = message;
-        this.writerId = profileId;
-    }
+	public Post(String message, long profileId) {
+		this.writtenDate = new Date();
+		this.message = message;
+		this.writerId = profileId;
+	}
 
-    public Date getWrittenDate() {
-        return writtenDate;
-    }
+	public Date getWrittenDate() {
+		return writtenDate;
+	}
 
-    public String getMessage() {
-        return this.message;
-    }
+	public String getMessage() {
+		return this.message;
+	}
 
-    public long getWriterId() {
-        return this.writerId;
-    }
+	public long getWriterId() {
+		return this.writerId;
+	}
 }

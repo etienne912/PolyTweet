@@ -1,6 +1,7 @@
 package com.polyTweet.dao.message.data;
 
 import com.polyTweet.model.Profile;
+import com.polyTweet.model.ProfileCache;
 
 /**
  * This class represents the data sent by a socket between two nodes to return a profile
@@ -16,7 +17,11 @@ public class ReturnProfileData extends Data {
 	 */
 	public ReturnProfileData(Profile pProfile) {
 		super(false);
-		profile = pProfile == null ? null : new Profile(pProfile);
+		if (pProfile == null) {
+			profile = null;
+		} else {
+			profile = pProfile.getClass() == ProfileCache.class ? new ProfileCache(pProfile) : new Profile(pProfile);
+		}
 	}
 
 	public Profile getProfile() {

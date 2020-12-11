@@ -70,8 +70,8 @@ public class Node {
 			if (nodeIp.equals(this.myIp)) throw new ConnectException();
 
 			ClientAdapter neighbor = new ClientAdapter(nodeIp);
-			this.neighbors.put(nodeIp, neighbor);
 			neighbor.addMyNode(this.myIp);
+			this.neighbors.put(nodeIp, neighbor);
 		}
 	}
 
@@ -123,7 +123,7 @@ public class Node {
 		if (nbNodes <= 0 || this.messageIdLog.containsKey(messageId)) return;
 		this.messageIdLog.put(messageId, new Date());
 
-		if (this.isNotFull()) {
+		if (this.isNotFull() && !this.myIp.equals(requesterIp)) {
 			this.addNeighbor(requesterIp);
 			nbNodes--;
 		}

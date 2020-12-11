@@ -11,10 +11,10 @@ import java.util.*;
  */
 public class Profile implements Serializable, Observable {
 	private final long id;
-	private String firstName, lastName, status;
 	private final List<Post> posts;
 	private final HashSet<Long> followedProfiles;
 	private final ArrayList<Observer> observers;
+	private String firstName, lastName, status;
 
 	public Profile(String firstName, String lastName) {
 		this.id = Objects.hash(firstName, lastName, new Date());
@@ -49,8 +49,18 @@ public class Profile implements Serializable, Observable {
 		return this.firstName;
 	}
 
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+		this.notifyObserver();
+	}
+
 	public String getLastName() {
 		return this.lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+		this.notifyObserver();
 	}
 
 	public String getName() {
@@ -59,16 +69,6 @@ public class Profile implements Serializable, Observable {
 
 	public String getStatus() {
 		return this.status;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-		this.notifyObserver();
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-		this.notifyObserver();
 	}
 
 	public void setStatus(String status) {
@@ -136,7 +136,7 @@ public class Profile implements Serializable, Observable {
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (o == null || (o.getClass() != Profile.class  && o.getClass() != ProfileCache.class)) return false;
+		if (o == null || (o.getClass() != Profile.class && o.getClass() != ProfileCache.class)) return false;
 		Profile profile = (Profile) o;
 		return id == profile.id;
 	}

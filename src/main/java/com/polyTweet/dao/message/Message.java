@@ -15,9 +15,10 @@ public class Message implements Serializable {
 
 	/**
 	 * Message's constructor
-	 * @param pType The message's type
+	 *
+	 * @param pType      The message's type
 	 * @param pMessageId The message's identifier
-	 * @param pData The message's data
+	 * @param pData      The message's data
 	 */
 	public Message(MessageTypesEnum pType, String pMessageId, Data pData) {
 		type = pType;

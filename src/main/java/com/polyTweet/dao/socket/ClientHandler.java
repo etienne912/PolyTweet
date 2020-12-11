@@ -16,9 +16,9 @@ import java.net.SocketException;
 public class ClientHandler implements Runnable {
 
 	private final Socket sock;
+	private final ServerAdapter serverAdapter;
 	private ObjectInputStream inputStream = null;
 	private ObjectOutputStream outputStream = null;
-	private final ServerAdapter serverAdapter;
 
 	public ClientHandler(Socket pSock, ServerAdapter pServerAdapter) {
 		sock = pSock;
