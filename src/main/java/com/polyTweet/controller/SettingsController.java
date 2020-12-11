@@ -30,7 +30,7 @@ public class SettingsController implements Initializable, Observer {
 	@FXML
 	public TextField firstNameField, lastNameField, statusField, ipField;
 	public HBox hboxNeighbors;
-	public JFXButton joinButton, leaveButton;
+	public JFXButton addButton, removeButton;
 
 	/**
 	 * Settings Constructor.
@@ -56,9 +56,9 @@ public class SettingsController implements Initializable, Observer {
 		this.statusField.setText(profile.getStatus());
 
 		if( node.getNbNeighbors() > 0 ) {
-			this.leaveButton.setDisable(false);
+			this.removeButton.setDisable(false);
 			if(node.getNbNeighbors() < 5) {
-				this.joinButton.setDisable(false);
+				this.addButton.setDisable(false);
 				this.hboxNeighbors.getChildren().clear();
 				node.getNeighbors().forEach(neighbor -> {
 
@@ -68,10 +68,10 @@ public class SettingsController implements Initializable, Observer {
 					this.hboxNeighbors.getChildren().add(label);
 				});
 			} else {
-				this.joinButton.setDisable(true);
+				this.addButton.setDisable(true);
 			}
 		} else {
-			this.leaveButton.setDisable(true);
+			this.removeButton.setDisable(true);
 			this.hboxNeighbors.getChildren().clear();
 
 			Label label = new Label("You don't have neighbors");
@@ -96,7 +96,7 @@ public class SettingsController implements Initializable, Observer {
 	}
 
 	@FXML
-	public void joinClick(ActionEvent e) {
+	public void addClick(ActionEvent e) {
 		String ip = this.ipField.getText();
 		if(!ip.equals("")){
 			this.ipField.setText("");
@@ -118,7 +118,7 @@ public class SettingsController implements Initializable, Observer {
 	}
 
 	@FXML
-	public void leaveClick(ActionEvent e) {
+	public void removeClick(ActionEvent e) {
 		String ip = this.ipField.getText();
 		if(!ip.equals("")){
 			this.ipField.setText("");

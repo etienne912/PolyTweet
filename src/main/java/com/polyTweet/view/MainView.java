@@ -208,15 +208,29 @@ public class MainView extends Application {
 	 */
 	public static void initSearchResult(Object o) {
 		try {
-			FXMLLoader loader = new FXMLLoader(MainView.class.getResource("/fxml/search.fxml"));
-			BorderPane searchPane = loader.load();
-			SearchController searchController = loader.getController();
 
-			if (o instanceof String) searchController.initResult((String) o);
-			else searchController.initResult((HashSet<Long>) o);
-			controllerMap.put("search", searchController);
+			FXMLLoader loader;
 
-			screenController.addScreen("search", searchPane);
+			if (o instanceof String) {
+				loader = new FXMLLoader(MainView.class.getResource("/fxml/search.fxml"));
+				BorderPane searchPane = loader.load();
+				SearchController searchController = loader.getController();
+
+				searchController.initResult((String) o);
+
+				controllerMap.put("search", searchController);
+				screenController.addScreen("search", searchPane);
+			} else {
+				loader = new FXMLLoader(MainView.class.getResource("/fxml/followed.fxml"));
+				BorderPane followedPane = loader.load();
+				FollowedController followedController = loader.getController();
+
+				followedController.initResult((HashSet<Long>) o);
+
+				controllerMap.put("follow", followedController);
+				screenController.addScreen("follow", followedPane);
+			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

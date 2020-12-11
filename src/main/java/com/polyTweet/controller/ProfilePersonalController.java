@@ -63,7 +63,7 @@ public class ProfilePersonalController extends ProfileController implements Init
 	 */
 	@FXML
 	public void followClick(ActionEvent e) {
-		MainView.initSearchResult(MainView.getProfileVisitor().getFollowedProfiles());
-		MainView.switchScene("search");
+		MainView.initSearchResult(MainView.getProfile().getFollowedProfiles());
+		MainView.switchScene("follow");
 	}
 }

@@ -13,25 +13,25 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
-import java.util.List;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 
 /**
  * Search list view controller.
  */
-public class SearchController implements Initializable {
+public class FollowedController implements Initializable {
 
     private final Profile profile;
     private final Node node;
-    private List<Profile> profiles;
+    HashSet<Long> profiles;
 
     @FXML
     public JFXListView listResult;
-
+    
     /**
      * Search list Controller.
      */
-    public SearchController() {
+    public FollowedController() {
         this.profile = MainView.getProfile();
         this.node = MainView.getNode();
     }
@@ -54,15 +54,20 @@ public class SearchController implements Initializable {
 
                     String[] entireName = cell.getText().split(" ");
 
-                    for (Profile p : profiles) {
-                        if (entireName[0].equals(p.getFirstName()) && entireName[1].equals(p.getLastName())) {
-                            if (p.equals(profile)) {
-                                MainView.switchScene("profile");
-                            } else {
-                                MainView.initVisitProfile(p);
-                                MainView.switchScene("profileVisitor");
+                    for (Long id : profiles) {
+                        
+                        Profile followedProfile = node.searchProfile(id);
+                        
+                        if( followedProfile != null ){
+                            if (entireName[0].equals(followedProfile.getFirstName()) && entireName[1].equals(followedProfile.getLastName())) {
+                                if (followedProfile.equals(profile)) {
+                                    MainView.switchScene("profile");
+                                } else {
+                                    MainView.initVisitProfile(followedProfile);
+                                    MainView.switchScene("profileVisitor");
+                                }
+                                break;
                             }
-                            break;
                         }
                     }
                 }
@@ -70,19 +75,25 @@ public class SearchController implements Initializable {
             return cell ;
         });
     }
-
+    
     /**
-     * Display of all profiles which correspond to the search.
-     * @param search Text to search profiles which contain it in their name
+     * Display of all profiles followed by the user.
+     * @param profiles Profiles list
      */
-    public void initResult(String search) {
+    public void initResult(HashSet<Long> profiles) {
 
-        profiles = node.searchProfile(search);
-
+        this.profiles = profiles;
+        
         if( profiles.size() > 0 ) {
             ObservableList<String> items = FXCollections.observableArrayList();
 
-            this.profiles.forEach(p -> items.add(p.getFirstName() + " " + p.getLastName()));
+            profiles.forEach(id -> {
+                Profile followedProfile = node.searchProfile(id);
+
+                if( followedProfile != null ) {
+                    items.add(followedProfile.getFirstName() + " " + followedProfile.getLastName());
+                }
+            });
 
             this.listResult.setItems(items);
         }

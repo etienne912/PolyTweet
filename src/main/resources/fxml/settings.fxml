@@ -51,9 +51,9 @@
                     <ColumnConstraints halignment="CENTER" percentWidth="33"/>
                     <ColumnConstraints halignment="CENTER" percentWidth="33"/>
                 </columnConstraints>
-                <JFXButton text="Join" styleClass="neighborButton" fx:id="joinButton" onAction="#joinClick"
+                <JFXButton text="Add" styleClass="neighborButton" fx:id="addButton" onAction="#addClick"
                            GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <JFXButton text="Leave" styleClass="neighborButton" fx:id="leaveButton" onAction="#leaveClick"
+                <JFXButton text="Remove" styleClass="neighborButton" fx:id="removeButton" onAction="#removeClick"
                            GridPane.columnIndex="1" GridPane.rowIndex="0"/>
                 <JFXButton text="Refresh" styleClass="neighborButton" onAction="#refreshClick"
                            GridPane.columnIndex="2" GridPane.rowIndex="0"/>
