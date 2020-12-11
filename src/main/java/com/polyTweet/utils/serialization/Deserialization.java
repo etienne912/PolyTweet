@@ -17,10 +17,10 @@ public class Deserialization {
      */
     public static Object deserialize(String path) {
         try {
-            File fichier = new File(path);
+            File file = new File(path);
 
             // Open the file
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fichier));
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
 
             return ois.readObject();
 

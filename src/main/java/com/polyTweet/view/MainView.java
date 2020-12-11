@@ -94,7 +94,8 @@ public class MainView extends Application {
 			myNode = null;
 		}
 		if (myProfile != null) {
-			Serialization.serialize(myProfile, "./tmp/profile" + myProfile.getFirstName() + ".ser");
+			myProfile.clearObservers();
+			Serialization.serialize(myProfile, "./tmp/profile-" + myProfile.getFirstName() + ".ser");
 			myProfile = null;
 			switchScene("login");
 		}

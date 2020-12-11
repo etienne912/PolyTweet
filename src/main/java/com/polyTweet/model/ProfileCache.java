@@ -3,7 +3,7 @@ package com.polyTweet.model;
 import java.util.Date;
 
 /**
- * Represent a profile saved in cache
+ * Represents a cached profile with the date of caching
  */
 public class ProfileCache extends Profile {
 	private final Date cachedDate;

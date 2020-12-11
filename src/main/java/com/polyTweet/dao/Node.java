@@ -9,6 +9,9 @@ import com.polyTweet.model.ProfileCache;
 import java.net.BindException;
 import java.util.*;
 
+/**
+ * This class makes a gateway that allows the user to access the network
+ */
 public class Node {
 
 	private static final int MAX_NODE_INFORMATION_CAPACITY = 5;
@@ -215,6 +218,9 @@ public class Node {
 		return profiles;
 	}
 
+	/**
+	 * To close the node properly
+	 */
 	public void close() {
 		ArrayList<String> neighbors = new ArrayList<>(this.neighbors.keySet());
 

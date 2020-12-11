@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Represent the post written by the users
+ * Represents the post written by the users
  */
 public class Post implements Serializable {
     private final Date writtenDate;

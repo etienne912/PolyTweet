@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * Represent the user profile
+ * Represents the user profile
  */
 public class Profile implements Serializable, Observable {
 	private final long id;
@@ -117,6 +117,8 @@ public class Profile implements Serializable, Observable {
 	public void notifyObserver() {
 		this.observers.forEach(observer -> observer.update(this));
 	}
+
+	public void clearObservers() { this.observers.clear(); }
 
 	@Override
 	public String toString() {
