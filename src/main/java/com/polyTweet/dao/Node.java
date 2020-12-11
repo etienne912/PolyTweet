@@ -55,10 +55,6 @@ public class Node {
 			ClientAdapter neighbor = new ClientAdapter(nodeInfo);
 			this.neighbors.put(nodeInfo, neighbor);
 			neighbor.addMyNode(this.myIp);
-
-//			if (this.getNbNeighbors() == 1) {
-//				this.requestNodeConnection();
-//			}
 		}
 	}
 
@@ -135,7 +131,6 @@ public class Node {
 		this.increaseMonitor(id);
 		Profile result = this.searchProfile(id, this.myIp.hashCode() + "searchProfile" + new Date().getTime(), true);
 
-//		if (result != null)
 		return result;
 	}
 

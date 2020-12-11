@@ -8,8 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.net.BindException;
+import java.util.List;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class TestS3 {
 
@@ -27,11 +28,12 @@ public class TestS3 {
 		profile3 = new Profile("P3", "N3");
 		node3 = new Node(profile3, "127.0.0.3");
 
-		profile4 = new Profile("P4", "N3");
+		profile4 = new Profile("P4", "N4");
 		node4 = new Node(profile4, "127.0.0.4");
 
 		node1.addNeighbor(node2.getNodeIp());
 		node2.addNeighbor(node3.getNodeIp());
+		node3.addNeighbor(node4.getNodeIp());
 	}
 
 	@After
@@ -48,5 +50,52 @@ public class TestS3 {
 
 		assertNull(profile);
 	}
+
+	@Test
+	public void searchByNameTest1() throws NodeNotFoundException {
+		List<Profile> profiles = node1.searchProfile("P5");
+
+		assertTrue(profiles.isEmpty());
+
+		profiles = node1.searchProfile("P2");
+
+		System.out.println(profiles);
+		assertEquals(1, profiles.size());
+		assertEquals("P2", profiles.get(0).getFirstName());
+
+		profiles = node1.searchProfile("P4");
+
+		assertEquals(1, profiles.size());
+		assertEquals("P4", profiles.get(0).getFirstName());
+
+		profiles = node1.searchProfile("P");
+
+		assertEquals(4, profiles.size());
+	}
+
+	@Test
+	public void searchByNameTest2() throws NodeNotFoundException {
+		node1.requestNodeConnection();
+
+		List<Profile> profiles = node1.searchProfile("P5");
+
+		assertTrue(profiles.isEmpty());
+
+		profiles = node1.searchProfile("P2");
+
+		System.out.println(profiles);
+		assertEquals(1, profiles.size());
+		assertEquals("P2", profiles.get(0).getFirstName());
+
+		profiles = node1.searchProfile("P4");
+
+		assertEquals(1, profiles.size());
+		assertEquals("P4", profiles.get(0).getFirstName());
+
+		profiles = node1.searchProfile("P");
+
+		assertEquals(4, profiles.size());
+	}
+
 
 }

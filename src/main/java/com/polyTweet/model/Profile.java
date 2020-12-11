@@ -118,7 +118,9 @@ public class Profile implements Serializable, Observable {
 		this.observers.forEach(observer -> observer.update(this));
 	}
 
-	public void clearObservers() { this.observers.clear(); }
+	public void clearObservers() {
+		this.observers.clear();
+	}
 
 	@Override
 	public String toString() {
@@ -134,7 +136,7 @@ public class Profile implements Serializable, Observable {
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (o == null || (o.getClass() != Profile.class  && o.getClass() != ProfileCache.class)) return false;
 		Profile profile = (Profile) o;
 		return id == profile.id;
 	}

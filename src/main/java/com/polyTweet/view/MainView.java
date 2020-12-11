@@ -64,7 +64,7 @@ public class MainView extends Application {
 			window.setScene(scene);
 			window.show();
 
-			window.setOnCloseRequest(event -> closeWindow());
+			window.setOnCloseRequest(event -> disconnection());
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -88,7 +88,7 @@ public class MainView extends Application {
 		screenController.activate(name);
 	}
 
-	public static void closeWindow() {
+	public static void disconnection() {
 		if (myNode != null) {
 			myNode.close();
 			myNode = null;
@@ -107,17 +107,17 @@ public class MainView extends Application {
 
 	private void loadViews() {
 		try {
-			FXMLLoader loader = new FXMLLoader(MainView.class.getResource("/fxml/profile.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/profile.fxml"));
 			BorderPane profilePane = loader.load();
 			ProfileController profileController = loader.getController();
 			controllerMap.put("profile", profileController);
 
-			loader = new FXMLLoader(MainView.class.getResource("/fxml/actualities.fxml"));
+			loader = new FXMLLoader(getClass().getResource("/fxml/actualities.fxml"));
 			BorderPane actualitiesPane = loader.load();
 			ActualitiesController actualitiesController = loader.getController();
 			controllerMap.put("actualities", actualitiesController);
 
-			loader = new FXMLLoader(MainView.class.getResource("/fxml/settings.fxml"));
+			loader = new FXMLLoader(getClass().getResource("/fxml/settings.fxml"));
 			BorderPane settingsPane = loader.load();
 			SettingsController settingsController = loader.getController();
 			controllerMap.put("settings", settingsController);

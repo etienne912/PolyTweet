@@ -51,7 +51,7 @@ public class HeaderController implements Initializable {
 
 	@FXML
 	private void logoutClick() {
-		MainView.closeWindow();
+		MainView.disconnection();
 	}
 
 	@FXML
