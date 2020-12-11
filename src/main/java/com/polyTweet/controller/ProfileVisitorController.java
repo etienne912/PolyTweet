@@ -1,7 +1,6 @@
 package com.polyTweet.controller;
 
 import com.polyTweet.Observable;
-import com.polyTweet.model.Profile;
 import com.polyTweet.view.MainView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,19 +21,18 @@ public class ProfileVisitorController extends ProfileController implements Initi
 	public VBox profilePosts;
 	public Button followButton;
 
-	private static Profile profile;
-
 	/**
 	 * Visited profile Constructor.
 	 */
 	public ProfileVisitorController() {
-		super(MainView.getProfileVisitor());
+		super();
 		profile = MainView.getProfileVisitor();
 	}
 
 	/**
 	 * Initialization of the view.
-	 * @param location location of the view
+	 *
+	 * @param location  location of the view
 	 * @param resources information for the initialisation
 	 */
 	@Override
@@ -43,29 +41,30 @@ public class ProfileVisitorController extends ProfileController implements Initi
 	}
 
 	public void initView() {
-		if (MainView.getProfile().isFollowing(profile.getId())) this.followButton.setText("Unfollow");
+		if (MainView.getProfile().isFollowing(this.profile.getId())) this.followButton.setText("Unfollow");
 		else this.followButton.setText("Follow");
 		super.initView();
 	}
 
 	/**
 	 * Listener called when the user click on the button to follow / unfollow the profile.
-	 * @param e Event
 	 */
 	public void followClick() {
-		if (!MainView.getProfile().isFollowing(profile.getId())) {
-			MainView.getProfile().follow(profile.getId());
+		if (!MainView.getProfile().isFollowing(this.profile.getId())) {
+			MainView.getProfile().follow(this.profile.getId());
 		} else {
-			MainView.getProfile().unfollow(profile.getId());
+			MainView.getProfile().unfollow(this.profile.getId());
 		}
 	}
 
 	/**
 	 * Function to update the view.
+	 *
 	 * @param observable Observable element
 	 */
 	@Override
 	public void update(Observable observable) {
 		this.initView();
 	}
+
 }

@@ -21,24 +21,15 @@ public abstract class ProfileController implements Observer {
 	public Label firstName, lastName, status;
 	public VBox profilePosts;
 
-	private static Profile profile;
+	protected Profile profile;
 
 
 	/**
 	 * Profile Constructor.
 	 */
-	public ProfileController(Profile p) {
-		profile = p;
+	public ProfileController() {
 	}
 
-	/**
-	 * Function to set Profile variable.
-	 *
-	 * @param myProfile Profile to set
-	 */
-	public void setVars(Profile myProfile) {
-		this.profile = myProfile;
-	}
 
 	/**
 	 * Function to initialise the user profile.

@@ -44,7 +44,8 @@ public class ActualitiesController implements Initializable, Observer {
 
 	/**
 	 * Initialization of the view.
-	 * @param location location of the view
+	 *
+	 * @param location  location of the view
 	 * @param resources information for the initialisation
 	 */
 	@Override
@@ -110,6 +111,7 @@ public class ActualitiesController implements Initializable, Observer {
 
 	/**
 	 * Listener called when the user click on the button to create a new post.
+	 *
 	 * @param e Event
 	 */
 	@FXML
@@ -123,6 +125,7 @@ public class ActualitiesController implements Initializable, Observer {
 
 	/**
 	 * Listener to refresh posts.
+	 *
 	 * @param e Event
 	 */
 	@FXML
@@ -132,6 +135,7 @@ public class ActualitiesController implements Initializable, Observer {
 
 	/**
 	 * Listener called when the user click on the name of the owner of a post.
+	 *
 	 * @param e Event
 	 */
 	@FXML
@@ -158,6 +162,7 @@ public class ActualitiesController implements Initializable, Observer {
 
 	/**
 	 * Function to update the view.
+	 *
 	 * @param observable Observable element
 	 */
 	@Override

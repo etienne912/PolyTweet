@@ -127,7 +127,7 @@ public class MainView extends Application {
 		}
 		if (myProfile != null) {
 			myProfile.clearObservers();
-//			Serialization.serialize(myProfile, "./tmp/profile-" + myProfile.getFirstName() + ".ser");
+			Serialization.serialize(myProfile, "./tmp/profile-" + myProfile.getFirstName() + ".ser");
 			myProfile = null;
 			switchScene("login");
 		}
@@ -183,6 +183,7 @@ public class MainView extends Application {
 			ProfileVisitorController profileVisitorController = loader.getController();
 			controllerMap.put("profileVisitor", profileVisitorController);
 
+			myProfile.addObserver(profileVisitorController);
 			screenController.addScreen("profileVisitor", profileVisitorPane);
 		} catch (IOException e) {
 			e.printStackTrace();

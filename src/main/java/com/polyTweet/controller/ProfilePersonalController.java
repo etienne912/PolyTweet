@@ -21,13 +21,11 @@ public class ProfilePersonalController extends ProfileController implements Init
 	public JFXButton followedNb;
 	public VBox profilePosts;
 
-	private static Profile profile;
-
 	/**
 	 * User profile Constructor.
 	 */
 	public ProfilePersonalController() {
-		super(MainView.getProfile());
+		super();
 		profile = MainView.getProfile();
 	}
 
@@ -55,7 +53,8 @@ public class ProfilePersonalController extends ProfileController implements Init
 	 */
 	@Override
 	public void update(Observable observable) {
-		this.initView();
+		if (observable instanceof Profile)
+			this.initView();
 	}
 
 	/**
@@ -64,7 +63,7 @@ public class ProfilePersonalController extends ProfileController implements Init
 	 */
 	@FXML
 	public void followClick(ActionEvent e) {
-		MainView.initSearchResult(profile.getFollowedProfiles());
+		MainView.initSearchResult(MainView.getProfileVisitor().getFollowedProfiles());
 		MainView.switchScene("search");
 	}
 }

@@ -61,7 +61,6 @@ public class HeaderController implements Initializable {
 
 	/**
 	 * Listener called when the user click on the button to log out.
-	 * @param e Event
 	 */
 	@FXML
 	private void logoutClick() {
