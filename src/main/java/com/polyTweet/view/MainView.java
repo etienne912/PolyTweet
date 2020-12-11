@@ -67,6 +67,7 @@ public class MainView extends Application {
                     getClass().getResource("/css/application.css").toExternalForm());
 
             primaryStage.getIcons().add(new Image("/img/polytweet.png"));
+            window.setResizable(false);
             window.setTitle("PolyTweet");
             window.setScene(scene);
             window.show();

@@ -51,7 +51,7 @@ public class SearchController implements Initializable, Observer {
 		this.listResult.setCellFactory(lv -> {
 			ListCell<String> cell = new ListCell<>();
 			cell.textProperty().bind(cell.itemProperty());
-			cell.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+			cell.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> { // Listener on each filled cell of the list
 
 			    if( cell.getText() != null ) {
 

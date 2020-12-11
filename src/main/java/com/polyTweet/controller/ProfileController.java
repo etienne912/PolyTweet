@@ -3,7 +3,6 @@ package com.polyTweet.controller;
 import com.polyTweet.Observer;
 import com.polyTweet.model.Post;
 import com.polyTweet.model.Profile;
-import com.polyTweet.view.MainView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -53,27 +52,19 @@ public abstract class ProfileController implements Observer {
 		sortedPosts.forEach((post) -> {
 			BorderPane postPane = new BorderPane();
 
-			Profile profileVisit = profile;
-
-			if (post.getWriterId() != profile.getId()) {
-				profileVisit = MainView.getNode().searchProfile(post.getWriterId());
-			}
-
-			if (profileVisit != null) {
-
-				Label labelName = new Label(profileVisit.getFirstName() + " " + profileVisit.getLastName());
-				labelName.getStyleClass().add("profileNameLabel");
+			Label labelName = new Label(profile.getFirstName() + " " + profile.getLastName());
+			labelName.getStyleClass().add("profileNameLabel");
 
 
-				Label labelPost = new Label(post.getWrittenDate().toString() + " - " + post.getMessage());
-				labelPost.getStyleClass().add("postLabel");
+			String date = post.getWrittenDate().toString().replaceAll("(.{3}) (.{3}) ([0-9]{2}) ([0-9]{2}:[0-9]{2}):[0-9]{2} CET ([0-9]{4})", "$3 $2 $5, $4" );
 
-				postPane.setTop(labelName);
-				postPane.setCenter(labelPost);
+			Label labelPost = new Label(date + " - " + post.getMessage());
+			labelPost.getStyleClass().add("postLabel");
 
-				profilePosts.getChildren().add(postPane);
+			postPane.setTop(labelName);
+			postPane.setCenter(labelPost);
 
-			}
+			profilePosts.getChildren().add(postPane);
 		});
 	}
 

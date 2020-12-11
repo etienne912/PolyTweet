@@ -76,7 +76,6 @@ public class LoginController implements Initializable {
 	public void importClick(ActionEvent e) {
 		this.file = chooser.showOpenDialog(this.view.getPrimaryStage());
 		if (this.file != null) {
-			String path = this.file.getPath();
 			this.filePath.setTextFill(Color.BLACK);
 			this.filePath.setText(this.file.getName());
 			fileSelected.setValue(true);
@@ -113,7 +112,7 @@ public class LoginController implements Initializable {
 		}
 
 		this.file = null;
-		this.filePath.setText("Aucun Profile Sélectionné");
+		this.filePath.setText("No profile selected");
 		fileSelected.setValue(false);
 
 		this.view.init(profile, node);

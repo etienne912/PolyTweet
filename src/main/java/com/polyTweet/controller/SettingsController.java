@@ -36,6 +36,10 @@ public class SettingsController implements Initializable, Observer {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		this.initSettings();
+	}
+
+	private void initSettings() {
 		this.firstNameField.setText(profile.getFirstName());
 		this.lastNameField.setText(profile.getLastName());
 		this.statusField.setText(profile.getStatus());
@@ -61,8 +65,6 @@ public class SettingsController implements Initializable, Observer {
 	 */
 	@Override
 	public void update(Observable observable) {
-		this.firstNameField.setText(profile.getFirstName());
-		this.lastNameField.setText(profile.getLastName());
-		this.statusField.setText(profile.getStatus());
+		this.initSettings();
 	}
 }
