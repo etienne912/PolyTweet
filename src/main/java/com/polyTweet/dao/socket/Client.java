@@ -9,16 +9,17 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ * This class is used to create a socket connection to other nodes
+ */
 public class Client {
 	private static final int PORT = 8000;
 
 	private Socket connexion = null;
 	private ObjectInputStream inputStream = null;
 	private ObjectOutputStream outputStream = null;
-	private final String nodeIp;
 
 	public Client(String nodeIp) {
-		this.nodeIp = nodeIp;
 		try {
 			connexion = new Socket(nodeIp, PORT);
 		} catch (IOException e) {
@@ -26,6 +27,12 @@ public class Client {
 		}
 	}
 
+	/**
+	 * Used to send message over the socket connection
+	 *
+	 * @param message Message to send
+	 * @return The response of the other node
+	 */
 	public Message send(Message message) {
 //		new Thread(() -> {
 		try {
@@ -35,7 +42,6 @@ public class Client {
 			outputStream.flush();
 
 			inputStream = new ObjectInputStream(connexion.getInputStream());
-
 
 			return (Message) inputStream.readObject();
 
@@ -47,6 +53,11 @@ public class Client {
 		return null;
 	}
 
+	/**
+	 * Used to close the connection, both from this node to the other node and from node to node
+	 *
+	 * @param myIp My IP address
+	 */
 	public void close(String myIp) {
 		try {
 			outputStream = new ObjectOutputStream(connexion.getOutputStream());

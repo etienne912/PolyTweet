@@ -4,16 +4,23 @@ import com.polyTweet.dao.adapter.ServerAdapter;
 
 import java.io.IOException;
 import java.net.*;
-import java.util.HashMap;
 
+/**
+ * This class is used to process the connection creation request
+ */
 public class Server {
 	private static final int PORT = 8000;
 
 	private ServerSocket server = null;
 	private boolean isRunning = true;
 	private final ServerAdapter serverAdapter;
-	private final HashMap<String, ClientHandler> clientHandlers;
 
+	/**
+	 * Server's constructor
+	 * @param nodeIp Ip that the server is going to have
+	 * @param pServerAdapter The message adapter for the server
+	 * @throws BindException Throw if the address nodeIp is already in use
+	 */
 	public Server(String nodeIp, ServerAdapter pServerAdapter) throws BindException {
 		try {
 			server = new ServerSocket(PORT, 5, InetAddress.getByName(nodeIp));
@@ -23,9 +30,11 @@ public class Server {
 			e.printStackTrace();
 		}
 		serverAdapter = pServerAdapter;
-		clientHandlers = new HashMap<>();
 	}
 
+	/**
+	 * Used to open the server. This will allow other nodes to create connections to this node.
+	 */
 	public void open() {
 
 		Thread t = new Thread(() -> {
@@ -33,12 +42,7 @@ public class Server {
 				try {
 					Socket client = server.accept();
 
-					ClientHandler clientHandler = new ClientHandler(client, serverAdapter);
-
-					InetSocketAddress remoteSocketAddress = (InetSocketAddress) client.getRemoteSocketAddress();
-					this.clientHandlers.put(remoteSocketAddress.getAddress().getHostAddress(), clientHandler);
-
-					Thread t1 = new Thread(clientHandler);
+					Thread t1 = new Thread(new ClientHandler(client, serverAdapter));
 					t1.start();
 
 				} catch (SocketException ignored) {
@@ -58,11 +62,9 @@ public class Server {
 		t.start();
 	}
 
-	public void close(String nodeIp) {
-		this.clientHandlers.get(nodeIp).close();
-		this.clientHandlers.remove(nodeIp);
-	}
-
+	/**
+	 * Used to close the server properly
+	 */
 	public void close() {
 		isRunning = false;
 		try {

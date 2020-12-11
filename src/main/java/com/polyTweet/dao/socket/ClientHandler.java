@@ -10,6 +10,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 
+/**
+ * This class is used to process separately for each connection the messages received by another node
+ */
 public class ClientHandler implements Runnable {
 
 	private final Socket sock;

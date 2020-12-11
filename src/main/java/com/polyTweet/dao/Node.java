@@ -42,7 +42,7 @@ public class Node {
 	}
 
 	/**
-	 * Used to just establish a connection between my node and another node
+	 * Used to just establish a connection between the node and another node
 	 *
 	 * @param nodeIp The other node's IP
 	 */
@@ -55,7 +55,7 @@ public class Node {
 	}
 
 	/**
-	 * Used to establish a connection between my node and another node and ask it to connect with us
+	 * Used to establish a connection between the node and another node and ask it to connect with this node
 	 *
 	 * @param nodeIp The other node's IP
 	 */
@@ -68,7 +68,7 @@ public class Node {
 	}
 
 	/**
-	 * Used to close a connection between my node and another node and ask it to close its connection too
+	 * Used to close a connection between the node and another node and ask it to close its connection too
 	 *
 	 * @param nodeIp The other node's IP
 	 */
@@ -96,14 +96,14 @@ public class Node {
 	}
 
 	/**
-	 * Used to forward and send node request over the network
+	 * Used to send and forward node requests over the network
 	 *
 	 * @param requesterIp Requester's IP
 	 * @param messageId   Message identifier
 	 * @param nbNodes     Number of new neighbours needed
 	 */
 	public void requestNodeConnection(String requesterIp, String messageId, int nbNodes) {
-		// if there is no more desired node or if we have already processed this message (to fight against the network cycle)
+		// if there is no more desired node or if the node has already processed this message (to fight against the network cycle)
 		if (nbNodes <= 0 || this.messageIdLog.containsKey(messageId)) return;
 		this.messageIdLog.put(messageId, new Date());
 
@@ -170,10 +170,12 @@ public class Node {
 	}
 
 	/**
-	 * @param id
-	 * @param messageId
-	 * @param broadcast
-	 * @return
+	 * Used to send and forward search profile requests over the network
+	 *
+	 * @param id        Requested profile's identifier
+	 * @param messageId Message identifier
+	 * @param broadcast True if the message should be broadcast to the node's neighbours
+	 * @return The profile requested
 	 */
 	public Profile searchProfile(long id, String messageId, boolean broadcast) {
 		if (this.messageIdLog.containsKey(messageId)) return null;
@@ -190,46 +192,56 @@ public class Node {
 				Profile profile = neighbor.searchProfile(id, messageId, b);
 
 				if (profile != null) {
-					if (profile instanceof ProfileCache) {
+					if (profile instanceof ProfileCache) { // If the profile has been returned from the cache of a node
+						// If I already have this profile in cache and mine is more recent
 						if (this.cache.containsKey(profile.getId()) && ((ProfileCache) profile).getCachedDate().compareTo(this.cache.get(profile.getId()).getCachedDate()) >= 0) {
-							return this.cache.get(profile.getId());
+							return this.cache.get(profile.getId()); // I return mine cached profile
 						} else {
 							this.cache.put(profile.getId(), (ProfileCache) profile);
 							return profile;
 						}
-					} else {
+					} else { // If it's not a cached profile, the node adds it to its cache.
 						this.cache.put(profile.getId(), new ProfileCache(profile));
 						return profile;
 					}
 				}
 			}
+			// If the requested profile is not in the neighborhood, the node sends a broadcast request
 			b = true;
 		}
 
+		// After failed to find the requested profile over the network, the node searches in its cache
 		return this.cache.getOrDefault(id, null);
 	}
 
 	/**
 	 * Used to obtain a list of profiles accessible on the network whose names correspond to the request
 	 *
-	 * @param name
-	 * @return
+	 * @param match A string to which the profiles must correspond
+	 * @return A list with all the profile accessible on the network whose names correspond to the request
 	 */
-	public List<Profile> searchProfile(String name) {
-		return this.searchProfile(name, this.myIp.hashCode() + "searchProfileByName" + new Date().getTime());
+	public List<Profile> searchProfile(String match) {
+		return this.searchProfile(match, this.myIp.hashCode() + "searchProfileByName" + new Date().getTime());
 	}
 
-	public List<Profile> searchProfile(String name, String messageId) {
+	/**
+	 * Used to send and forward search profile requests over the network
+	 *
+	 * @param match     A string to which the profiles must correspond
+	 * @param messageId Message identifier
+	 * @return A list with all the profile accessible on the network whose names correspond to the request
+	 */
+	public List<Profile> searchProfile(String match, String messageId) {
 		if (this.messageIdLog.containsKey(messageId)) return null;
 		this.messageIdLog.put(messageId, new Date());
 
 		ArrayList<Profile> profiles = new ArrayList<>();
 
-		if (this.myProfile.getName().toLowerCase(Locale.ROOT).contains(name.toLowerCase(Locale.ROOT)))
+		if (this.myProfile.getName().toLowerCase(Locale.ROOT).contains(match.toLowerCase(Locale.ROOT))) // matching tests
 			profiles.add(myProfile);
 
-		for (ClientAdapter neighbor : this.neighbors.values()) {
-			List<Profile> result = neighbor.searchProfile(name, messageId);
+		for (ClientAdapter neighbor : this.neighbors.values()) { // Broadcast the request to the neighborhood
+			List<Profile> result = neighbor.searchProfile(match, messageId);
 
 			if (result != null) {
 				result.forEach(profile -> {
@@ -248,8 +260,9 @@ public class Node {
 			}
 		}
 
+		// After checking on the network, the node searches in its cache for another matching profile
 		this.cache.values().forEach(profile -> {
-			if (profile.getName().toLowerCase(Locale.ROOT).contains(name.toLowerCase(Locale.ROOT)) && !profiles.contains(profile))
+			if (profile.getName().toLowerCase(Locale.ROOT).contains(match.toLowerCase(Locale.ROOT)) && !profiles.contains(profile))
 				profiles.add(profile);
 		});
 
