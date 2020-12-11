@@ -21,11 +21,11 @@ public class Server {
 	 * @param pServerAdapter The message adapter for the server
 	 * @throws BindException Throw if the address nodeIp is already in use
 	 */
-	public Server(String nodeIp, ServerAdapter pServerAdapter) throws BindException {
+	public Server(String nodeIp, ServerAdapter pServerAdapter) throws BindException, UnknownHostException {
 		try {
 			server = new ServerSocket(PORT, 5, InetAddress.getByName(nodeIp));
-		} catch (BindException bindException) {
-			throw bindException;
+		} catch (BindException | UnknownHostException exception) {
+			throw exception;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

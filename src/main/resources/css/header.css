@@ -18,7 +18,7 @@
 
 .searchField {
     -fx-font-size: 15px;
-    -fx-text-fill: #019CDE;
+    -fx-text-fill: WHITE;
     -fx-alignment: CENTER_LEFT;
     -fx-padding: 0 0 0 10;
 }

@@ -5,7 +5,7 @@ import com.polyTweet.dao.exceptions.MaxNodeException;
 import com.polyTweet.model.Profile;
 import org.junit.Test;
 
-import java.net.BindException;
+import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -28,7 +28,7 @@ public class Tests {
 	}
 
 	@Test
-	public void searchTest() throws MaxNodeException, BindException {
+	public void searchTest() throws MaxNodeException, IOException {
 		Profile profile1 = new Profile("Étienne", "Lécrivain");
 		Node node1 = new Node(profile1, "127.0.0.1");
 

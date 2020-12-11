@@ -9,7 +9,7 @@ version '1.0-SNAPSHOT'
 
 javafx {
     version = "15.0.1"
-    modules = [ 'javafx.controls', 'javafx.fxml' ]
+    modules = ['javafx.controls', 'javafx.fxml']
 }
 
 repositories {
@@ -22,6 +22,15 @@ application {
 
 test {
     useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.polyTweet.view.MainView'
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 dependencies {

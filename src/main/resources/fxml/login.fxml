@@ -55,6 +55,7 @@
                           GridPane.columnIndex="1" GridPane.rowIndex="2"/>
         </GridPane>
     </GridPane>
+    <Label fx:id="errorLabel" styleClass="errorLabel" text="Error: Unknown error!" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
     <JFXButton alignment="CENTER" fx:id="loginButton" styleClass="loginButton"
                onAction="#connexionClick" text="Login" disable="true"/>
     <FlowPane styleClass="flowRegister" alignment="CENTER">

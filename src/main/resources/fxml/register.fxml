@@ -54,6 +54,7 @@
                                   text="127.0.0.1" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
                 </GridPane>
             </VBox>
+            <Label fx:id="errorLabel" styleClass="errorLabel" text="Error: Unknown error!" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
             <FlowPane styleClass="registerFlow" alignment="CENTER">
                 <JFXButton fx:id="registerButton" styleClass="registerButton" text="Validate" disable="true" onAction="#registerClick"/>
             </FlowPane>

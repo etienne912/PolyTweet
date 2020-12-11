@@ -7,7 +7,9 @@ import com.polyTweet.dao.message.data.CloseConnectionData;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 /**
  * This class is used to create a socket connection to other nodes
@@ -19,9 +21,11 @@ public class Client {
 	private ObjectInputStream inputStream = null;
 	private ObjectOutputStream outputStream = null;
 
-	public Client(String nodeIp) {
+	public Client(String nodeIp) throws ConnectException, UnknownHostException {
 		try {
 			connexion = new Socket(nodeIp, PORT);
+		} catch (ConnectException | UnknownHostException exception) {
+			throw exception;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

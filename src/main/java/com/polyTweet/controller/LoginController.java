@@ -19,7 +19,9 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.net.BindException;
+import java.net.ConnectException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 
 /**
@@ -30,7 +32,7 @@ public class LoginController implements Initializable {
 	MainView view;
 
 	@FXML
-	public Label filePath;
+	public Label filePath, errorLabel;
 	public TextField networkIpField, localIpField;
 	public Button loginButton;
 	private final BooleanProperty fileSelected = new SimpleBooleanProperty(false);
@@ -48,6 +50,7 @@ public class LoginController implements Initializable {
 
 	/**
 	 * Function to set MainView.
+	 *
 	 * @param mainView MainView class
 	 */
 	public void setVars(MainView mainView) {
@@ -56,7 +59,8 @@ public class LoginController implements Initializable {
 
 	/**
 	 * Initialization of the view.
-	 * @param location location of the view
+	 *
+	 * @param location  location of the view
 	 * @param resources information for the initialisation
 	 */
 	@Override
@@ -70,6 +74,7 @@ public class LoginController implements Initializable {
 
 	/**
 	 * Listener called when the user click on the button to import a serialized profile.
+	 *
 	 * @param e Event
 	 */
 	@FXML
@@ -84,6 +89,7 @@ public class LoginController implements Initializable {
 
 	/**
 	 * Listener called when the user click on the button to connect to his profile.
+	 *
 	 * @param e Event
 	 */
 	@FXML
@@ -101,26 +107,53 @@ public class LoginController implements Initializable {
 		Node node;
 		try {
 			node = new Node(profile, this.localIpField.getText());
+		} catch (UnknownHostException exception) {
+			this.displayError("Error: wrong ip address ! Please try with an IP address");
+			return;
 		} catch (BindException bindException) {
-			System.err.println("Address already in use");
+			this.displayError("Error: IP address already in use ! Please try with another IP address");
 			return;
 		}
 
 		if (!this.networkIpField.getText().equals("")) {
-			node.addNeighbor(this.networkIpField.getText());
-			new Thread(node::requestNodeConnection).start();
+			try {
+				node.addNeighbor(this.networkIpField.getText());
+				new Thread(() -> {
+					try {
+						node.requestNodeConnection();
+					} catch (ConnectException | UnknownHostException exception) {
+						exception.printStackTrace();
+					}
+				}).start();
+			} catch (UnknownHostException exception) {
+				this.displayError("Error: wrong ip address ! Please try with an IP address");
+				node.close();
+				return;
+			} catch (ConnectException connectException) {
+				this.displayError("Error: Connection refused ! Please try with another IP address");
+				node.close();
+				return;
+			}
 		}
 
 		this.file = null;
 		this.filePath.setText("No profile selected");
 		fileSelected.setValue(false);
+		this.errorLabel.setVisible(false);
 
 		this.view.init(profile, node);
 		this.view.switchScene("actualities");
 	}
 
+	private void displayError(String errorMessage) {
+		this.errorLabel.setText(errorMessage);
+		this.errorLabel.setVisible(true);
+		this.errorLabel.setStyle("-fx-padding: 10 30 10 30;-fx-font-size: 15px;");
+	}
+
 	/**
 	 * Listener called when the user click on the button to create a new profile.
+	 *
 	 * @param e Event
 	 */
 	@FXML

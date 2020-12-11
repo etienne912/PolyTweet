@@ -39,7 +39,7 @@ public class TestS5 {
 	}
 
 	@Test
-	public void shareRootingInfoTest1() {
+	public void shareRootingInfoTest1() throws IOException {
 		node1.requestNodeConnection();
 		node2.close();
 

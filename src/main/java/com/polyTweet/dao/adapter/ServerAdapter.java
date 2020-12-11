@@ -8,6 +8,8 @@ import com.polyTweet.dao.socket.Server;
 import com.polyTweet.model.Profile;
 
 import java.net.BindException;
+import java.net.ConnectException;
+import java.net.UnknownHostException;
 import java.util.List;
 
 /**
@@ -25,7 +27,7 @@ public class ServerAdapter {
 	 * @param pNode  The node
 	 * @throws BindException Throw if the address nodeIp is already in use
 	 */
-	public ServerAdapter(String nodeIp, Node pNode) throws BindException {
+	public ServerAdapter(String nodeIp, Node pNode) throws BindException, UnknownHostException {
 		node = pNode;
 		server = new Server(nodeIp, this);
 		server.open();
@@ -61,7 +63,11 @@ public class ServerAdapter {
 			case REQUEST_CONNECTION -> {
 				RequestConnectionData data = (RequestConnectionData) message.getData();
 
-				node.requestNodeConnection(data.getNodeIp(), message.getMessageId(), data.getNbNodes());
+				try {
+					node.requestNodeConnection(data.getNodeIp(), message.getMessageId(), data.getNbNodes());
+				} catch (ConnectException | UnknownHostException exception) {
+					exception.printStackTrace();
+				}
 			}
 			case CLOSE_CONNECTION -> {
 				CloseConnectionData data = (CloseConnectionData) message.getData();

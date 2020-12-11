@@ -6,6 +6,8 @@ import com.polyTweet.dao.message.data.*;
 import com.polyTweet.dao.socket.Client;
 import com.polyTweet.model.Profile;
 
+import java.net.ConnectException;
+import java.net.UnknownHostException;
 import java.util.List;
 
 /**
@@ -21,7 +23,7 @@ public class ClientAdapter {
 	 *
 	 * @param nodeIp The IP address of the node to be contacted
 	 */
-	public ClientAdapter(String nodeIp) {
+	public ClientAdapter(String nodeIp) throws ConnectException, UnknownHostException {
 		client = new Client(nodeIp);
 	}
 

@@ -57,3 +57,10 @@
     -fx-cursor: HAND;
     -fx-background-color: #32b3f8;
 }
+
+.errorLabel {
+    -fx-text-alignment: center;
+    -fx-font-size: 0px;
+    -fx-font-weight: bold;
+    -fx-text-fill: RED;
+}

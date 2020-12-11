@@ -13,7 +13,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
+import java.net.ConnectException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 
 /**
@@ -21,6 +23,7 @@ import java.util.ResourceBundle;
  */
 public class SettingsController implements Initializable, Observer {
 
+	public Label errorLabel;
 	private Profile profile;
 	private Node node;
 
@@ -97,9 +100,21 @@ public class SettingsController implements Initializable, Observer {
 		String ip = this.ipField.getText();
 		if(!ip.equals("")){
 			this.ipField.setText("");
-			node.addNeighbor(ip);
-			this.initSettings();
+			try {
+				node.addNeighbor(ip);
+				this.initSettings();
+			} catch (ConnectException connectException) {
+				this.displayError("Error: Connection refused! Please try with another IP address");
+			} catch (UnknownHostException exception) {
+				this.displayError("Error: wrong ip address! Please try with an IP address");
+			}
 		}
+	}
+
+	private void displayError(String errorMessage) {
+		this.errorLabel.setText(errorMessage);
+		this.errorLabel.setVisible(true);
+		this.errorLabel.setStyle("-fx-padding: 10 30 10 30;-fx-font-size: 15px;");
 	}
 
 	@FXML

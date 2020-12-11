@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.net.BindException;
+import java.io.IOException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -17,7 +17,7 @@ public class TestS3 {
 	private Profile profile1, profile2, profile3, profile4;
 
 	@Before
-	public void initObjects() throws BindException {
+	public void initObjects() throws IOException {
 		profile1 = new Profile("P1", "N1");
 		node1 = new Node(profile1, "127.0.0.1");
 
@@ -72,7 +72,7 @@ public class TestS3 {
 	}
 
 	@Test
-	public void searchByNameTest2() {
+	public void searchByNameTest2() throws IOException {
 		node1.requestNodeConnection();
 
 		List<Profile> profiles = node1.searchProfile("P5");

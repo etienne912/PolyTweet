@@ -6,6 +6,8 @@ import com.polyTweet.model.Profile;
 import com.polyTweet.model.ProfileCache;
 
 import java.net.BindException;
+import java.net.ConnectException;
+import java.net.UnknownHostException;
 import java.util.*;
 
 /**
@@ -23,7 +25,7 @@ public class Node {
 	private final String myIp;
 	private ServerAdapter serverAdapter;
 
-	public Node(Profile myProfile, String nodeIp) throws BindException {
+	public Node(Profile myProfile, String nodeIp) throws BindException, UnknownHostException {
 		this.neighbors = new HashMap<>(MAX_NODE_INFORMATION_CAPACITY);
 		this.cache = new HashMap<>();
 		this.traficMonitor = new HashMap<>();
@@ -49,8 +51,12 @@ public class Node {
 	public void addNeighborSimple(String nodeIp) {
 		if (nodeIp == null) return;
 		if (this.isNotFull()) {
-			ClientAdapter neighbor = new ClientAdapter(nodeIp);
-			this.neighbors.put(nodeIp, neighbor);
+			try {
+				ClientAdapter neighbor = new ClientAdapter(nodeIp);
+				this.neighbors.put(nodeIp, neighbor);
+			} catch (ConnectException | UnknownHostException exception) {
+				exception.printStackTrace();
+			}
 		}
 	}
 
@@ -59,8 +65,10 @@ public class Node {
 	 *
 	 * @param nodeIp The other node's IP
 	 */
-	public void addNeighbor(String nodeIp) {
+	public void addNeighbor(String nodeIp) throws ConnectException, UnknownHostException {
 		if (nodeIp != null && !this.neighbors.containsKey(nodeIp) && this.isNotFull()) {
+			if (nodeIp.equals(this.myIp)) throw new ConnectException();
+
 			ClientAdapter neighbor = new ClientAdapter(nodeIp);
 			this.neighbors.put(nodeIp, neighbor);
 			neighbor.addMyNode(this.myIp);
@@ -84,8 +92,10 @@ public class Node {
 
 	/**
 	 * Used to request a connection with other nodes by broadcasting a message over the network
+	 *
+	 * @throws ConnectException It's throw if the connection creation is refused
 	 */
-	public void requestNodeConnection() {
+	public void requestNodeConnection() throws ConnectException, UnknownHostException {
 		this.requestNodeConnection(MAX_NODE_INFORMATION_CAPACITY - this.getNbNeighbors());
 	}
 
@@ -93,8 +103,9 @@ public class Node {
 	 * Used to request a connection with other nodes by broadcasting a message over the network
 	 *
 	 * @param nbNodes Number of new neighbours needed
+	 * @throws ConnectException It's throw if the connection creation is refused
 	 */
-	public void requestNodeConnection(int nbNodes) {
+	public void requestNodeConnection(int nbNodes) throws ConnectException, UnknownHostException {
 		if (0 < nbNodes && nbNodes <= MAX_NODE_INFORMATION_CAPACITY - this.getNbNeighbors())
 			this.requestNodeConnection(this.myIp, this.myIp.hashCode() + "requestNodeConnection" + new Date().getTime(), nbNodes);
 	}
@@ -105,8 +116,9 @@ public class Node {
 	 * @param requesterIp Requester's IP
 	 * @param messageId   Message identifier
 	 * @param nbNodes     Number of new neighbours needed
+	 * @throws ConnectException It's throw if the connection creation is refused
 	 */
-	public void requestNodeConnection(String requesterIp, String messageId, int nbNodes) {
+	public void requestNodeConnection(String requesterIp, String messageId, int nbNodes) throws ConnectException, UnknownHostException {
 		// if there is no more desired node or if the node has already processed this message (to fight against the network cycle)
 		if (nbNodes <= 0 || this.messageIdLog.containsKey(messageId)) return;
 		this.messageIdLog.put(messageId, new Date());
@@ -131,9 +143,7 @@ public class Node {
 	public List<Profile> getProfileFollowedInformation() {
 		ArrayList<Profile> profileFollowed = new ArrayList<>();
 
-		this.myProfile.getFollowedProfiles().forEach(id -> {
-			profileFollowed.add(this.searchProfile(id));
-		});
+		this.myProfile.getFollowedProfiles().forEach(id -> profileFollowed.add(this.searchProfile(id)));
 
 		return profileFollowed;
 	}

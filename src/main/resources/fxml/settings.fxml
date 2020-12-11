@@ -44,6 +44,7 @@
             <Label styleClass="settingsTitle, neighborsLabel" text="Your Neighbors"/>
             <HBox fx:id="hboxNeighbors" spacing="50"/>
             <JFXTextField fx:id="ipField" styleClass="ipField" promptText="Neighbor IP"/>
+            <Label fx:id="errorLabel" styleClass="errorLabel" text="Error: Unknown error!" visible="false" />
             <GridPane>
                 <columnConstraints>
                     <ColumnConstraints halignment="CENTER" percentWidth="33"/>

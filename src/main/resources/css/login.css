@@ -36,6 +36,12 @@
     -fx-text-fill: #019CDE;
 }
 
+.errorLabel {
+    -fx-font-size: 0px;
+    -fx-font-weight: bold;
+    -fx-text-fill: RED;
+}
+
 .loginButton {
     -fx-padding: 10 30 10 30;
     -jfx-button-type: RAISED;
