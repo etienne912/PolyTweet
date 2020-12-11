@@ -9,6 +9,8 @@ import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -17,6 +19,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Optional;
 
 /**
  * Class to run to launch the software.
@@ -125,7 +128,6 @@ public class MainView extends Application {
 	 */
 	public static void initSearchResult(Object o) {
 		try {
-
 			FXMLLoader loader;
 
 			if (o instanceof String) {
@@ -171,7 +173,6 @@ public class MainView extends Application {
 	public void start(Stage primaryStage) {
 
 		window = primaryStage;
-
 		try {
 			controllerMap = new HashMap<>();
 
@@ -206,7 +207,19 @@ public class MainView extends Application {
 			window.setScene(scene);
 			window.show();
 
-			window.setOnCloseRequest(event -> disconnection());
+			window.setOnCloseRequest(event -> {
+				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+				alert.setTitle("Delete File");
+				alert.setHeaderText("Are you sure you want close PolyTweet ?");
+
+				Optional<ButtonType> option = alert.showAndWait();
+
+				if (option.get() == ButtonType.OK) {
+					disconnection();
+				} else {
+					event.consume();
+				}
+			});
 
 		} catch (IOException e) {
 			e.printStackTrace();

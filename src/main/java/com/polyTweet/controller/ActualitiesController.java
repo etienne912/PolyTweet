@@ -89,8 +89,6 @@ public class ActualitiesController implements Initializable, Observer {
 				button.setOnAction(this::visitProfileClick);
 				button.getStyleClass().add("profileButton");
 
-				// Fri Dec 11 17:47:11 CET 2020
-
 				Locale locale = new Locale("fr", "FR");
 				DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, locale);
 				String date = dateFormat.format(post.getWrittenDate());

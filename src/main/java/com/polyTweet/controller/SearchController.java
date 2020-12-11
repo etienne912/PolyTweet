@@ -82,7 +82,10 @@ public class SearchController implements Initializable {
         if( profiles.size() > 0 ) {
             ObservableList<String> items = FXCollections.observableArrayList();
 
-            this.profiles.forEach(p -> items.add(p.getFirstName() + " " + p.getLastName()));
+            this.profiles.forEach(p -> {
+                String name = p.getFirstName() + " " + p.getLastName();
+                if( !items.contains(name) ) items.add(name);
+            });
 
             this.listResult.setItems(items);
         }

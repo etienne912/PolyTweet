@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 
 /**
- * Search list view controller.
+ * Followed profiles list view controller.
  */
 public class FollowedController implements Initializable {
 
@@ -29,7 +29,7 @@ public class FollowedController implements Initializable {
     public JFXListView listResult;
     
     /**
-     * Search list Controller.
+     * Followed profiles list Controller.
      */
     public FollowedController() {
         this.profile = MainView.getProfile();

@@ -105,6 +105,11 @@ public class RegisterController implements Initializable {
 		view.switchScene("actualities");
 	}
 
+	/**
+	 * Function allowing to display an error.
+	 *
+	 * @param errorMessage Message to display
+	 */
 	private void displayError(String errorMessage) {
 		this.errorLabel.setText(errorMessage);
 		this.errorLabel.setVisible(true);

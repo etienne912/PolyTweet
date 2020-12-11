@@ -5,9 +5,12 @@ import com.polyTweet.view.MainView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -63,8 +66,18 @@ public class HeaderController implements Initializable {
 	 * Listener called when the user click on the button to log out.
 	 */
 	@FXML
-	private void logoutClick() {
-		MainView.disconnection();
+	private void logoutClick(ActionEvent e) {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Delete File");
+		alert.setHeaderText("Are you sure you want log out ?");
+
+		Optional<ButtonType> option = alert.showAndWait();
+
+		if (option.get() == ButtonType.OK) {
+			MainView.disconnection();
+		} else {
+			e.consume();
+		}
 	}
 
 	/**

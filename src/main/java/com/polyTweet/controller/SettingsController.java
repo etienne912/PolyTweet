@@ -9,6 +9,8 @@ import com.polyTweet.view.MainView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -16,6 +18,7 @@ import javafx.scene.layout.HBox;
 import java.net.ConnectException;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -89,14 +92,29 @@ public class SettingsController implements Initializable, Observer {
 	 */
 	@FXML
 	public void validateClick(ActionEvent e) {
-		if (!this.firstNameField.getText().equals(this.profile.getFirstName()))
-			this.profile.setFirstName(this.firstNameField.getText());
-		if (!this.lastNameField.getText().equals(this.profile.getLastName()))
-			this.profile.setLastName(this.lastNameField.getText());
-		if (!this.statusField.getText().equals(this.profile.getStatus()))
-			this.profile.setStatus(this.statusField.getText());
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Delete File");
+		alert.setHeaderText("Are you sure you want to update your personal information ?");
+
+		Optional<ButtonType> option = alert.showAndWait();
+
+		if (option.get() == ButtonType.OK) {
+			if (!this.firstNameField.getText().equals(this.profile.getFirstName()))
+				this.profile.setFirstName(this.firstNameField.getText());
+			if (!this.lastNameField.getText().equals(this.profile.getLastName()))
+				this.profile.setLastName(this.lastNameField.getText());
+			if (!this.statusField.getText().equals(this.profile.getStatus()))
+				this.profile.setStatus(this.statusField.getText());
+		} else {
+			e.consume();
+		}
 	}
 
+	/**
+	 * Listener called to add a new neighbor.
+	 *
+	 * @param e Event
+	 */
 	@FXML
 	public void addClick(ActionEvent e) {
 		String ip = this.ipField.getText();
@@ -114,22 +132,47 @@ public class SettingsController implements Initializable, Observer {
 		this.errorLabel.setVisible(false);
 	}
 
+	/**
+	 * Function called to display an error.
+	 *
+	 * @param errorMessage Message to display
+	 */
 	private void displayError(String errorMessage) {
 		this.errorLabel.setText(errorMessage);
 		this.errorLabel.setVisible(true);
 		this.errorLabel.setStyle("-fx-padding: 10 30 10 30;-fx-font-size: 15px;");
 	}
 
+	/**
+	 * Listener called to remove a new neighbor.
+	 *
+	 * @param e Event
+	 */
 	@FXML
 	public void removeClick(ActionEvent e) {
-		String ip = this.ipField.getText();
-		if (!ip.equals("")) {
-			this.ipField.setText("");
-			node.removeNeighbor(ip);
-			this.initSettings();
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Delete File");
+		alert.setHeaderText("Are you sure you want to remove this neighbor ?");
+
+		Optional<ButtonType> option = alert.showAndWait();
+
+		if (option.get() == ButtonType.OK) {
+			String ip = this.ipField.getText();
+			if (!ip.equals("")) {
+				this.ipField.setText("");
+				node.removeNeighbor(ip);
+				this.initSettings();
+			}
+		} else {
+			e.consume();
 		}
 	}
 
+	/**
+	 * Listener called to refresh neighbors list.
+	 *
+	 * @param e Event
+	 */
 	@FXML
 	public void refreshClick(ActionEvent e) {
 		this.initSettings();
