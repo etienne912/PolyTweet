@@ -93,7 +93,7 @@ public class SettingsController implements Initializable, Observer {
 	@FXML
 	public void validateClick(ActionEvent e) {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Delete File");
+		alert.setTitle("Update your personal information");
 		alert.setHeaderText("Are you sure you want to update your personal information ?");
 
 		Optional<ButtonType> option = alert.showAndWait();
@@ -151,7 +151,7 @@ public class SettingsController implements Initializable, Observer {
 	@FXML
 	public void removeClick(ActionEvent e) {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Delete File");
+		alert.setTitle("Remove this neighbor ?");
 		alert.setHeaderText("Are you sure you want to remove this neighbor ?");
 
 		Optional<ButtonType> option = alert.showAndWait();

@@ -209,7 +209,7 @@ public class MainView extends Application {
 
 			window.setOnCloseRequest(event -> {
 				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-				alert.setTitle("Delete File");
+				alert.setTitle("Close PolyTweet");
 				alert.setHeaderText("Are you sure you want close PolyTweet ?");
 
 				Optional<ButtonType> option = alert.showAndWait();

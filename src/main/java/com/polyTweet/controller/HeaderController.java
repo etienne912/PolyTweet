@@ -68,7 +68,7 @@ public class HeaderController implements Initializable {
 	@FXML
 	private void logoutClick(ActionEvent e) {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Delete File");
+		alert.setTitle("Log out ?");
 		alert.setHeaderText("Are you sure you want log out ?");
 
 		Optional<ButtonType> option = alert.showAndWait();
