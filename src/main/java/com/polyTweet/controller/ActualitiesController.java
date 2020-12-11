@@ -1,5 +1,7 @@
 package com.polyTweet.controller;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextArea;
 import com.polyTweet.Observable;
 import com.polyTweet.Observer;
 import com.polyTweet.dao.exceptions.NodeNotFoundException;
@@ -11,8 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -26,9 +27,9 @@ public class ActualitiesController implements Initializable, Observer {
 	private List<Profile> profiles;
 
 	@FXML
-	public TextField postText;
+	public JFXTextArea postText;
 	public Button postButton, refreshButton;
-	public VBox actualitiesPosts;
+	public VBox vboxPost;
 
 	public ActualitiesController() {
 		this.profile = MainView.getProfile();
@@ -54,12 +55,12 @@ public class ActualitiesController implements Initializable, Observer {
 
 		sortedPosts.sort((p1, p2) -> p2.getWrittenDate().compareTo(p1.getWrittenDate()));
 
-		this.actualitiesPosts.getChildren().clear();
+		if (this.vboxPost != null ) this.vboxPost.getChildren().clear();
 
 		sortedPosts.forEach((post) -> {
 
 			try {
-				GridPane grid = new GridPane();
+				BorderPane postPane = new BorderPane();
 
 				Profile profileVisit = profile;
 
@@ -69,15 +70,17 @@ public class ActualitiesController implements Initializable, Observer {
 
 				if (profileVisit != null) {
 
-					Button button = new Button(profileVisit.getFirstName() + " " + profileVisit.getLastName());
+					JFXButton button = new JFXButton(profileVisit.getFirstName() + " " + profileVisit.getLastName());
 					button.setOnAction(this::visitProfileClick);
+					button.getStyleClass().add("profileButton");;
 
 					Label label = new Label(post.getWrittenDate().toString() + " - " + post.getMessage());
+					label.getStyleClass().add("postLabel");
 
-					grid.addRow(0, button);
-					grid.addRow(1, label);
+					postPane.setTop(button);
+					postPane.setCenter(label);
 
-					actualitiesPosts.getChildren().add(grid);
+					vboxPost.getChildren().add(postPane);
 
 				}
 			} catch (NodeNotFoundException e) {

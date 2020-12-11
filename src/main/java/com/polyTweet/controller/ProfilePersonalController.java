@@ -1,11 +1,12 @@
 package com.polyTweet.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.polyTweet.Observable;
 import com.polyTweet.model.Profile;
 import com.polyTweet.view.MainView;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -14,13 +15,13 @@ import java.util.ResourceBundle;
 public class ProfilePersonalController extends ProfileController implements Initializable {
 
 	@FXML
-	public Label followedNb;
+	public JFXButton followedNb;
 	public VBox profilePosts;
 
 	private static Profile profile;
 
 	public ProfilePersonalController() {
-		super();
+		super(MainView.getProfile());
 		profile = MainView.getProfile();
 	}
 
@@ -37,5 +38,11 @@ public class ProfilePersonalController extends ProfileController implements Init
 	@Override
 	public void update(Observable observable) {
 		this.initView();
+	}
+
+	@FXML
+	public void followClick(ActionEvent e) {
+		MainView.initSearchResult(profile.getFollowedProfiles());
+		MainView.switchScene("search");
 	}
 }

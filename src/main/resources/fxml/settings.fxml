@@ -1,36 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
+<?import java.net.URL?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.polyTweet.controller.SettingsController"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="com.polyTweet.controller.SettingsController">
+    <stylesheets>
+        <URL value="@/css/settings.css"/>
+    </stylesheets>
     <top>
         <fx:include source="header.fxml"/>
     </top>
     <center>
-        <VBox>
+        <VBox spacing="20" styleClass="vboxSettings" >
             <GridPane hgap="10" vgap="10">
                 <columnConstraints>
-                    <ColumnConstraints percentWidth="50.0"/>
-                    <ColumnConstraints percentWidth="50.0"/>
+                    <ColumnConstraints percentWidth="15.0"/>
+                    <ColumnConstraints percentWidth="40.0"/>
                 </columnConstraints>
                 <rowConstraints>
                     <RowConstraints prefHeight="50.0"/>
                     <RowConstraints prefHeight="50.0"/>
                 </rowConstraints>
-                <Label fx:id="firstNameLabel" text="Prénom"
+                <Label styleClass="settingsLabel, gridLabel" text="Prénom"
                        GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <TextField fx:id="firstNameField"
-                           GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                <Label fx:id="lastNameLabel" text="Nom"
+                <JFXTextField styleClass="settingsField" fx:id="firstNameField"
+                              GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                <Label styleClass="settingsLabel, gridLabel" text="Nom"
                        GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <TextField fx:id="lastNameField"
+                <JFXTextField styleClass="settingsField" fx:id="lastNameField"
                            GridPane.columnIndex="1" GridPane.rowIndex="1"/>
             </GridPane>
-            <TextField fx:id="statusField"/>
-            <Button fx:id="validateSettings" text="Valider" onAction="#validateClick"/>
+            <Label styleClass="settingsLabel" text="Status"
+                   GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <JFXTextField promptText="Type your status..." styleClass="settingsField" fx:id="statusField"/>
+            <JFXButton styleClass="validateSettings" text="Valider" onAction="#validateClick"/>
         </VBox>
     </center>
 </BorderPane>

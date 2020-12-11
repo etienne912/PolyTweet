@@ -1,45 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
+<?import java.net.URL?>
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          fx:controller="com.polyTweet.controller.HeaderController" hgap="30">
-    <rowConstraints>
-        <RowConstraints percentHeight="50.0"/>
-        <RowConstraints prefHeight="50.0"/>
-    </rowConstraints>
+          fx:controller="com.polyTweet.controller.HeaderController"
+          styleClass="gridHeader">
+    <stylesheets>
+        <URL value="@/css/header.css"/>
+    </stylesheets>
     <columnConstraints>
-        <ColumnConstraints percentWidth="16.5"/>
-        <ColumnConstraints percentWidth="16.5"/>
-        <ColumnConstraints percentWidth="16.5"/>
-        <ColumnConstraints percentWidth="16.5"/>
-        <ColumnConstraints percentWidth="16.5"/>
-        <ColumnConstraints percentWidth="16.5"/>
+        <ColumnConstraints halignment="CENTER" percentWidth="10"/>
+        <ColumnConstraints halignment="CENTER" percentWidth="50"/>
+        <ColumnConstraints halignment="CENTER" percentWidth="30"/>
+        <ColumnConstraints halignment="CENTER" percentWidth="10"/>
     </columnConstraints>
-    <ImageView fx:id="polytweet"
-               fitHeight="20.0" fitWidth="20.0"
-               preserveRatio="true"
-               GridPane.columnIndex="0" GridPane.rowIndex="0">
+    <ImageView fitWidth="30" fitHeight="30" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="0">
         <Image url="@/img/polytweet.png"/>
     </ImageView>
-    <Button GridPane.columnIndex="1" GridPane.rowIndex="0"
-            text="Profile" fx:id="profileButton" onAction="#profileClick"/>
-    <JFXButton GridPane.columnIndex="2" GridPane.rowIndex="0"
-               text="Actualités" fx:id="actualitiesButton" onAction="#actualitiesClick"/>
-    <JFXButton GridPane.columnIndex="3" GridPane.rowIndex="0"
-            text="Paramètres" fx:id="settingsButton" onAction="#settingsClick"/>
-    <JFXTextField fx:id="searchField" onAction="#searchProfile" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
-    <VBox fx:id="listProfile" prefHeight="100.0"
-          GridPane.columnIndex="4" GridPane.rowIndex="1"/>
-    <ImageView GridPane.columnIndex="5" GridPane.rowIndex="0"
-               fx:id="logout"
-               fitHeight="20.0" fitWidth="20.0"
-               preserveRatio="true" onMouseClicked="#logoutClick">
-        <Image url="@/img/logout.png"/>
-    </ImageView>
+    <GridPane GridPane.columnIndex="1" GridPane.rowIndex="0">
+        <columnConstraints>
+            <ColumnConstraints halignment="CENTER" percentWidth="33"/>
+            <ColumnConstraints halignment="CENTER" percentWidth="33"/>
+            <ColumnConstraints halignment="CENTER" percentWidth="33"/>
+        </columnConstraints>
+        <JFXButton GridPane.columnIndex="0" GridPane.rowIndex="0" alignment="CENTER" minHeight="40" minWidth="160"
+                   text="Profile" styleClass="navButton" fx:id="profileButton" onAction="#profileClick"/>
+        <JFXButton GridPane.columnIndex="1" GridPane.rowIndex="0" alignment="CENTER" minHeight="40" minWidth="150"
+                   text="Actualités" styleClass="navButton" fx:id="actualitiesButton" onAction="#actualitiesClick"/>
+        <JFXButton GridPane.columnIndex="2" GridPane.rowIndex="0" alignment="CENTER" minHeight="40" minWidth="150"
+                   text="Paramètres" styleClass="navButton" fx:id="settingsButton" onAction="#settingsClick"/>
+    </GridPane>
+    <GridPane alignment="CENTER" GridPane.columnIndex="2">
+        <JFXTextField promptText="Search" styleClass="searchField" prefHeight="30"  fx:id="searchField" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <JFXButton styleClass="searchButton" onAction="#searchClick" minWidth="40"
+                   GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+    </GridPane>
+    <JFXButton styleClass="logoutButton" onAction="#logoutClick" minWidth="40" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
 </GridPane>

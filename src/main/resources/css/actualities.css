@@ -1,0 +1,34 @@
+.vboxAcutalities {
+    -fx-padding: 0 150 50 150;
+}
+
+.areaPost {
+    -fx-padding: 20 20 20 20;
+    -fx-font-size: 15px;
+    -fx-text-fill: #019CDE;
+}
+
+.postButton {
+    -fx-padding: 10 50 10 50;
+    -jfx-button-type: RAISED;
+    -fx-background-color: #019CDE;
+    -fx-text-fill: WHITE;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.postButton:hover {
+    -fx-background-color: #32b3f8;
+    -fx-cursor: HAND;
+}
+
+.profileButton {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #019CDE;
+}
+
+.profileButton:hover {
+    -fx-cursor: HAND;
+    -fx-text-fill: #32b3f8;
+}

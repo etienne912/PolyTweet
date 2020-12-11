@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import java.net.URL?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.polyTweet.controller.ActualitiesController"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="com.polyTweet.controller.ActualitiesController">
+    <stylesheets>
+        <URL value="@/css/actualities.css"/>
+    </stylesheets>
     <top>
         <fx:include source="header.fxml"/>
     </top>
     <center>
-        <VBox>
-            <TextField fx:id="postText"/>
-            <HBox>
-                <Button fx:id="postButton" onAction="#postClick" text="Valider"/>
-                <Button fx:id="refreshButton" onAction="#refresh" text="Actualiser"/>
+        <VBox spacing="20" styleClass="vboxAcutalities">
+            <JFXTextArea promptText="Type your message..." styleClass="areaPost" minHeight="100" minWidth="700" fx:id="postText"/>
+            <HBox spacing="20">
+                <JFXButton styleClass="postButton" fx:id="postButton" onAction="#postClick" text="Valider"/>
+                <JFXButton styleClass="postButton" fx:id="refreshButton" onAction="#refresh" text="Actualiser"/>
             </HBox>
-            <VBox fx:id="actualitiesPosts"/>
+            <ScrollPane>
+                <VBox spacing="20" prefHeight="600" fx:id="vboxPost"/>
+            </ScrollPane>
         </VBox>
     </center>
 </BorderPane>

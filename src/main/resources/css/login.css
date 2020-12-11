@@ -1,0 +1,64 @@
+.flowPolytweet {
+    -fx-padding: 0 0 30 0;
+}
+
+.gridLogin {
+    -fx-padding: 40 0 70 0;
+}
+
+.polytweetLabel {
+    -fx-font-weight: bold;
+    -fx-font-size: 30px;
+    -fx-text-fill: #019CDE;
+}
+
+.loginLabel {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #019cde;
+}
+
+.importButton {
+    -fx-padding: 10 30 10 30;
+    -jfx-button-type: RAISED;
+    -fx-background-color: #019CDE;
+    -fx-text-fill: WHITE;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.importButton:hover {
+    -fx-background-color: #32b3f8;
+    -fx-cursor: HAND;
+}
+
+.loginField {
+    -fx-text-fill: #019CDE;
+}
+
+.loginButton {
+    -fx-padding: 10 30 10 30;
+    -jfx-button-type: RAISED;
+    -fx-background-color: #019CDE;
+    -fx-text-fill: WHITE;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.loginButton:hover {
+    -fx-background-color: #32b3f8;
+    -fx-cursor: HAND;
+}
+
+.flowRegister {
+    -fx-padding: 20 0 0 0;
+}
+
+.registerButton {
+    -fx-text-fill: #019CDE;
+}
+
+.registerButton:hover {
+    -fx-text-fill: #32b3f8;
+    -fx-cursor: HAND;
+}

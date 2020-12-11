@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.polyTweet.controller.SearchController">
+    <stylesheets>
+        <URL value="@/css/search.css"/>
+    </stylesheets>
+    <top>
+        <fx:include source="header.fxml"/>
+    </top>
+    <center>
+        <VBox styleClass="vboxSearch">
+            <Label styleClass="resultLabel" text="Résultats"/>
+            <ScrollPane>
+                <JFXListView prefHeight="500" prefWidth="698" fx:id="listResult" styleClass="listProfile"/>
+            </ScrollPane>
+        </VBox>
+    </center>
+</BorderPane>

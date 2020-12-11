@@ -3,11 +3,14 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
+<?import java.net.URL?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.polyTweet.controller.ProfileVisitorController"
-            prefHeight="400.0" prefWidth="600.0"
             fx:id="profileContainer">
+    <stylesheets>
+        <URL value="@/css/profile.css"/>
+    </stylesheets>
     <top>
         <fx:include source="header.fxml"/>
     </top>
@@ -21,7 +24,7 @@
                 </columnConstraints>
                 <Label fx:id="firstName" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
                 <Label fx:id="lastName" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                <Button fx:id="followButton" onAction="#followClick" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                <Button fx:id="followButton" styleClass="followButton" onAction="#followClick" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
             </GridPane>
             <Label fx:id="status"/>
             <VBox fx:id="profilePosts"/>

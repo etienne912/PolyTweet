@@ -5,55 +5,58 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.polyTweet.controller.RegisterController"
-      prefHeight="400.0" prefWidth="600.0">
-    <HBox onMouseClicked="#returnLogin">
-        <ImageView fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
-            <Image url="@/img/return.png"/>
-        </ImageView>
-    </HBox>
-    <VBox spacing="25" alignment="CENTER">
-        <FlowPane style="-fx-alignment: center;">
-            <ImageView fitHeight="50.0" fitWidth="50.0" preserveRatio="true">
-                <Image url="@/img/polytweet.png"/>
-            </ImageView>
-            <Label text="olyTweet"/>
-        </FlowPane>
-        <VBox>
-            <GridPane vgap="20">
-                <columnConstraints>
-                    <ColumnConstraints percentWidth="40.0"/>
-                    <ColumnConstraints percentWidth="60.0"/>
-                </columnConstraints>
-                <rowConstraints>
-                    <RowConstraints percentHeight="25.0"/>
-                    <RowConstraints percentHeight="25.0"/>
-                    <RowConstraints percentHeight="25.0"/>
-                    <RowConstraints percentHeight="25.0"/>
-                </rowConstraints>
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.polyTweet.controller.RegisterController"
+            styleClass="registerPane">
+    <stylesheets>
+        <URL value="@/css/register.css"/>
+    </stylesheets>
+    <top>
+        <JFXButton styleClass="returnButton" onAction="#returnLogin"/>
+    </top>
+    <center>
+        <VBox spacing="25" alignment="CENTER">
+            <FlowPane alignment="CENTER" styleClass="flowPolytweet">
+                <ImageView fitHeight="100.0" fitWidth="100.0" preserveRatio="true">
+                    <Image url="@/img/polytweet.png"/>
+                </ImageView>
+                <Label styleClass="polytweetLabel" text="olyTweet"/>
+            </FlowPane>
+            <VBox>
+                <GridPane styleClass="gridRegister" vgap="20" hgap="20" alignment="CENTER">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" prefWidth="200.0"/>
+                        <ColumnConstraints prefWidth="350.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints percentHeight="25.0"/>
+                        <RowConstraints percentHeight="25.0"/>
+                        <RowConstraints percentHeight="25.0"/>
+                        <RowConstraints percentHeight="25.0"/>
+                    </rowConstraints>
 
-                <Label text="First name" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <JFXTextField style="-fx-label-float:true;-fx-background-color:transparent" fx:id="firstName"
-                              GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                    <Label text="First name" styleClass="registerLabel" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <JFXTextField styleClass="registerField" fx:id="firstName"
+                                  GridPane.columnIndex="1" GridPane.rowIndex="0"/>
 
-                <Label text="Last name" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <JFXTextField style="-fx-label-float:true;-fx-background-color:transparent" fx:id="lastName"
-                              GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                    <Label text="Last name" styleClass="registerLabel" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <JFXTextField styleClass="registerField" fx:id="lastName"
+                                  GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-                <Label text="Your IP address" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                <JFXTextField style="-fx-label-float:true;-fx-background-color:transparent" fx:id="localIpField"
-                              GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                    <Label text="Your IP address" styleClass="registerLabel" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <JFXTextField styleClass="registerField" fx:id="localIpField"
+                                  GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-                <Label text="Network IP address" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-                <JFXTextField style="-fx-label-float:true;-fx-background-color:transparent" fx:id="networkIpField"
-                              text="127.0.0.1" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-            </GridPane>
+                    <Label text="Network IP address" styleClass="registerLabel" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                    <JFXTextField styleClass="registerField" fx:id="networkIpField"
+                                  text="127.0.0.1" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                </GridPane>
+            </VBox>
+            <FlowPane styleClass="registerFlow" alignment="CENTER">
+                <JFXButton fx:id="registerButton" styleClass="registerButton" text="Validate" disable="true" onAction="#registerClick"/>
+            </FlowPane>
         </VBox>
-        <FlowPane style="-fx-alignment: center;">
-            <JFXButton fx:id="registerButton" text="Valider" disable="true" onAction="#registerClick" minWidth="100"
-                       style="-jfx-button-type: RAISED;-fx-background-color: green;-fx-text-fill: white;"/>
-        </FlowPane>
-    </VBox>
-</VBox>
+    </center>
+</BorderPane>

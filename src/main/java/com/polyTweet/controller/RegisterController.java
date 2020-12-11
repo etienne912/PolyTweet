@@ -66,7 +66,7 @@ public class RegisterController implements Initializable {
 	}
 
 	@FXML
-	public void returnLogin() {
+	public void returnLogin(ActionEvent e) {
 		view.switchScene("login");
 	}
 

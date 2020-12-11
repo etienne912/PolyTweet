@@ -22,8 +22,8 @@ public class ProfileVisitorController extends ProfileController implements Initi
 	private static Profile profile;
 
 	public ProfileVisitorController() {
-		super();
-		profile = MainView.getProfile();
+		super(MainView.getProfileVisitor());
+		profile = MainView.getProfileVisitor();
 	}
 
 	@Override

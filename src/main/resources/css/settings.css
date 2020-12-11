@@ -1,0 +1,27 @@
+.vboxSettings {
+    -fx-padding: 50 150 50 150;
+}
+
+.settingsLabel {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #019CDE;
+}
+
+.settingsField {
+    -fx-text-fill: #019CDE;
+}
+
+.validateSettings {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-background-color: #019CDE;
+    -fx-text-fill: WHITE;
+    -jfx-button-type: RAISED;
+    -fx-padding: 10 50 10 50;
+}
+
+.validateSettings:hover {
+    -fx-background-color: #32b3f8;
+    -fx-cursor: HAND;
+}

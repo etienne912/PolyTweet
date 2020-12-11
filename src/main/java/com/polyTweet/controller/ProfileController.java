@@ -1,11 +1,13 @@
 package com.polyTweet.controller;
 
 import com.polyTweet.Observer;
+import com.polyTweet.dao.exceptions.NodeNotFoundException;
 import com.polyTweet.model.Post;
 import com.polyTweet.model.Profile;
 import com.polyTweet.view.MainView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
@@ -18,8 +20,8 @@ public abstract class ProfileController implements Observer {
 
     private static Profile profile;
 
-    public ProfileController() {
-        profile = MainView.getProfile();
+    public ProfileController(Profile p) {
+        profile = p;
     }
 
     public void setVars(Profile myProfile) {
@@ -34,8 +36,34 @@ public abstract class ProfileController implements Observer {
         ArrayList<Post> sortedPosts = new ArrayList<>(profile.getPosts());
         sortedPosts.sort((p1, p2) -> p2.getWrittenDate().compareTo(p1.getWrittenDate()));
 
-        this.profilePosts.getChildren().clear();
-        sortedPosts.forEach((post) -> this.profilePosts.getChildren().add(new Label(post.getWrittenDate().toString() + " - " + post.getMessage())));
+        if (this.profilePosts != null )this.profilePosts.getChildren().clear();
+        sortedPosts.forEach((post) -> {
+            try {
+                BorderPane postPane = new BorderPane();
+
+                Profile profileVisit = profile;
+
+                if (post.getWriterId() != profile.getId()) {
+                    profileVisit = MainView.getNode().searchProfile(post.getWriterId());
+                }
+
+                if (profileVisit != null) {
+
+                    Label labelName = new Label(profileVisit.getFirstName() + " " + profileVisit.getLastName());
+                    labelName.getStyleClass().add("profileNameLabel");;
+
+                    Label labelPost = new Label(post.getWrittenDate().toString() + " - " + post.getMessage());
+                    labelPost.getStyleClass().add("postLabel");
+
+                    postPane.setTop(labelName);
+                    postPane.setCenter(labelPost);
+
+                    profilePosts.getChildren().add(postPane);
+
+                }
+            } catch (NodeNotFoundException e) {
+                e.printStackTrace();
+            }        });
     }
 
 }

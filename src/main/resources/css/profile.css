@@ -1,8 +1,51 @@
-.root {
-    -fx-background-color: #383838;
-    -fx-font-size: 11pt;
+.vboxProfile {
+    -fx-padding: 50 150 50 150;
 }
 
-#profileContainer {
-    -fx-padding: 5 10 15 20;
+.nameLabel {
+    -fx-font-size: 25px;
+    -fx-text-fill: #019CDE;
+    -fx-font-weight: bold;
+}
+
+.followLabel {
+    -fx-font-size: 15px;
+    -fx-text-fill: #019CDE;
+    -fx-font-weight: bold;
+}
+
+.followedButton {
+    -fx-text-fill: #019CDE;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.followedButton:hover {
+    -fx-cursor: HAND;
+}
+
+.followButton {
+    -fx-padding: 10 50 10 50;
+    -jfx-button-type: RAISED;
+    -fx-background-color: #019CDE;
+    -fx-text-fill: WHITE;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.followButton:hover {
+    -fx-background-color: #32b3f8;
+    -fx-cursor: HAND;
+}
+
+.statusLabel {
+    -fx-font-size: 15px;
+    -fx-text-fill: #019CDE;
+}
+
+.profileNameLabel {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #019CDE;
+    -fx-padding: 10 10 10 10;
 }

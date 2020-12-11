@@ -1,0 +1,53 @@
+.registerPane {
+    -fx-padding: 30 30 30 30;
+}
+
+.returnButton {
+    -fx-background-image: url('../img/return.png');
+    -fx-background-size: 20px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
+.returnButton:hover {
+    -fx-background-image: url('../img/returnHover.png');
+    -fx-cursor: HAND;
+}
+
+.flowPolytweet {
+    -fx-padding: 0 0 30 0;
+}
+
+.polytweetLabel {
+    -fx-font-weight: bold;
+    -fx-font-size: 30px;
+    -fx-text-fill: #019CDE;
+}
+
+.registerFlow {
+    -fx-padding: 30 0 0 0;
+}
+
+.registerLabel {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #019cde;
+}
+
+.registerField {
+    -fx-text-fill: #019CDE;
+}
+
+.registerButton {
+    -fx-padding: 10 30 10 30;
+    -jfx-button-type: RAISED;
+    -fx-background-color: #019CDE;
+    -fx-text-fill: WHITE;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.registerButton:hover {
+    -fx-background-color: #32b3f8;
+    -fx-cursor: HAND;
+}

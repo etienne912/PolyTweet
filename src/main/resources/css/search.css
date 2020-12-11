@@ -1,0 +1,28 @@
+.vboxSearch {
+    -fx-padding: 30 150 50 150;
+}
+
+.list-cell {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #019CDE;
+    -fx-padding: 10 0 10 10;
+}
+
+.list-cell:even {
+    -fx-background-color: #D1D6FF;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #019CDE;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.resultLabel {
+    -fx-padding: 20 20 20 20;
+    -fx-font-size: 20px;
+    -fx-text-fill: #019CDE;
+    -fx-font-weight: bold;
+}
+
