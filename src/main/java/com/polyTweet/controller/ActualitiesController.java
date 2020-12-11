@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Actualities view controller.
+ */
 public class ActualitiesController implements Initializable, Observer {
 
 	private final Profile profile;
@@ -30,15 +33,26 @@ public class ActualitiesController implements Initializable, Observer {
 	public Button postButton, refreshButton;
 	public VBox vboxPost;
 
+	/**
+	 * Actualities Constructor.
+	 */
 	public ActualitiesController() {
 		this.profile = MainView.getProfile();
 	}
 
+	/**
+	 * Initialisation of the view.
+	 * @param location location of the view.
+	 * @param resources information for the initialisation.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.initPost();
 	}
 
+	/**
+	 * Initialisation of personal and profiles followed posts.
+	 */
 	private void initPost() {
 		List<Post> sortedPosts = new ArrayList<>();
 
@@ -86,6 +100,10 @@ public class ActualitiesController implements Initializable, Observer {
 		});
 	}
 
+	/**
+	 * Listener called when user click on the button to create a new post.
+	 * @param e Event.
+	 */
 	@FXML
 	public void postClick(ActionEvent e) {
 		String post = this.postText.getText();
@@ -95,11 +113,19 @@ public class ActualitiesController implements Initializable, Observer {
 		}
 	}
 
+	/**
+	 * Listener to refresh posts.
+	 * @param e Event.
+	 */
 	@FXML
 	public void refresh(ActionEvent e) {
 		this.initPost();
 	}
 
+	/**
+	 * Listener called when user click on the name of the owner of a post.
+	 * @param e Event.
+	 */
 	@FXML
 	public void visitProfileClick(ActionEvent e) {
 
@@ -122,6 +148,10 @@ public class ActualitiesController implements Initializable, Observer {
 
 	}
 
+	/**
+	 * Function to update the view.
+	 * @param observable Observable element.
+	 */
 	@Override
 	public void update(Observable observable) {
 		this.initPost();
