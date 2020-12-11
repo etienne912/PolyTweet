@@ -18,12 +18,13 @@
 
 1. Open terminal and execute this command:
 - On Linux:
+
 ```sh
 ./gradlew run
-```sh
+```
 
 - On Windows:
-```
+```sh
 ./gradlew.bat run
 ```
 
@@ -33,10 +34,10 @@
 - On Linux:
 ```sh
 ./gradlew test
-```sh
+```
 
 - On Windows:
-```
+```sh
 ./gradlew.bat test
 ```
 
