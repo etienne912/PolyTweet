@@ -6,6 +6,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/etienne912/PolyTweet)](https://github.com/etienne912/PolyTweet/issues)
 [![GitHub forks](https://img.shields.io/github/forks/etienne912/PolyTweet)](https://github.com/etienne912/PolyTweet/network)
 [![GitHub stars](https://img.shields.io/github/stars/etienne912/PolyTweet)](https://github.com/etienne912/PolyTweet/stargazers)
+[![Made With](https://img.shields.io/badge/made_with-java-white)]
 
 ## Authors
 
