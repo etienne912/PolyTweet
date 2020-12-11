@@ -14,9 +14,9 @@
 
 ## 🚀 Usage
 
-## Launch interface
+### Launch interface
 
-1. Open terminal and execute this command:
+Open terminal and execute this command:
 - On Linux:
 
 ```sh
@@ -28,9 +28,9 @@
 ./gradlew.bat run
 ```
 
-## Run test
+### Run test
 
-1. Open terminal and execute this command:
+Open terminal and execute this command:
 - On Linux:
 ```sh
 ./gradlew test
