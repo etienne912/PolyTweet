@@ -1,7 +1,6 @@
 package com.polyTweet;
 
 import com.polyTweet.dao.Node;
-import com.polyTweet.dao.exceptions.NodeNotFoundException;
 import com.polyTweet.model.Profile;
 import com.polyTweet.model.ProfileCache;
 import org.junit.After;
@@ -18,7 +17,7 @@ public class TestS2 {
 	private Profile profile1, profile2, profile3;
 
 	@Before
-	public void initObjects() throws IOException, NodeNotFoundException {
+	public void initObjects() throws IOException {
 		profile1 = new Profile("P1", "N1");
 		node1 = new Node(profile1, "127.0.0.1");
 
@@ -41,7 +40,7 @@ public class TestS2 {
 	}
 
 	@Test
-	public void cacheTest1() throws NodeNotFoundException {
+	public void cacheTest1() {
 		Profile profile = node1.searchProfile(profile3.getId());
 
 		assertNotNull(profile);
@@ -50,7 +49,7 @@ public class TestS2 {
 	}
 
 	@Test
-	public void cacheTest2() throws NodeNotFoundException {
+	public void cacheTest2() {
 		node3.close();
 		Profile profile = node1.searchProfile(profile3.getId());
 
@@ -60,7 +59,7 @@ public class TestS2 {
 	}
 
 	@Test
-	public void cacheTest3() throws NodeNotFoundException {
+	public void cacheTest3() {
 		node3.close();
 		node2.flushCache();
 		Profile profile = node1.searchProfile(profile3.getId());

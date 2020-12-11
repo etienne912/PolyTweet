@@ -59,7 +59,7 @@ public class LoginController implements Initializable {
 		if (this.file != null) {
 			String path = this.file.getPath();
 			this.filePath.setTextFill(Color.BLACK);
-			this.filePath.setText(path);
+			this.filePath.setText(this.file.getName());
 			fileSelected.setValue(true);
 		}
 	}

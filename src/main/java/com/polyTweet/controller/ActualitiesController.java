@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.polyTweet.Observable;
 import com.polyTweet.Observer;
-import com.polyTweet.dao.exceptions.NodeNotFoundException;
 import com.polyTweet.model.Post;
 import com.polyTweet.model.Profile;
 import com.polyTweet.view.MainView;
@@ -55,37 +54,34 @@ public class ActualitiesController implements Initializable, Observer {
 
 		sortedPosts.sort((p1, p2) -> p2.getWrittenDate().compareTo(p1.getWrittenDate()));
 
-		if (this.vboxPost != null ) this.vboxPost.getChildren().clear();
+		if (this.vboxPost != null) this.vboxPost.getChildren().clear();
 
 		sortedPosts.forEach((post) -> {
 
-			try {
-				BorderPane postPane = new BorderPane();
+			BorderPane postPane = new BorderPane();
 
-				Profile profileVisit = profile;
+			Profile profileVisit = profile;
 
-				if (post.getWriterId() != profile.getId()) {
-					profileVisit = MainView.getNode().searchProfile(post.getWriterId());
-				}
-
-				if (profileVisit != null) {
-
-					JFXButton button = new JFXButton(profileVisit.getFirstName() + " " + profileVisit.getLastName());
-					button.setOnAction(this::visitProfileClick);
-					button.getStyleClass().add("profileButton");;
-
-					Label label = new Label(post.getWrittenDate().toString() + " - " + post.getMessage());
-					label.getStyleClass().add("postLabel");
-
-					postPane.setTop(button);
-					postPane.setCenter(label);
-
-					vboxPost.getChildren().add(postPane);
-
-				}
-			} catch (NodeNotFoundException e) {
-				e.printStackTrace();
+			if (post.getWriterId() != profile.getId()) {
+				profileVisit = MainView.getNode().searchProfile(post.getWriterId());
 			}
+
+			if (profileVisit != null) {
+
+				JFXButton button = new JFXButton(profileVisit.getFirstName() + " " + profileVisit.getLastName());
+				button.setOnAction(this::visitProfileClick);
+				button.getStyleClass().add("profileButton");
+
+				Label label = new Label(post.getWrittenDate().toString() + " - " + post.getMessage());
+				label.getStyleClass().add("postLabel");
+
+				postPane.setTop(button);
+				postPane.setCenter(label);
+
+				vboxPost.getChildren().add(postPane);
+
+			}
+
 
 		});
 	}
@@ -111,7 +107,7 @@ public class ActualitiesController implements Initializable, Observer {
 		String[] entireName = button.getText().split(" ");
 
 		for (Profile p : profiles) {
-			if( p != null ) {
+			if (p != null) {
 				if (entireName[0].equals(p.getFirstName()) && entireName[1].equals(p.getLastName())) {
 					if (p.equals(profile)) {
 						MainView.switchScene("profile");

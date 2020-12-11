@@ -1,5 +1,4 @@
 import com.polyTweet.dao.Node;
-import com.polyTweet.dao.exceptions.NodeNotFoundException;
 import com.polyTweet.model.Profile;
 import com.polyTweet.utils.serialization.Deserialization;
 import com.polyTweet.utils.serialization.Serialization;
@@ -50,14 +49,10 @@ public class Main {
 
 		System.out.println("\n*********** Search a Profile ***********\n");
 
-		try {
-			System.out.println(node1.searchProfile(profile2.getId()));
-			System.out.println(node1.searchProfile("l"));
+		System.out.println(node1.searchProfile(profile2.getId()));
+		System.out.println(node1.searchProfile("l"));
 //			System.out.println(node2.searchProfile(2));
 
-		} catch (NodeNotFoundException e) {
-			System.err.println(e);
-		}
 		System.out.println(node1);
 		System.out.println(node2);
 //		System.out.println(node3);

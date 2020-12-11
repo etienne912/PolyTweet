@@ -2,7 +2,6 @@ package com.polyTweet;
 
 import com.polyTweet.dao.Node;
 import com.polyTweet.dao.exceptions.MaxNodeException;
-import com.polyTweet.dao.exceptions.NodeNotFoundException;
 import com.polyTweet.model.Profile;
 import org.junit.Test;
 
@@ -29,7 +28,7 @@ public class Tests {
 	}
 
 	@Test
-	public void searchTest() throws MaxNodeException, NodeNotFoundException, BindException {
+	public void searchTest() throws MaxNodeException, BindException {
 		Profile profile1 = new Profile("Étienne", "Lécrivain");
 		Node node1 = new Node(profile1, "127.0.0.1");
 

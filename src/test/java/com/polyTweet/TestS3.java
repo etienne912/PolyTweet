@@ -1,7 +1,6 @@
 package com.polyTweet;
 
 import com.polyTweet.dao.Node;
-import com.polyTweet.dao.exceptions.NodeNotFoundException;
 import com.polyTweet.model.Profile;
 import org.junit.After;
 import org.junit.Before;
@@ -45,21 +44,20 @@ public class TestS3 {
 	}
 
 	@Test
-	public void unavailableUserTest1() throws NodeNotFoundException {
+	public void unavailableUserTest1() {
 		Profile profile = node1.searchProfile(-1);
 
 		assertNull(profile);
 	}
 
 	@Test
-	public void searchByNameTest1() throws NodeNotFoundException {
+	public void searchByNameTest1() {
 		List<Profile> profiles = node1.searchProfile("P5");
 
 		assertTrue(profiles.isEmpty());
 
 		profiles = node1.searchProfile("P2");
 
-		System.out.println(profiles);
 		assertEquals(1, profiles.size());
 		assertEquals("P2", profiles.get(0).getFirstName());
 
@@ -74,7 +72,7 @@ public class TestS3 {
 	}
 
 	@Test
-	public void searchByNameTest2() throws NodeNotFoundException {
+	public void searchByNameTest2() {
 		node1.requestNodeConnection();
 
 		List<Profile> profiles = node1.searchProfile("P5");
@@ -83,7 +81,6 @@ public class TestS3 {
 
 		profiles = node1.searchProfile("P2");
 
-		System.out.println(profiles);
 		assertEquals(1, profiles.size());
 		assertEquals("P2", profiles.get(0).getFirstName());
 

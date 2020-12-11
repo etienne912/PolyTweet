@@ -1,7 +1,6 @@
 package com.polyTweet;
 
 import com.polyTweet.dao.Node;
-import com.polyTweet.dao.exceptions.NodeNotFoundException;
 import com.polyTweet.model.Profile;
 import org.junit.After;
 import org.junit.Before;
@@ -40,7 +39,7 @@ public class TestS5 {
 	}
 
 	@Test
-	public void shareRootingInfoTest1() throws NodeNotFoundException {
+	public void shareRootingInfoTest1() {
 		node1.requestNodeConnection();
 		node2.close();
 

@@ -1,7 +1,6 @@
 package com.polyTweet;
 
 import com.polyTweet.dao.Node;
-import com.polyTweet.dao.exceptions.NodeNotFoundException;
 import com.polyTweet.model.Profile;
 import org.junit.After;
 import org.junit.Before;
@@ -39,7 +38,7 @@ public class TestS1 {
 	}
 
 	@Test
-	public void rootingTest() throws NodeNotFoundException {
+	public void rootingTest() {
 		assertEquals(profile3, node1.searchProfile(profile3.getId()));
 	}
 }

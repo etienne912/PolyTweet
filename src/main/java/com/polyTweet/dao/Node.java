@@ -2,7 +2,6 @@ package com.polyTweet.dao;
 
 import com.polyTweet.dao.adapter.ClientAdapter;
 import com.polyTweet.dao.adapter.ServerAdapter;
-import com.polyTweet.dao.exceptions.NodeNotFoundException;
 import com.polyTweet.model.Profile;
 import com.polyTweet.model.ProfileCache;
 
@@ -42,6 +41,11 @@ public class Node {
 		return this.myIp;
 	}
 
+	/**
+	 * Used to just establish a connection between my node and another node
+	 *
+	 * @param nodeIp The other node's IP
+	 */
 	public void addNeighborSimple(String nodeIp) {
 		if (nodeIp == null) return;
 		if (this.isNotFull()) {
@@ -50,66 +54,81 @@ public class Node {
 		}
 	}
 
-	public void addNeighbor(String nodeInfo) {
-		if (nodeInfo != null && !this.neighbors.containsKey(nodeInfo) && this.isNotFull()) {
-			ClientAdapter neighbor = new ClientAdapter(nodeInfo);
-			this.neighbors.put(nodeInfo, neighbor);
+	/**
+	 * Used to establish a connection between my node and another node and ask it to connect with us
+	 *
+	 * @param nodeIp The other node's IP
+	 */
+	public void addNeighbor(String nodeIp) {
+		if (nodeIp != null && !this.neighbors.containsKey(nodeIp) && this.isNotFull()) {
+			ClientAdapter neighbor = new ClientAdapter(nodeIp);
+			this.neighbors.put(nodeIp, neighbor);
 			neighbor.addMyNode(this.myIp);
 		}
 	}
 
-	public HashMap<Long, ProfileCache> getCache() {
-		return cache;
-	}
-
+	/**
+	 * Used to close a connection between my node and another node and ask it to close its connection too
+	 *
+	 * @param nodeIp The other node's IP
+	 */
 	public void removeNeighbor(String nodeIp) {
 		if (neighbors.containsKey(nodeIp))
 			neighbors.get(nodeIp).close(this.myIp);
 		neighbors.remove(nodeIp);
 	}
 
-	public void follow(long id) {
-		this.myProfile.follow(id);
-	}
-
-	public void unfollow(long id) {
-		this.myProfile.unfollow(id);
-	}
-
+	/**
+	 * Used to request a connection with other nodes by broadcasting a message over the network
+	 */
 	public void requestNodeConnection() {
 		this.requestNodeConnection(MAX_NODE_INFORMATION_CAPACITY - this.getNbNeighbors());
 	}
 
+	/**
+	 * Used to request a connection with other nodes by broadcasting a message over the network
+	 *
+	 * @param nbNodes Number of new neighbours needed
+	 */
 	public void requestNodeConnection(int nbNodes) {
 		if (0 < nbNodes && nbNodes <= MAX_NODE_INFORMATION_CAPACITY - this.getNbNeighbors())
 			this.requestNodeConnection(this.myIp, this.myIp.hashCode() + "requestNodeConnection" + new Date().getTime(), nbNodes);
 	}
 
-	public void requestNodeConnection(String nodeInfo, String messageId, int nbNodes) {
+	/**
+	 * Used to forward and send node request over the network
+	 *
+	 * @param requesterIp Requester's IP
+	 * @param messageId   Message identifier
+	 * @param nbNodes     Number of new neighbours needed
+	 */
+	public void requestNodeConnection(String requesterIp, String messageId, int nbNodes) {
+		// if there is no more desired node or if we have already processed this message (to fight against the network cycle)
 		if (nbNodes <= 0 || this.messageIdLog.containsKey(messageId)) return;
 		this.messageIdLog.put(messageId, new Date());
 
 		if (this.isNotFull()) {
-			this.addNeighbor(nodeInfo);
+			this.addNeighbor(requesterIp);
 			nbNodes--;
 		}
 
 		ArrayList<ClientAdapter> neighbors = new ArrayList<>(this.neighbors.values());
 
 		for (ClientAdapter neighbor : neighbors) {
-			neighbor.requestNodeConnection(nodeInfo, messageId, nbNodes);
+			neighbor.requestNodeConnection(requesterIp, messageId, nbNodes);
 		}
 	}
 
+	/**
+	 * Used to obtain the list of profiles that the user follows
+	 *
+	 * @return The list of profiles returned by the network
+	 */
 	public List<Profile> getProfileFollowedInformation() {
 		ArrayList<Profile> profileFollowed = new ArrayList<>();
 
 		this.myProfile.getFollowedProfiles().forEach(id -> {
-			try {
-				profileFollowed.add(this.searchProfile(id));
-			} catch (NodeNotFoundException e) {
-				e.printStackTrace();
-			}
+			profileFollowed.add(this.searchProfile(id));
 		});
 
 		return profileFollowed;
@@ -123,21 +142,39 @@ public class Node {
 		return this.neighbors.size() < MAX_NODE_INFORMATION_CAPACITY;
 	}
 
+	/**
+	 * Used to monitor the exchange of data passing through our node
+	 * In a future version, this will make it possible to dynamically manage the node's neighbourhood by deleting little-used nodes and to connect to heavily used nodes
+	 *
+	 * @param id Identifier of the requested profile
+	 */
 	public void increaseMonitor(long id) {
 		this.traficMonitor.compute(id, (k, v) -> (v == null) ? 1 : v + 1);
-	}
-
-	public Profile searchProfile(long id) throws NodeNotFoundException {
-		this.increaseMonitor(id);
-		Profile result = this.searchProfile(id, this.myIp.hashCode() + "searchProfile" + new Date().getTime(), true);
-
-		return result;
 	}
 
 	public void flushCache() {
 		this.cache.clear();
 	}
 
+	/**
+	 * Used to obtain a profile by requesting it from network nodes with its identifier
+	 *
+	 * @param id Requested profile's identifier
+	 * @return The profile requested
+	 */
+	public Profile searchProfile(long id) {
+		this.increaseMonitor(id);
+
+		// Before sending a request over the network, I create a messageId that is as unique as possible
+		return this.searchProfile(id, this.myIp.hashCode() + "searchProfile" + new Date().getTime(), true);
+	}
+
+	/**
+	 * @param id
+	 * @param messageId
+	 * @param broadcast
+	 * @return
+	 */
 	public Profile searchProfile(long id, String messageId, boolean broadcast) {
 		if (this.messageIdLog.containsKey(messageId)) return null;
 		if (broadcast)
@@ -172,6 +209,12 @@ public class Node {
 		return this.cache.getOrDefault(id, null);
 	}
 
+	/**
+	 * Used to obtain a list of profiles accessible on the network whose names correspond to the request
+	 *
+	 * @param name
+	 * @return
+	 */
 	public List<Profile> searchProfile(String name) {
 		return this.searchProfile(name, this.myIp.hashCode() + "searchProfileByName" + new Date().getTime());
 	}
