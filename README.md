@@ -1,4 +1,4 @@
-<h1 align="center">PolyTweet👋</h1>
+<h1 align="center">PolyTweet 🖧</h1>
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/etienne912/PolyTweet/CI)
 ![GitHub](https://img.shields.io/github/license/etienne912/PolyTweet)
@@ -14,7 +14,7 @@
 
 ## 🚀 Usage
 
-## How to run
+## Launch interface
 
 1. Open terminal and execute this command:
 - On Linux:
@@ -28,7 +28,7 @@
 ./gradlew.bat run
 ```
 
-## How to run test
+## Run test
 
 1. Open terminal and execute this command:
 - On Linux:
