@@ -2,6 +2,20 @@
     -fx-padding: 50 150 50 150;
 }
 
+.settingsTitle {
+    -fx-text-fill: #019CDE;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.informationLabel {
+    -fx-padding: 0 0 10 50;
+}
+
+.neighborsLabel {
+    -fx-padding: 20 0 10 50;
+}
+
 .settingsLabel {
     -fx-font-size: 15px;
     -fx-font-weight: bold;
@@ -24,4 +38,22 @@
 .validateSettings:hover {
     -fx-background-color: #32b3f8;
     -fx-cursor: HAND;
+}
+
+.ipField {
+    -fx-text-fill: #32b3f8;
+}
+
+.neighborButton {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-background-color: #019CDE;
+    -fx-text-fill: WHITE;
+    -jfx-button-type: RAISED;
+    -fx-padding: 10 50 10 50;
+}
+
+.neighborButton:hover {
+    -fx-cursor: HAND;
+    -fx-background-color: #32b3f8;
 }
