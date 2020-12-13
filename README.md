@@ -1,8 +1,9 @@
 <h1 align="center">PolyTweet 🖧</h1>
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/etienne912/PolyTweet/CI)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/etienne912/PolyTweet/Java%20CI%20with%20Gradle)
 ![GitHub](https://img.shields.io/github/license/etienne912/PolyTweet)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/etienne912/PolyTweet)
+![](https://img.shields.io/snyk/vulnerabilities/github/etienne912/PolyTweet)
 [![GitHub issues](https://img.shields.io/github/issues/etienne912/PolyTweet)](https://github.com/etienne912/PolyTweet/issues)
 [![GitHub forks](https://img.shields.io/github/forks/etienne912/PolyTweet)](https://github.com/etienne912/PolyTweet/network)
 [![GitHub stars](https://img.shields.io/github/stars/etienne912/PolyTweet)](https://github.com/etienne912/PolyTweet/stargazers)
