@@ -36,9 +36,11 @@ public class ClientAdapter {
 	 * @return The profile requested
 	 */
 	public Profile searchProfile(long id, String messageId, boolean broadcast) {
-		ReturnProfileData result = (ReturnProfileData) client.send(new Message(MessageTypesEnum.SEARCH_PROFILE, messageId, new SearchProfileData(id, broadcast))).getData();
+		Message message = client.send(new Message(MessageTypesEnum.SEARCH_PROFILE, messageId, new SearchProfileData(id, broadcast)));
+		if (message == null) return null;
+		ReturnProfileData result = (ReturnProfileData) message.getData();
 
-		return result.getProfile();
+		return result == null ? null : result.getProfile();
 	}
 
 	/**
@@ -49,9 +51,11 @@ public class ClientAdapter {
 	 * @return A list with all the profile accessible on the network whose names correspond to the request
 	 */
 	public List<Profile> searchProfile(String name, String messageId) {
-		ReturnProfilesData result = (ReturnProfilesData) client.send(new Message(MessageTypesEnum.SEARCH_PROFILE_BY_NAME, messageId, new SearchProfileByNameData(name))).getData();
+		Message message = client.send(new Message(MessageTypesEnum.SEARCH_PROFILE_BY_NAME, messageId, new SearchProfileByNameData(name)));
+		if (message == null) return null;
+		ReturnProfilesData result = (ReturnProfilesData) message.getData();
 
-		return result.getProfiles();
+		return result == null ? null : result.getProfiles();
 	}
 
 	/**

@@ -202,7 +202,8 @@ public class Node {
 
 		boolean b = false;
 		for (int i = 0; i < 2; i++) {
-			for (ClientAdapter neighbor : this.neighbors.values()) {
+			ArrayList<ClientAdapter> neighbors = new ArrayList<>(this.neighbors.values());
+			for (ClientAdapter neighbor : neighbors) {
 				Profile profile = neighbor.searchProfile(id, messageId, b);
 
 				if (profile != null) {
@@ -254,7 +255,8 @@ public class Node {
 		if (this.myProfile.getName().toLowerCase(Locale.ROOT).contains(match.toLowerCase(Locale.ROOT))) // matching tests
 			profiles.add(myProfile);
 
-		for (ClientAdapter neighbor : this.neighbors.values()) { // Broadcast the request to the neighborhood
+		ArrayList<ClientAdapter> neighbors = new ArrayList<>(this.neighbors.values());
+		for (ClientAdapter neighbor : neighbors) { // Broadcast the request to the neighborhood
 			List<Profile> result = neighbor.searchProfile(match, messageId);
 
 			if (result != null) {
